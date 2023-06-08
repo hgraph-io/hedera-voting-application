@@ -3,6 +3,7 @@ import { Typography, Container, Button } from '@mui/material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import withAuth from '../components/withAuth';
+import CardComponent from '../components/Card';
 
 const SecurePage: React.FC = () => {
   const router = useRouter();
@@ -17,7 +18,7 @@ const SecurePage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
         Welcome to the secure page
       </Typography>
@@ -27,6 +28,16 @@ const SecurePage: React.FC = () => {
       <Button variant="outlined" color="primary" onClick={handleLogout}>
         Logout
       </Button>
+      <br />
+      <br />
+      <div>
+        <CardComponent title='Card 1' rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={true} type='view' />
+        <CardComponent title='Card 1' rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={false} type='vote' />
+        <CardComponent title='Card 1' rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={true} type='approved' />
+        <CardComponent title='Card 1' rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={true} type='denied' />
+        <CardComponent title='Card 1' rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={true} type='default' />
+      </div>
+
     </Container>
   );
 };

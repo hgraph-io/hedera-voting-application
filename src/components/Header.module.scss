@@ -1,0 +1,12 @@
+@import 'variables';
+
+.links {
+    
+  @media (min-width: 1024px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    position: relative;
+  }
+}
