@@ -1,20 +1,44 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import nextConnect from 'next-connect';
+import cookie from 'cookie';
 
-export default async function login(req: NextApiRequest, res: NextApiResponse) {
-  const { username, password } = req.body;
+import dbConnect from '../../helpers/dbConnect';
+import User from '../../models/User';
 
-  // Here you should validate the user credentials. We're just checking if they're not empty.
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Invalid username or password' });
+const handler = nextConnect<NextApiRequest, NextApiResponse>();
+
+handler.post(async (req, res) => {
+  await dbConnect();
+
+  const { email, password } = req.body;
+
+  // Find the user
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(400).json({ success: false, message: 'Invalid email or password' });
   }
 
-  // Generate the JWT
-  const token = jwt.sign({ username }, 'your-secret-key', { expiresIn: '1h' });
+  // Check the password
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(400).json({ success: false, message: 'Invalid email or password' });
+  }
 
-  // Set the JWT as a cookie
-  res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60}`);
+  // Create a JWT token
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, { expiresIn: '1d' });
 
-  // Return a success response
-  res.status(200).json({ message: 'Login successful' });
-}
+  // Send the JWT in a cookie
+  res.setHeader('Set-Cookie', cookie.serialize('auth', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: 'strict',
+    maxAge: 3600,
+    path: '/',
+  }));
+
+  res.status(200).json({ success: true, data: user });
+});
+
+export default handler;
