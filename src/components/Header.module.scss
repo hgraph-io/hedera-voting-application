@@ -30,14 +30,13 @@
 
 .links {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
+  flex-direction: column;
   height: 65px;
   @media (min-width: 900px) {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    align-items: flex-end;
     width: 100%;
     position: relative;
   }
