@@ -1,5 +1,30 @@
-// AdminLogin.module.scss
 .adminLogin {
-    // Style as needed
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    background: white;
+  
+    .title {
+      margin-bottom: 2rem;
+    }
+  
+    .MuiContainer-root {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(var(--card-rgb), 0.7);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+  
+    .inputField {
+      margin: 1rem 0;
+    }
+  
+    .submitBtn {
+      margin-top: 2rem;
+    }
 }
   
