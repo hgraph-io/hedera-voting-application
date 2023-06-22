@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Checkbox, Button } from '@mui/material';
+import { Checkbox, Button, Link } from '@mui/material';
 import { Rating } from '@mui/lab';
+import { useRouter } from 'next/router';
 import styles from './Card.module.scss';
 
 interface CardProps {
@@ -8,13 +9,14 @@ interface CardProps {
   speaker: string;
   title: string;
   isSelected: boolean;
+  applicationId: number;
   rating: {
     voteNum: number;
     currentRating: number;
   };
 }
 
-export const Card: React.FC<CardProps> = ({ type, speaker, title, isSelected, rating }) => {
+export const Card: React.FC<CardProps> = ({ type, applicationId, speaker, title, isSelected, rating }) => {
   const [selected, setSelected] = useState(isSelected);
 
   const renderRating = () => {
@@ -28,15 +30,15 @@ export const Card: React.FC<CardProps> = ({ type, speaker, title, isSelected, ra
     }
   };
 
-  
-
   const renderButton = () => {
       return (
         <>
           <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
-          <Button className={styles.cardButton} variant="contained">
-            {type}
-          </Button>
+          <Link href={`/application/${applicationId}`} >
+            <Button className={styles.cardButton} variant="contained">
+              {type}
+            </Button>
+          </Link>
         </>
       );
   };
@@ -63,7 +65,8 @@ export const Card: React.FC<CardProps> = ({ type, speaker, title, isSelected, ra
                 disabled={true}
                 className={styles.checkBox}
                 onChange={() => setSelected(!selected)}
-              />{type}
+              />
+              {type}
             </>
           )}
           {renderRating()}

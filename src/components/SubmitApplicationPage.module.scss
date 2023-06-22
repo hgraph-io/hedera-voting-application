@@ -1,0 +1,28 @@
+.submitApplication {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    .MuiTextField-root {
+      margin-bottom: 20px;
+    }
+
+    .MuiButton-root {
+      margin: 20px auto;
+    }
+
+    @media (max-width: 600px) {
+      padding: 10px;
+    }
+  }
+}
