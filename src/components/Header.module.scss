@@ -1,12 +1,80 @@
 @import 'variables';
 
+.menuBar {
+  background-color: whitesmoke;
+  right: 20px;
+  display: flex;
+  justify-content:space-between;
+  align-items: flex-start;
+
+  a {
+    text-decoration: none;
+  }
+}
+.menuButton {
+  color: black;
+}
+
+.toolBar {
+  background-color: whitesmoke;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content:space-between;
+  align-items: flex-start;
+}
+
+.logo {
+  position: relative;
+  width: 100px;
+}
+
 .links {
-    
-  @media (min-width: 1024px) {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 65px;
+  @media (min-width: 900px) {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
     position: relative;
   }
+}
+
+.link {
+  color: $grey-3;
+  text-decoration: none;
+  margin-right: 2rem;
+  padding-bottom: 10px;
+}
+
+.activeLink {
+  color: $black;
+  border-bottom: 2px solid $purple;
+  text-decoration: none;
+  padding-bottom: 8px;
+  margin-right: 2rem;
+}
+
+.drawerPaper {
+  padding: 20px; 
+  div {
+    margin: 10px 0px;
+    width: auto;
+  }
+}
+
+.loginButton {
+  margin-top: 0px;
+  background: $purple;
+  min-width: 100px;
+}
+
+.signupButton {
+  margin-top: 0px;
+  background: $white;
+  color: $black;
+  min-width: 100px;
 }

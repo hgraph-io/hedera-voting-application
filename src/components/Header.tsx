@@ -1,82 +1,82 @@
-import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, useMediaQuery, Theme, Hidden, Drawer } from '@mui/material';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, IconButton,Button, useMediaQuery, Theme, Hidden, Drawer } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';  
+import { useRouter } from 'next/router';
 import styles from './Header.module.scss';
+import logo from '../assets/Hlogo.png';
 
 export default function Header() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   
-  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const router = useRouter();
+  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  interface Route {
+    label: string;
+    path: string;
+  }
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const routes: Route[] = [
+    { label: 'Home', path: '/' },
+    // { label: 'Admin Dashboard', path: '/admin-dashboard' },
+    { label: 'Dashboard', path: '/dashboard' },
+    // { label: 'Results', path: '/admin-results' },
+    // { label: 'Application', path: '/application' },
+    { label: 'Admin', path: '/admin-login' },
+  ];
 
-  const drawer = (
-    <div className={styles.links}>
-      <Link href="/">  
-        <MenuItem onClick={handleClose}>Home</MenuItem>
-      </Link>
-      <Link href="/admin-dashboard">
-        <MenuItem onClick={handleClose}>Admin Dashboard</MenuItem>
-      </Link>
-      <Link href="/dashboard">
-        <MenuItem onClick={handleClose}>Dashboard</MenuItem>
-      </Link>
-      <Link href="/results">
-        <MenuItem onClick={handleClose}>Results</MenuItem>
-      </Link>
-      <Link href="/application">
-        <MenuItem onClick={handleClose}>Application</MenuItem>
-      </Link>
-      <Link href="/admin-login">
-        <MenuItem onClick={handleClose}>Admin Login</MenuItem>
-      </Link>
-    </div>
+  const renderLink = ({ label, path }: Route) => (
+    <Link href={path} passHref key={path}>
+      <div className={router.pathname === path ? styles.activeLink : styles.link}>{label}</div>
+    </Link>
   );
 
   return (
     <div className={styles.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={styles.title}>
+      <AppBar className={styles.menuBar} position="static">
+        <Toolbar style={{position:'relative',width:'100%', display:"flex", justifyContent:'space-between'}}>
             {/* Add a placeholder for the logo */}
-            <img src="logo-placeholder.png" alt="Logo" />
-          </Typography>
-
-          {isDesktop ? (
+            <Link href="/" passHref>  
+              <img className={styles.logo} src={logo?.src} alt="Logo" />
+            </Link>
             <div>
-              {drawer}
-            </div>
-          ) : (
-            <IconButton edge="start" className={styles.menuButton} color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
-              <MenuIcon />
-            </IconButton>
-          )}
+              {isDesktop ? (
+                <div className={styles.links}>
+                  {routes.map(renderLink)}
+                  <Button className={styles.signupButton} >
+                    Sign Up
+                  </Button>
+                  <Button className={styles.loginButton}>
+                    Login
+                  </Button>
+                </div>
+              ) : (
+                <IconButton edge="start" className={styles.menuButton} color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
+                  <MenuIcon />
+                </IconButton>
+              )}
 
-          <Hidden lgUp implementation="css">
-            <Drawer
-              anchor={'right'}
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              classes={{
-                paper: styles.drawerPaper,
-              }}
-              variant="temporary"
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
+              <Hidden lgUp implementation="css">
+                <Drawer
+                  anchor={'right'}
+                  open={mobileOpen}
+                  onClose={handleDrawerToggle}
+                  classes={{
+                    paper: styles.drawerPaper,
+                  }}
+                  variant="temporary"
+                >
+                  <div className={styles.links}>
+                    {routes.map(renderLink)}
+                  </div>
+                </Drawer>
+              </Hidden>
+            </div>
 
         </Toolbar>
       </AppBar>
