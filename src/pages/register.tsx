@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 
 const RegisterPage: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -15,7 +15,7 @@ const RegisterPage: React.FC = () => {
       return alert('Passwords do not match');
     }
     try {
-      const response = await axios.post('/api/register', { username, password });
+      const response = await axios.post('/api/register', { email, password });
       alert(response.data.message);
       router.push('/secure'); // navigate to the secure page
     } catch (error) {
@@ -33,9 +33,9 @@ const RegisterPage: React.FC = () => {
           margin="normal"
           required
           fullWidth
-          label="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           margin="normal"
