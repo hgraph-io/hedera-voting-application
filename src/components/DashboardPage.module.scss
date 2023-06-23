@@ -2,5 +2,18 @@
 .dashboardContainer {
   margin-top: 40px;
   max-width: 1024px; 
-  // Style as needed
+}
+
+.header {
+  margin-top: 10px; 
+  margin-bottom: 20px; 
+}
+
+.cardContainer {
+  >div >div {
+    &:first-of-type {
+      margin-top: 30px;
+    }
+    margin: 0px; 
+  }
 }

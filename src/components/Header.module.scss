@@ -32,6 +32,7 @@
   display: flex;
   flex-direction: column;
   height: 65px;
+  
   @media (min-width: 900px) {
     display: flex;
     flex-direction: row;
@@ -59,21 +60,75 @@
 
 .drawerPaper {
   padding: 20px; 
-  div {
+  min-width: 300px;
+  .link, .activeLink {
     margin: 10px 0px;
     width: auto;
   }
 }
+.menuCloseButton {
+  width: 40px; 
+  height: 40px; 
+}
+
+.mobileButtonContainer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.desktopButtonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+  min-width: 320px;
+  margin-bottom: 5px;
+  margin-left: 30px; 
+}
+
+.logoContainer { 
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+  margin: 0px 0 30px; 
+}
 
 .loginButton {
-  margin-top: 0px;
+  margin-top: 10px;
   background: $purple;
-  min-width: 100px;
+  min-width: 250px;
+
+  @media (min-width: 900px) {
+    margin-top: 0px;
+    background: $purple;
+    min-width: 100px;
+    width: 50%;
+  
+  }
 }
 
 .signupButton {
-  margin-top: 0px;
+  border: 1px solid $black;
   background: $white;
   color: $black;
-  min-width: 100px;
+  min-width: 250px;
+  
+  @media (min-width: 900px) {
+    margin-top: 0px;
+    background: $white;
+    color: $black;
+    min-width: 100px;
+    width: 45%;
+  }
 }

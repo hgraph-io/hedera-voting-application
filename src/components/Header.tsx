@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton,Button, useMediaQuery, Theme, Hidden, Drawer } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';  
 import { useRouter } from 'next/router';
 import styles from './Header.module.scss';
@@ -48,12 +49,14 @@ export default function Header() {
               {isDesktop ? (
                 <div className={styles.links}>
                   {routes.map(renderLink)}
-                  <Button className={styles.signupButton} >
-                    Sign Up
-                  </Button>
-                  <Button className={styles.loginButton}>
-                    Login
-                  </Button>
+                  <div className={styles.desktopButtonContainer}>
+                    <Button className={styles.signupButton} >
+                      Sign Up
+                    </Button>
+                    <Button className={styles.loginButton}>
+                      Login
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <IconButton edge="start" className={styles.menuButton} color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
@@ -72,7 +75,24 @@ export default function Header() {
                   variant="temporary"
                 >
                   <div className={styles.links}>
+                 
+                    <div className={styles.logoContainer}>
+                      <Link href="/" passHref>  
+                        <img className={styles.logo} src={logo?.src} alt="Logo" />
+                      </Link>
+                      <IconButton edge="start" className={styles.menuCloseButton} color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
+                        <CloseIcon />
+                      </IconButton>
+                    </div>
                     {routes.map(renderLink)}
+                    <div className={styles.mobileButtonContainer}>
+                      <Button className={styles.signupButton} >
+                        Sign Up
+                      </Button>
+                      <Button className={styles.loginButton}>
+                        Login
+                      </Button>
+                    </div>
                   </div>
                 </Drawer>
               </Hidden>
