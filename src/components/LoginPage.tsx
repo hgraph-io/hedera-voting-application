@@ -97,7 +97,7 @@ const LoginPage: React.FC = () => {
             Login with Hashpack
           </Button>
         )}
-        <Button variant="contained" color="secondary" fullWidth onClick={() => router.push('/admin-login')}>
+        <Button variant="text" fullWidth onClick={() => router.push('/admin-login')}>
           Admin Login
         </Button>
       </form>

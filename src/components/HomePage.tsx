@@ -15,8 +15,8 @@ const HomePage: React.FC = () => {
         </Typography>
         <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '2rem' }}>
           <Link href="/login">
-            <Button variant="contained" color="primary">
-                Login
+            <Button variant="contained" className={styles.heroButton}>
+              Submit an Application
             </Button>
           </Link>
         </div>

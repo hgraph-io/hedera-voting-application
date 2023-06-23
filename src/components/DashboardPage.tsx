@@ -17,7 +17,7 @@ const DashboardPage: React.FC = () => {
         <Typography align="left" color="textSecondary" gutterBottom>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus. 
         </Typography>
-        <Button onClick={() => router.replace('/application/create')}>
+        <Button variant="contained" onClick={() => router.replace('/application/create')}>
           Submit New Application
         </Button>
       </div>

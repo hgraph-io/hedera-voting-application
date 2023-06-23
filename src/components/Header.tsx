@@ -91,12 +91,12 @@ export default function Header() {
                     {routes.map(renderLink)}
                     <div className={styles.mobileButtonContainer}>
                       <Link href="/register">  
-                        <Button onClick={handleDrawerToggle} className={styles.signupButton} >
+                        <Button onClick={handleDrawerToggle} variant="outlined">
                           Sign Up
                         </Button>
                       </Link>
                       <Link href="/login">  
-                        <Button onClick={handleDrawerToggle} className={styles.loginButton}>
+                        <Button onClick={handleDrawerToggle} variant="contained" >
                           Login
                         </Button>
                       </Link>
