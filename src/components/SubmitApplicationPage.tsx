@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, TextField, Container, Box, Checkbox, FormControlLabel, FormGroup, FormLabel, Typography } from '@mui/material';
+import { Button, TextField, Container, Checkbox, FormControlLabel, FormGroup, FormLabel, Typography, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import styles from './SubmitApplicationPage.module.scss';
 
@@ -55,29 +55,37 @@ const SubmitApplicationPage: React.FC = () => {
 
   return (
     <Container className={styles.submitApplication}>
-      <Button variant="outlined" onClick={goBack} style={{ marginTop: "20px", marginLeft: "20px" }}>Go Back</Button>
+      <Button variant="outlined" onClick={goBack} style={{ margin: "20px 0px 30px" }}>Go Back</Button>
 
-      <Typography variant="h4">Submit Application</Typography>
+      <Typography variant="h4" gutterBottom>Submit Application</Typography>
       <form onSubmit={handleSubmit} noValidate autoComplete="off">
-        <TextField label="Speaker Name" value={name} onChange={(e) => setName(e.target.value)} fullWidth required />
-        <TextField label="Organization" value={organization} onChange={(e) => setOrganization(e.target.value)} fullWidth  />
-        <TextField label="Links" value={links} onChange={(e) => setLinks(e.target.value)} fullWidth required helperText="Enter comma-separated links." />
-        <br/>
-        <br/>
-        <FormLabel component="legend">Relevant Topics/Tags</FormLabel>
-        <FormGroup>
-          <FormControlLabel control={<Checkbox checked={topics.HCS} onChange={handleTopicChange} name="HCS" />} label="HCS" />
-          <FormControlLabel control={<Checkbox checked={topics['Smart Contracts']} onChange={handleTopicChange} name="Smart Contracts" />} label="Smart Contracts" />
-          <FormControlLabel control={<Checkbox checked={topics.dApps} onChange={handleTopicChange} name="dApps" />} label="dApps" />
-          <FormControlLabel control={<Checkbox checked={topics.Consensus} onChange={handleTopicChange} name="Consensus" />} label="Consensus" />
-        </FormGroup> 
-        <br/>
-        <br/>
-        <FormLabel component="legend">Participation</FormLabel>
-        <FormControlLabel control={<Checkbox checked={interestedInModerator} onChange={(e) => setInterestedInModerator(e.target.checked)} />} label="I'm Interested in being a moderator" />
-        <Box sx={{ mt: 2 }}>
-          <Button variant="contained" color="primary" type="submit">Submit</Button>
-        </Box>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField label="Speaker Name" value={name} onChange={(e) => setName(e.target.value)} fullWidth required />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField label="Organization" value={organization} onChange={(e) => setOrganization(e.target.value)} fullWidth  />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField label="Links" value={links} onChange={(e) => setLinks(e.target.value)} fullWidth required helperText="Enter comma-separated links." />
+          </Grid>
+          <Grid item xs={12}>
+            <FormLabel component="legend">Relevant Topics/Tags</FormLabel>
+            <FormGroup>
+              <FormControlLabel control={<Checkbox checked={topics.HCS} onChange={handleTopicChange} name="HCS" />} label="HCS" />
+              <FormControlLabel control={<Checkbox checked={topics['Smart Contracts']} onChange={handleTopicChange} name="Smart Contracts" />} label="Smart Contracts" />
+              <FormControlLabel control={<Checkbox checked={topics.dApps} onChange={handleTopicChange} name="dApps" />} label="dApps" />
+              <FormControlLabel control={<Checkbox checked={topics.Consensus} onChange={handleTopicChange} name="Consensus" />} label="Consensus" />
+            </FormGroup>
+          </Grid>
+          <Grid item xs={12}>
+            <FormLabel component="legend">Participation</FormLabel>
+            <FormControlLabel control={<Checkbox checked={interestedInModerator} onChange={(e) => setInterestedInModerator(e.target.checked)} />} label="I'm Interested in being a moderator" />
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" type="submit">Submit</Button>
+          </Grid>
+        </Grid>
       </form>
     </Container>
   );
