@@ -24,7 +24,7 @@ export const Card: React.FC<CardProps> = ({ type, applicationId, speaker, title,
       return (
         <div>
           <div className={styles.ratingLabel}>Current Rating with {rating.voteNum} votes</div>
-          <Rating name="rating" value={rating.currentRating} readOnly />
+          <Rating className={styles.ratingContainer} name="rating" value={rating.currentRating} readOnly />
         </div>
       );
     }
