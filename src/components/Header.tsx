@@ -51,12 +51,12 @@ export default function Header() {
                   {routes.map(renderLink)}
                   <div className={styles.desktopButtonContainer}>
                     <Link href="/register">  
-                      <Button className={styles.signupButton} >
+                      <Button variant="outlined" className={styles.signupButton} >
                         Sign Up
                       </Button>
                     </Link>
                     <Link href="/login">  
-                      <Button className={styles.loginButton}>
+                      <Button variant="contained" className={styles.loginButton}>
                         Login
                       </Button>
                     </Link>

@@ -14,15 +14,13 @@ const DashboardPage: React.FC = () => {
         <Typography component="h1" variant="h3" align="left" color="textPrimary" gutterBottom>
           Dashboard
         </Typography>
-        <Typography align="left" color="textSecondary" gutterBottom>
+        <Typography align="left" color="textSecondary">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus. 
         </Typography>
-        <Button variant="contained" onClick={() => router.replace('/application/create')}>
+        <Button className={styles.buttonContainer} variant="contained" onClick={() => router.replace('/application/create')}>
           Submit New Application
         </Button>
       </div>
-      <br />
-      <br />
       <Typography variant="h4">Previous Applications</Typography>
       <div className={styles.cardContainer}>
         <CardComponent title='Card 1' applicationId={3} rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={true} type='approved' />
