@@ -1,26 +1,25 @@
 @import 'variables';
 
-.menuBar {
-  background-color: whitesmoke;
-  right: 20px;
+@mixin flex($direction: row, $justify: flex-start, $align: flex-start, $wrap: nowrap) {
   display: flex;
-  justify-content:space-between;
-  align-items: flex-start;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
 
+.menuBar,
+.toolBar {
+  @include flex(row, space-between, flex-start);
+  background-color: whitesmoke;
+  
   a {
     text-decoration: none;
   }
 }
+
 .menuButton {
   color: black;
-}
-
-.toolBar {
-  background-color: whitesmoke;
-  margin-bottom: 30px;
-  display: flex;
-  justify-content:space-between;
-  align-items: flex-start;
 }
 
 .logo {
@@ -29,106 +28,91 @@
 }
 
 .links {
-  display: flex;
-  flex-direction: column;
+  @include flex(column);
   height: 65px;
   
   @media (min-width: 900px) {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: flex-end;
+    @include flex(row, flex-end, flex-end);
     width: 100%;
-    position: relative;
   }
+}
+
+.link,
+.activeLink {
+  text-decoration: none;
+  margin-right: 2rem;
 }
 
 .link {
   color: $grey-3;
-  text-decoration: none;
-  margin-right: 2rem;
   padding-bottom: 10px;
 }
 
 .activeLink {
   color: $black;
   border-bottom: 2px solid $purple;
-  text-decoration: none;
   padding-bottom: 8px;
-  margin-right: 2rem;
 }
 
 .drawerPaper {
   padding: 20px; 
   min-width: 300px;
-  .link, .activeLink {
+  
+  .link,
+  .activeLink {
     margin: 10px 0px;
     width: auto;
   }
 }
+
 .menuCloseButton {
   width: 40px; 
   height: 40px; 
 }
 
-.mobileButtonContainer {
+.logoContainer,
+.desktopButtonContainer {
+  @include flex(row, space-between, flex-end, wrap);
+  margin-bottom: 30px; 
   width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
+}
+
+.loginButton,
+.signupButton {
+  min-width: 250px;
+  text-transform: capitalize;
+  width: 100%; 
+  margin-top: 10px;
+
+  @media (min-width: 900px) {
+    margin-top: 0px;
+    min-width: 100px;
+    width: 50%;
+  }
+}
+
+.loginButton {
+  background: $purple;
+}
+
+.mobileButtonContainer {
+  margin-top: 30px; 
+  width: 100%;
   position: relative;
 }
 
 .desktopButtonContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  position: relative;
-  min-width: 320px;
+  min-width: 220px;
   margin-bottom: 5px;
-  margin-left: 30px; 
-}
-
-.logoContainer { 
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  position: relative;
-  margin: 0px 0 30px; 
-}
-
-.loginButton {
-  margin-top: 10px;
-  background: $purple;
-  min-width: 250px;
-
-  @media (min-width: 900px) {
-    margin-top: 0px;
-    background: $purple;
-    min-width: 100px;
-    width: 50%;
-  
-  }
+  margin-left: 30px;
 }
 
 .signupButton {
   border: 1px solid $black;
   background: $white;
   color: $black;
-  min-width: 250px;
   
   @media (min-width: 900px) {
-    margin-top: 0px;
-    background: $white;
-    color: $black;
-    min-width: 100px;
     width: 45%;
   }
 }

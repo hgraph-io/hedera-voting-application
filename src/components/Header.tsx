@@ -32,7 +32,7 @@ export default function Header() {
   ];
 
   const renderLink = ({ label, path }: Route) => (
-    <Link href={path} passHref key={path}>
+    <Link href={path} onClick={!isDesktop ? handleDrawerToggle : ()=>{}} passHref key={path}>
       <div className={router.pathname === path ? styles.activeLink : styles.link}>{label}</div>
     </Link>
   );
@@ -50,12 +50,16 @@ export default function Header() {
                 <div className={styles.links}>
                   {routes.map(renderLink)}
                   <div className={styles.desktopButtonContainer}>
-                    <Button className={styles.signupButton} >
-                      Sign Up
-                    </Button>
-                    <Button className={styles.loginButton}>
-                      Login
-                    </Button>
+                    <Link href="/register">  
+                      <Button className={styles.signupButton} >
+                        Sign Up
+                      </Button>
+                    </Link>
+                    <Link href="/login">  
+                      <Button className={styles.loginButton}>
+                        Login
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               ) : (
@@ -86,12 +90,16 @@ export default function Header() {
                     </div>
                     {routes.map(renderLink)}
                     <div className={styles.mobileButtonContainer}>
-                      <Button className={styles.signupButton} >
-                        Sign Up
-                      </Button>
-                      <Button className={styles.loginButton}>
-                        Login
-                      </Button>
+                      <Link href="/register">  
+                        <Button onClick={handleDrawerToggle} className={styles.signupButton} >
+                          Sign Up
+                        </Button>
+                      </Link>
+                      <Link href="/login">  
+                        <Button onClick={handleDrawerToggle} className={styles.loginButton}>
+                          Login
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </Drawer>
