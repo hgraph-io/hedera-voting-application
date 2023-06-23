@@ -1,24 +1,13 @@
-.registerPageContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem 0;
+// AdminLogin.module.scss
+.loginPageContainer {
+  margin: 50px auto;
+  // Style as needed
 
-  h5 {
-    margin-bottom: 1.5rem;
+  button {
+      margin-top: 30px; 
   }
+}
 
-  form {
-    width: 100%;
-
-    .MuiTextField-root {
-      margin-bottom: 1rem;
-    }
-
-    .MuiButton-root {
-      margin-top: 2rem;
-    }
-  }
+.formContent {
+  margin-top: 30px; 
 }
