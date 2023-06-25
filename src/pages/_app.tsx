@@ -5,6 +5,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
 import '../styles/globals.scss';
+import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs';
+import { SessionContextProvider, Session } from '@supabase/auth-helpers-react';
+
+import { SnackbarProvider } from '../contexts/SnackbarContext';
+import { UserProvider } from '../contexts/UserContext';
 
 type User = {
     loggedIn: boolean
@@ -16,6 +21,7 @@ type User = {
     setAccountId: React.Dispatch<React.SetStateAction<string>>
     setPairingString: React.Dispatch<React.SetStateAction<string>>
     setWalletModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    initWalletConnect:(firstLoad: boolean) => Promise<void>
 } | null | undefined;
 
 const UserContext = createContext<User>(undefined);
@@ -143,27 +149,40 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       setAccountId: () => {},
       setConnected: () => {},
       setPairingString: () => {},
-      setWalletModalOpen: () => {}
+      setWalletModalOpen: () => {},
+      initWalletConnect
     });
 
     initWalletConnect(true);
   }, []);
 
+  // Create a new supabase browser client on every first render.
+  const [supabaseClient] = useState(() => createPagesBrowserClient())
+
   return (
-    <UserContext.Provider value={user}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
-        <Header />
-        <main style={{flex: '1 0 auto'}}>
-          <Component {...pageProps} />
-        </main>
-        <footer style={{flexShrink: 0}}>
-          <Footer />
-        </footer>
-      </div>
-    </ThemeProvider>
-  </UserContext.Provider>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
+      <UserContext.Provider value={user}>
+        <ThemeProvider theme={theme}>
+
+          <SnackbarProvider>
+            <CssBaseline />
+            <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
+              <Header />
+              <main style={{flex: '1 0 auto'}}>
+                <Component {...pageProps} />
+              </main>
+              <footer style={{flexShrink: 0}}>
+                <Footer />
+              </footer>
+            </div>
+          </SnackbarProvider>
+
+        </ThemeProvider>
+      </UserContext.Provider>
+    </SessionContextProvider>
   );
 }
 

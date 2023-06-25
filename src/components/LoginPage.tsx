@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import axios from 'axios';
-import { useRouter } from 'next/router' // next/router instead of next/navigation
-import {useUser} from '../pages/_app'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useRouter } from 'next/router';
+import { useSnackbar } from '../contexts/SnackbarContext';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import styles from './LoginPage.module.scss';
 
-import type { Database } from '@/lib/database.types'
+import type { Database } from '@/lib/database.types';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -14,39 +13,19 @@ const LoginPage: React.FC = () => {
   const [method, setMethod] = useState('Email');
 
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>()
-
-  const handleSignUp = async () => {
-    await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/dashboard`,
-      },
-    })
-    router.refresh()
-  }
+  const supabase = createClientComponentClient<Database>();
+  const { openSnackbar } = useSnackbar();
 
   const handleSignIn = async () => {
-    await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    })
-    router.refresh()
-  }
+    });
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.refresh()
-  }
-
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('/api/login', { email, password });
-      alert(response.data.message);
-      router.push('/dashboard');
-    } catch (error) {
-      alert(error.response?.data?.error || 'Login failed');
+    if (error) {
+      openSnackbar(error.message, 'error');
+    } else {
+      router.push("/dashboard");
     }
   };
 
@@ -88,7 +67,7 @@ const LoginPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button variant="contained" color="primary" fullWidth onClick={handleSignUp}>
+            <Button variant="contained" color="primary" fullWidth onClick={handleSignIn}>
               Login
             </Button>
           </>

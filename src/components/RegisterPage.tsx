@@ -1,69 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import axios from 'axios';
-import { useRouter } from 'next/router' // next/router instead of next/navigation
-import {useUser} from '../pages/_app'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useRouter } from 'next/router';
+import { useUser } from '../pages/_app';
+import { useSnackbar } from '../contexts/SnackbarContext';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import styles from './RegisterPage.module.scss';
 
-import type { Database } from '@/lib/database.types'
+import type { Database } from '@/lib/database.types';
 
 const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [method, setMethod] = useState('Email');
-
-  const supabase = createClientComponentClient<Database>()
+  const { openSnackbar } = useSnackbar();
+  const user = useUser();
+  const supabase = createClientComponentClient<Database>();
+  const router = useRouter();
 
   const handleSignUp = async () => {
-    await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/dashboard`,
-      },
-    })
-    router.refresh()
-  }
-
-  const handleSignIn = async () => {
-    await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    router.refresh()
-  }
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.refresh()
-  }
-
-  const handleLogin = async () => {
+    
+    if (password !== confirmPassword) {
+      return openSnackbar('Passwords do not match', 'error');
+    }
+    
     try {
-      const response = await axios.post('/api/login', { email, password });
-      alert(response.data.message);
-      router.push('/dashboard');
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${location.origin}/dashboard`,
+        },
+      });
+
+      if (error) throw error;
+      openSnackbar("Signup successful!", "success");
+      router.push("/login");
     } catch (error) {
-      alert(error.response?.data?.error || 'Login failed');
+      openSnackbar(error.message, "error");
     }
   };
-
-  const router = useRouter(); // get the router object
 
   const handleRegister = async () => {
-    if (password !== confirmPassword) {
-      return alert('Passwords do not match');
-    }
+    
     try {
-      const response = await axios.post('/api/register', { email, password });
-      alert(response.data.message);
-      router.push('/secure'); // navigate to the secure page
+      const response = await user?.initWalletConnect(false);
+      console.log(response);
     } catch (error) {
-      alert(error.response?.data?.error || 'Registration failed');
+      openSnackbar(error.response?.data?.error || 'Registration failed', 'error');
     }
   };
+
   return (
     <Container className={styles.loginPageContainer} maxWidth="xs">
       <Typography component="h1" variant="h5">
@@ -112,11 +100,11 @@ const RegisterPage: React.FC = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <Button variant="contained" color="primary" fullWidth onClick={handleSignUp}>
-              Login
+              Sign Up
             </Button>
           </>
         ) : (
-          <Button variant="contained" color="primary" fullWidth onClick={handleSignIn}>
+          <Button variant="contained" color="primary" fullWidth onClick={handleRegister}>
             Sign Up with Hashpack
           </Button>
         )}

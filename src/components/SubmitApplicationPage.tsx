@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Button, TextField, Container, Checkbox, FormControlLabel, FormGroup, FormLabel, Typography, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import styles from './SubmitApplicationPage.module.scss';
+import { supabase } from '../supabaseClient';
 
 const SubmitApplicationPage: React.FC = () => {
   const [name, setName] = useState('');
@@ -21,6 +21,7 @@ const SubmitApplicationPage: React.FC = () => {
     setTopics({ ...topics, [event.target.name]: event.target.checked });
   };
 
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -30,17 +31,36 @@ const SubmitApplicationPage: React.FC = () => {
     }
 
     const selectedTopics = Object.keys(topics).filter((topic) => topics[topic]);
-
+    
+   
+    const {data: { user }} = await supabase.auth.getUser()
+    
+    console.log(user)
     const applicationData = {
       name,
       organization,
-      topics: selectedTopics,
+      tags: selectedTopics,
       links: links.split(',').map((link: string) => link.trim()),
       moderator: interestedInModerator,
+      user_id: user?.id,
     };
 
     try {
-      await axios.post('api/application/submission', applicationData);
+
+      
+      const { data, error: erro2 } = await supabase.auth.getSession()
+      console.log(data)
+      
+      const { error } = await supabase
+        .from('applications')
+        .insert(applicationData)
+
+      if (error) {
+        console.error('Error submitting application:', error);
+        alert('An error occurred. Please try again.');
+        return;
+      }
+      
       alert('Application submitted successfully.');
       router.push('/');
     } catch (error) {
@@ -48,7 +68,7 @@ const SubmitApplicationPage: React.FC = () => {
       alert('An error occurred. Please try again.');
     }
   };
-
+  
   const goBack = () => {
     router.back();
   }
