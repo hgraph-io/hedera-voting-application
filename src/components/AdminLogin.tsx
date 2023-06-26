@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import axios from 'axios';
 import { useRouter } from 'next/router' // next/router instead of next/navigation
-import {useUser} from '../pages/_app'
+import {useUser} from '../contexts/UserContext'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import styles from './AdminLogin.module.scss';
 
@@ -11,7 +11,7 @@ import type { Database } from '@/lib/database.types'
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const user = useUser()
   const router = useRouter();
   const supabase = createClientComponentClient<Database>()
 
@@ -23,31 +23,13 @@ const AdminLogin: React.FC = () => {
         emailRedirectTo: `${location.origin}/dashboard`,
       },
     })
-    router.refresh()
   }
 
   const handleSignIn = async () => {
-    await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    router.refresh()
+    const res = await user?.initWalletConnect(false)
+    console.log(res)
+  
   }
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.refresh()
-  }
-
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('/api/login', { email, password });
-      alert(response.data.message);
-      router.push('/dashboard');
-    } catch (error) {
-      alert(error.response?.data?.error || 'Login failed');
-    }
-  };
 
   return (
     <Container className={styles.adminLoginPageContainer} maxWidth="xs">
