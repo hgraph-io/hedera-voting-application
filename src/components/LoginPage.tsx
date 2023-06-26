@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useSnackbar } from '../contexts/SnackbarContext';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { supabase } from '../supabaseClient';
 import styles from './LoginPage.module.scss';
 
 import type { Database } from '@/lib/database.types';
@@ -13,7 +13,6 @@ const LoginPage: React.FC = () => {
   const [method, setMethod] = useState('Email');
 
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
   const { openSnackbar } = useSnackbar();
 
   const handleSignIn = async () => {

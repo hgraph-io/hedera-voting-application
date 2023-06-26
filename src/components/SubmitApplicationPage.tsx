@@ -31,10 +31,9 @@ const SubmitApplicationPage: React.FC = () => {
     }
 
     const selectedTopics = Object.keys(topics).filter((topic) => topics[topic]);
-    
    
     const {data: { user }} = await supabase.auth.getUser()
-    
+
     console.log(user)
     const applicationData = {
       name,
@@ -45,12 +44,7 @@ const SubmitApplicationPage: React.FC = () => {
       user_id: user?.id,
     };
 
-    try {
-
-      
-      const { data, error: erro2 } = await supabase.auth.getSession()
-      console.log(data)
-      
+    try {      
       const { error } = await supabase
         .from('applications')
         .insert(applicationData)

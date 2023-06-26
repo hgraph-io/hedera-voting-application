@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Container, Button } from '@mui/material';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import CardComponent from '../components/Card';
 import styles from './DashboardPage.module.scss';
+import { supabase } from '../supabaseClient'; // import the client from the separate module
 
 const DashboardPage: React.FC = () => {
   const router = useRouter();
+  const [applications, setApplications] = useState([]);
+  
+  useEffect(() => {
+    const fetchApplications = async () => {
+      const { data: {user}} = await supabase.auth.getUser();
+      const { data, error } = await supabase
+        .from('applications')
+        .select('*')
+        .eq('user_id', user.id);
+
+      console.log(data)
+      if (error) console.error('Error loading applications', error);
+      else setApplications(data);
+    };
+
+    fetchApplications();
+  }, []);
 
   return (
     <Container maxWidth="md" className={styles.dashboardContainer}>
@@ -21,11 +38,19 @@ const DashboardPage: React.FC = () => {
           Submit New Application
         </Button>
       </div>
-      <Typography variant="h4">Previous Applications</Typography>
+      {applications.length > 0 && <Typography variant="h4">Previous Applications</Typography>}
       <div className={styles.cardContainer}>
-        <CardComponent title='Card 1' applicationId={3} rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={true} type='approved' />
-        <CardComponent title='Card 1' applicationId={4} rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={true} type='denied' />
-        <CardComponent title='Card 1' applicationId={5} rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={true} type='default' />
+        {applications.map((application, index) => (
+          <CardComponent 
+            key={index}
+            title={application.links[0]}
+            applicationId={application.id} 
+            rating={{voteNum:application.voteNum,currentRating:application.currentRating}} 
+            speaker={application.name}
+            isSelected={application.isSelected}
+            type={application.type}
+          />
+        ))}
       </div>
 
     </Container>
