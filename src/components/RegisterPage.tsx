@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useUser } from '../pages/_app';
+import { useUser } from '../contexts/UserContext';
 import { useSnackbar } from '../contexts/SnackbarContext';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import styles from './RegisterPage.module.scss';
@@ -24,7 +24,7 @@ const RegisterPage: React.FC = () => {
     if (password !== confirmPassword) {
       return openSnackbar('Passwords do not match', 'error');
     }
-    
+
     try {
       const { error } = await supabase.auth.signUp({
         email,

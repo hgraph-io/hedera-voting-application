@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton,Button, useMediaQuery, Theme, Hidden, Drawer } from '@mui/material';
+import React, { useCallback, useState } from 'react';
+import { AppBar, Toolbar, IconButton, Button, useMediaQuery, Theme, Hidden, Drawer, CircularProgress, Backdrop } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';  
 import { useRouter } from 'next/router';
 import styles from './Header.module.scss';
 import logo from '../assets/Hlogo.png';
+import { useUser } from '../contexts/UserContext';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   
   const router = useRouter();
+  const user = useUser();
   const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const handleLogout = useCallback(async () => {
+    if (user?.disconnectHashpack) {
+      user.disconnectHashpack();
+    }
+    router.push('/login');
+  }, [router, user]);
 
   interface Route {
     label: string;
@@ -24,11 +33,8 @@ export default function Header() {
 
   const routes: Route[] = [
     { label: 'Home', path: '/' },
-    // { label: 'Admin Dashboard', path: '/admin-dashboard' },
     { label: 'Dashboard', path: '/dashboard' },
-    // { label: 'Results', path: '/admin-results' },
-    // { label: 'Application', path: '/application' },
-    { label: 'Admin', path: '/admin-login' },
+    { label: 'Admin', path: '/admin-dashboard' },
   ];
 
   const renderLink = ({ label, path }: Route) => (
@@ -41,7 +47,6 @@ export default function Header() {
     <div className={styles.root}>
       <AppBar className={styles.menuBar} position="static">
         <Toolbar style={{position:'relative',width:'100%', display:"flex", justifyContent:'space-between'}}>
-            {/* Add a placeholder for the logo */}
             <Link href="/" passHref>  
               <img className={styles.logo} src={logo?.src} alt="Logo" />
             </Link>
@@ -55,11 +60,17 @@ export default function Header() {
                         Sign Up
                       </Button>
                     </Link>
-                    <Link href="/login">  
-                      <Button variant="contained" className={styles.loginButton}>
-                        Login
+                    {user?.connected ? (
+                      <Button onClick={handleLogout} variant="contained" >
+                        Log Out {user.accountId}
                       </Button>
-                    </Link>
+                    ) : (
+                      <Link href="/login">  
+                        <Button onClick={handleDrawerToggle} variant="contained" >
+                          Login
+                        </Button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -79,7 +90,6 @@ export default function Header() {
                   variant="temporary"
                 >
                   <div className={styles.links}>
-                 
                     <div className={styles.logoContainer}>
                       <Link href="/" passHref>  
                         <img className={styles.logo} src={logo?.src} alt="Logo" />
@@ -95,17 +105,22 @@ export default function Header() {
                           Sign Up
                         </Button>
                       </Link>
-                      <Link href="/login">  
-                        <Button onClick={handleDrawerToggle} variant="contained" >
-                          Login
+                      {user?.connected ? (
+                        <Button variant="contained" className={styles.loginButton} onClick={handleLogout}>
+                          Log Out {user.accountId}
                         </Button>
-                      </Link>
+                      ) : (
+                        <Link href="/login">  
+                          <Button variant="contained" className={styles.loginButton}>
+                            Login
+                          </Button>
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </Drawer>
               </Hidden>
             </div>
-
         </Toolbar>
       </AppBar>
     </div>

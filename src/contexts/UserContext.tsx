@@ -2,16 +2,19 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
 
 type User = {
-    loggedIn: boolean;
-    type: string;
-    token: string;
-    disconnectHashpack: () => void;
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-    setConnected: React.Dispatch<React.SetStateAction<boolean>>;
-    setAccountId: React.Dispatch<React.SetStateAction<string>>;
-    setPairingString: React.Dispatch<React.SetStateAction<string>>;
-    setWalletModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    initWalletConnect:(firstLoad: boolean) => Promise<void>;
+  connected: boolean;
+  type: string;
+  token: string;
+  accountId: string;
+  loading: boolean;
+  hashpackTopicId: string;
+  disconnectHashpack: () => void;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setConnected: React.Dispatch<React.SetStateAction<boolean>>;
+  setAccountId: React.Dispatch<React.SetStateAction<string>>;
+  setPairingString: React.Dispatch<React.SetStateAction<string>>;
+  setHashpackTopicId: React.Dispatch<React.SetStateAction<string>>;
+  initWalletConnect: (firstLoad: boolean) => Promise<boolean>;
 } | null | undefined;
 
 const UserContext = createContext<User>(undefined);
@@ -19,62 +22,88 @@ const UserContext = createContext<User>(undefined);
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User>(null);
-  const hashconnect = new HashConnect();
+  const [accountId, setAccountId] = useState<string>('');
+  const [connected, setConnected] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [hashpackTopicId, setHashpackTopicId] = useState<string | undefined>(undefined);
-  
+  const hashconnect = new HashConnect();
+
   const disconnectHashpack = () => {
     if (hashpackTopicId) {
       hashconnect.disconnect(hashpackTopicId);
-      setUser(prevState => ({...prevState, accountId: '', connected: false}));
+      setAccountId('');
+      setConnected(false);
     }
   };
 
   const initWalletConnect = async (firstLoad: boolean) => {
-      const initData = await hashconnect.init({
-          name: "Voting Application",
-          description: "Open sourced voting application from Hedera",
-          icon: ""
-      }, "testnet", false);
-      
-      setHashpackTopicId(initData.savedPairings[0]?.topic ?? initData.topic);
+    setLoading(true);
+    
+    let appMetadata: HashConnectTypes.AppMetadata = {
+      name: "Hedera Voting Application",
+      description: "Voting Application Created By Hedera",
+      icon: "https://launch.turtlemoon.io/_next/static/media/default-profile-picture.75ccdb8e.png"
+    };
 
-      hashconnect.pairingEvent.on(async (pairingData) => {
-          setUser(prevState => ({...prevState, accountId: pairingData.accountIds[0], connected: true}));
-      });
+    let initData = await hashconnect.init(appMetadata, "testnet", false);
+    let topic = initData.savedPairings[0] ? initData.savedPairings[0].topic : initData.topic;
+    let pairingString = initData.pairingString;
 
-      if (!firstLoad) {
-          hashconnect.findLocalWallets();
+    setHashpackTopicId(topic);
+
+    hashconnect.pairingEvent.on(async (pairingData) => {
+      if (pairingData.accountIds) {
+        setAccountId(pairingData.accountIds[0]);
+        setConnected(true);
       }
-
-      const savedPairingsId = initData.savedPairings[0]?.accountIds[0];
-      const hashconnectDataId = JSON.parse(localStorage.getItem('hashconnectData') ?? '{}')?.pairingData?.[0]?.accountIds[0];
-
-      setUser(prevState => ({
-          ...prevState,
-          accountId: savedPairingsId ?? hashconnectDataId,
-          connected: true,
-          pairingString: initData.pairingString
-      }));
-  };
-
-
-  useEffect(() => {
-    setUser({
-      loggedIn: false,
-      type: 'user',
-      token: '',
-      disconnectHashpack,
-      setLoading: () => {},
-      setAccountId: () => {},
-      setConnected: () => {},
-      setPairingString: () => {},
-      setWalletModalOpen: () => {},
-      initWalletConnect
     });
 
+    if (!firstLoad) {
+      hashconnect.foundExtensionEvent.once((appMetadata) => {
+        hashconnect.connectToLocalWallet(pairingString, appMetadata);
+      });
+
+      hashconnect.findLocalWallets();
+    }
+    
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    const savedUser = JSON.parse(localStorage.getItem("voting_user") || "{}");
+
+    if (savedUser && savedUser.accountId) {
+      setAccountId(savedUser.accountId);
+      setConnected(savedUser.connected);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "voting_user",
+      JSON.stringify({ accountId, connected })
+    );
+  }, [accountId, connected]);
+
+  useEffect(() => {
     initWalletConnect(true);
   }, []);
+
+  const user = {
+    connected,
+    type: 'user',
+    accountId,
+    hashpackTopicId,
+    loading,
+    disconnectHashpack,
+    setLoading,
+    setConnected,
+    setAccountId,
+    setPairingString: () => {},
+    setHashpackTopicId,
+    initWalletConnect,
+    token: '',
+  };
 
   return (
     <UserContext.Provider value={user}>
