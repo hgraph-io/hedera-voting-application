@@ -1,15 +1,45 @@
-import React from 'react';
-import { Typography, Container, Button, Link } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Typography, Container, Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import CardComponent from '../components/Card';
 import styles from './AdminDashboard.module.scss';
+import { supabase } from '../supabaseClient'; 
+import { useUser } from '../contexts/UserContext';
+import LoadingScreen from '../components/LoadingScreen'; 
 
 const AdminDashboardPage: React.FC = () => {
   const router = useRouter();
+  const user = useUser(); 
+
+  const [applications, setApplications] = useState([]);
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      // Set loading to true
+      user?.setLoading(true);
+      const { data, error } = await supabase
+        .from('applications')
+        .select('*');
+      console.log('applications', data)
+
+      if (error) console.error('Error loading applications', error);
+      else {
+        const apps = data.map(application => ({
+          ...application, 
+          type: application.votes.includes(user?.accountId) ? 'vote' :  'view'
+        }));
+        setApplications(apps);
+      }
+      // Set loading to false
+      user?.setLoading(false);
+    };
+    fetchApplications();
+  }, []);
 
   const handleViewAll = () => {
     router.push('/admin-results');
   }
+
 
   return (
     <Container maxWidth="md" className={styles.adminDashboardContainer}>
@@ -32,10 +62,18 @@ const AdminDashboardPage: React.FC = () => {
       </Typography>
       
       <div>
-        <CardComponent title='Application 1' applicationId={1} rating={{voteNum:1,currentRating:5}} speaker='John Doe' isSelected={true} type='view' />
-        <CardComponent title='Application 2' applicationId={2} rating={{voteNum:1,currentRating:3}} speaker='Jane Doe' isSelected={false} type='vote' />
-        <CardComponent title='Application 3' applicationId={3} rating={{voteNum:1,currentRating:1}} speaker='John Doe' isSelected={true} type='view' />
-        <CardComponent title='Application 4' applicationId={4} rating={{voteNum:1,currentRating:5}} speaker='Jane Doe' isSelected={false} type='vote' />
+        {applications.map((app) => (
+          <CardComponent 
+            key={app.id}
+            id={app.id}
+            tags={app.tags} 
+            applicationId={app.applicationId} 
+            rating={app.rating}
+            speaker={app.name} 
+            isSelected={app.isSelected} 
+            type={app.type}
+          />
+        ))}
       </div>
     </Container>
   );

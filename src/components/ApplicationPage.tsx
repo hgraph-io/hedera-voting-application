@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ApplicationPage.module.scss';
-import { Typography, Button, Container, Table, TableBody, TableCell, TableContainer, TableRow, Paper, TableHead, Grid } from '@mui/material';
+import { Typography, Button, Container, Table, TableBody, TableCell, TableContainer, TableRow, Paper, TableHead, Grid, Chip } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { useUser } from '../contexts/UserContext'; // import the useUser hook
+import VoteCard from './VoteCard'; // import the VoteCard component
 
 interface ApplicationData {
   name: string;
@@ -22,27 +24,45 @@ interface Props {
   applicationData: ApplicationData[];
 }
 
-const ApplicationPage: React.FC<Props> = ({applicationData}) => {
+const ApplicationPage: React.FC<Props> = ({ applicationData }) => {
+  console.log(applicationData)
   const [votes, setVotes] = useState<VoteData[]>([]);
   const [userVote, setUserVote] = useState<number>(4);
-  const userId = 'userId'; // replace with actual logged in user id
+  const [userVoted, setUserVoted] = useState<boolean>(false);
+
+  const user = useUser(); // get the user data
+  const { accountId, type } = user || {};
+  const applicationId = 'applicationId'; // replace with actual application id
 
   useEffect(() => {
     const fetchVotes = async () => {
-      const response = {data:[]}//await axios.get('https://hgraph.io/backed'); // replace with actual API
+      const response = { data: [] }; //await axios.get('https://hgraph.io/backed'); // replace with actual API
       const votesData: VoteData[] = response.data; // adjust according to actual response structure
       setVotes(votesData);
-      const userVoteData = votesData.find(vote => vote.accountId === userId);
+      const userVoteData = votesData.find((vote) => vote.accountId === accountId);
       setUserVote(userVoteData ? userVoteData.vote : 1);
-    }
+      setUserVoted(userVoteData ? true : false);
+    };
     fetchVotes();
-  }, [userId]);
+  }, [accountId]);
+
+  const handleVote = async (vote: number) => {
+    setUserVote(vote);
+    try {
+      await axios.post('/api/voting-submission', { accountId, vote, applicationId });
+    } catch (error) {
+      console.error('Error submitting vote', error);
+    }
+  };
 
   const router = useRouter();
 
   const goBack = () => {
     router.back();
-  }
+  };
+
+  // determine whether user can vote or not
+  const canVote = type === 'admin' && !votes.find((vote) => vote.accountId === accountId);
 
   return (
     <Grid container spacing={3} className={styles.adminDashboard}>
@@ -61,12 +81,10 @@ const ApplicationPage: React.FC<Props> = ({applicationData}) => {
                 <Typography variant="h6">{data.name}</Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body1">Related Topics:</Typography>
-                <ul>
-                  {data.topics.map((topic, topicIndex) => (
-                    <li key={topicIndex}>{topic}</li>
-                  ))}
-                </ul>
+                <Typography variant="body1">Relevant Topics:</Typography>
+                {data.topics.map((topic, topicIndex) => (
+                  <Chip key={topicIndex} label={topic} color="primary" style={{backgroundColor: "black", color: "white", marginTop: '5px'}}/>
+                ))}
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1">Links:</Typography>
@@ -76,15 +94,32 @@ const ApplicationPage: React.FC<Props> = ({applicationData}) => {
                   ))}
                 </ul>
               </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h6">Your Vote: </Typography> 
-                <div className={styles.rating}>
-                  {[...Array(5)].map((_, i) => (
-                    <StarIcon key={i} className={styles.star} style={{ color: i < userVote ? 'gold' : 'grey' }} />
-                  ))}
-                </div>
-                <Typography variant="body1">{userVote}/5</Typography>
-              </Grid>
+
+              {!userVoted ? (
+                <Grid item xs={12}>
+                  <VoteCard
+                    id={data.id}
+                    speaker={data.name}
+                    tags={data.topics.join(', ')}
+                    isSelected={votes.find((vote) => vote.accountId === accountId) ? true : false}
+                    rating={{
+                      voteNum: votes.length,
+                      currentRating: votes.reduce((a, v) => a + v.vote, 0) / votes.length,
+                    }}
+                  />
+                </Grid>
+              ): 
+              (
+                <Grid item xs={12}>
+                  <Typography variant="h6">Your Vote: </Typography> 
+                  <div className={styles.rating}>
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} className={styles.star} style={{ color: i < userVote ? 'gold' : 'grey' }} />
+                    ))}
+                  </div>
+                  <Typography variant="body1">{userVote}/5</Typography>
+                </Grid>
+              )}
               <Grid item xs={12}>
                 <Typography variant="h6">Total Votes:</Typography>
                 <div className={styles.rating}>

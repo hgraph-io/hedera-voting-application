@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Container, Button } from '@mui/material';
+import { Typography, Container, Button, CircularProgress } from '@mui/material';
 import { useRouter } from 'next/router';
 import CardComponent from '../components/Card';
 import styles from './DashboardPage.module.scss';
-import { supabase } from '../supabaseClient'; // import the client from the separate module
+import { supabase } from '../supabaseClient'; 
+import { useUser } from '../contexts/UserContext';
 
 const DashboardPage: React.FC = () => {
   const router = useRouter();
   const [applications, setApplications] = useState([]);
+  const user = useUser()
   
   useEffect(() => {
     const fetchApplications = async () => {
-      const { data: {user}} = await supabase.auth.getUser();
+      user?.setLoading(true); // start loading
+      const { data: {user: sbUser}} = await supabase.auth.getUser();
       const { data, error } = await supabase
         .from('applications')
         .select('*')
-        .eq('user_id', user.id);
+        .eq('user_id', sbUser?.id);
 
-      console.log(data)
       if (error) console.error('Error loading applications', error);
       else setApplications(data);
+      user?.setLoading(false); // stop loading
     };
 
     fetchApplications();
@@ -38,19 +41,24 @@ const DashboardPage: React.FC = () => {
           Submit New Application
         </Button>
       </div>
-      {applications.length > 0 && <Typography variant="h4">Previous Applications</Typography>}
       <div className={styles.cardContainer}>
-        {applications.map((application, index) => (
-          <CardComponent 
-            key={index}
-            title={application.links[0]}
-            applicationId={application.id} 
-            rating={{voteNum:application.voteNum,currentRating:application.currentRating}} 
-            speaker={application.name}
-            isSelected={application.isSelected}
-            type={application.type}
-          />
-        ))}
+          {applications.length > 0 && <Typography variant="h4">Previous Applications</Typography>}
+          <div className={styles.cardContainer}>
+            {applications.map((application, index) => (
+              <CardComponent 
+                key={index}
+                tags={application.tags}
+                applicationId={application.id} 
+                rating={{
+                  voteNum:application.voteNum,
+                  currentRating:application.currentRating
+                }} 
+                speaker={application.name}
+                isSelected={application.isSelected}
+                type={application.type}
+              />
+            ))}
+          </div>
       </div>
 
     </Container>

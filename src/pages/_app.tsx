@@ -1,6 +1,6 @@
 import React, {useState, createContext, useEffect, useContext} from 'react';
 import { AppProps } from 'next/app';
-import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
+import { ThemeProvider, CssBaseline, createTheme, CircularProgress, Backdrop } from '@mui/material';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
@@ -9,7 +9,7 @@ import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react';
 
 import { SnackbarProvider } from '../contexts/SnackbarContext';
-import { UserProvider } from '../contexts/UserContext';
+import { UserProvider, useUser } from '../contexts/UserContext';
 
 const theme = createTheme({
   palette: {
@@ -80,10 +80,17 @@ const theme = createTheme({
     },
   },
 });
+const LoadingBackdrop = () => {
+  const user = useUser();
+  return (
+    <Backdrop open={user.loading} style={{zIndex: 9999, color: '#fff'}}>
+      <CircularProgress color="inherit" />
+    </Backdrop>
+  );
+};
 
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
-  
   // Create a new supabase browser client on every first render.
   const [supabaseClient] = useState(() => createPagesBrowserClient())
 
@@ -100,13 +107,13 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
               <Header />
               <main style={{flex: '1 0 auto'}}>
                 <Component {...pageProps} />
+                <LoadingBackdrop />
               </main>
               <footer style={{flexShrink: 0}}>
                 <Footer />
               </footer>
             </div>
           </SnackbarProvider>
-
         </ThemeProvider>
       </UserProvider>
     </SessionContextProvider>

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const getVotingData = async (clientAccountId?:string) => {
+const getVotingData = async (clientAccountId?:string) => {
     const topicId =  process.env.VOTE_TOPIC_ID;
     const votingEndpoint = process.env.HGRAPH_ENDPOINT_BETA;
     const votingHeaders = {
@@ -59,10 +59,12 @@ export const getVotingData = async (clientAccountId?:string) => {
 }
 
 export default async function handler(req, res) {
-    // Get all auction NFTs that are in stock
-    const votingNfts = await getVotingData()
-
-    console.log("votingNfts",votingNfts)
+    // Extract the clientAccountId from the request query
+    const clientAccountId = req.query.id;
+    console.log(req.body)
+    // Get all auction NFTs that are in stock, filtered by clientAccountId if it exists
+    const votingNfts = await getVotingData(clientAccountId)
+    console.log(votingNfts)
     let parsedMessageObjs = votingNfts.initialMessageObjArray
 
     let deletedBallots = []

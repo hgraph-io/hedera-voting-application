@@ -7,13 +7,13 @@ import { useRouter } from 'next/router';
 const AdminResultsPage: React.FC = () => {
   // TODO: fetch the actual data from an API
   const approvedApplications = [
-    { title: 'Application 1', applicationId: 1, rating: { voteNum: 1, currentRating: 5 }, speaker: 'John Doe', isSelected: true, type: 'approved' },
-    { title: 'Application 2', applicationId: 2, rating: { voteNum: 1, currentRating: 5 }, speaker: 'Jane Doe', isSelected: true, type: 'approved' },
+    { title: 'Application 1', applicationId: 1, rating: { voteNum: 1, currentRating: 5 }, voted:true, speaker: 'John Doe', isSelected: true, type: 'approved' },
+    { title: 'Application 2', applicationId: 2, rating: { voteNum: 1, currentRating: 5 }, voted:false, speaker: 'Jane Doe', isSelected: true, type: 'approved' },
   ];
   
   const openApplications = [
-    { title: 'Application 3', applicationId: 3, rating: { voteNum: 1, currentRating: 4 }, speaker: 'John Doe', isSelected: false, type: 'default' },
-    { title: 'Application 4', applicationId: 4, rating: { voteNum: 1, currentRating: 4 }, speaker: 'Jane Doe', isSelected: false, type: 'default' },
+    { title: 'Application 3', applicationId: 3, rating: { voteNum: 1, currentRating: 4 }, voted:true, speaker: 'John Doe', isSelected: false, type: 'default' },
+    { title: 'Application 4', applicationId: 4, rating: { voteNum: 1, currentRating: 4 }, voted:false, speaker: 'Jane Doe', isSelected: false, type: 'default' },
   ];
 
   const router = useRouter();

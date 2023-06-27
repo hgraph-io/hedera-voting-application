@@ -12,6 +12,7 @@ type User = {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setConnected: React.Dispatch<React.SetStateAction<boolean>>;
   setAccountId: React.Dispatch<React.SetStateAction<string>>;
+  setType: React.Dispatch<React.SetStateAction<string>>;
   setPairingString: React.Dispatch<React.SetStateAction<string>>;
   setHashpackTopicId: React.Dispatch<React.SetStateAction<string>>;
   initWalletConnect: (firstLoad: boolean) => Promise<boolean>;
@@ -23,6 +24,7 @@ export const useUser = () => useContext(UserContext);
 
 export const UserProvider: React.FC = ({ children }) => {
   const [accountId, setAccountId] = useState<string>('');
+  const [type, setType] = useState<string>('user');
   const [connected, setConnected] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [hashpackTopicId, setHashpackTopicId] = useState<string | undefined>(undefined);
@@ -55,6 +57,7 @@ export const UserProvider: React.FC = ({ children }) => {
       if (pairingData.accountIds) {
         setAccountId(pairingData.accountIds[0]);
         setConnected(true);
+        setType('admin')
       }
     });
 
@@ -91,7 +94,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const user = {
     connected,
-    type: 'user',
+    type,
     accountId,
     hashpackTopicId,
     loading,
@@ -102,7 +105,6 @@ export const UserProvider: React.FC = ({ children }) => {
     setPairingString: () => {},
     setHashpackTopicId,
     initWalletConnect,
-    token: '',
   };
 
   return (
