@@ -38,7 +38,7 @@ const SubmitApplicationPage: React.FC = () => {
     const applicationData = {
       name,
       organization,
-      tags: selectedTopics,
+      topics: selectedTopics,
       links: links.split(',').map((link: string) => link.trim()),
       moderator: interestedInModerator,
       user_id: user?.id,
@@ -84,7 +84,7 @@ const SubmitApplicationPage: React.FC = () => {
             <TextField label="Links" value={links} onChange={(e) => setLinks(e.target.value)} fullWidth required helperText="Enter comma-separated links." />
           </Grid>
           <Grid item xs={12}>
-            <FormLabel component="legend">Relevant Topics/Tags</FormLabel>
+            <FormLabel component="legend">Relevant Topics</FormLabel>
             <FormGroup>
               <FormControlLabel control={<Checkbox checked={topics.HCS} onChange={handleTopicChange} name="HCS" />} label="HCS" />
               <FormControlLabel control={<Checkbox checked={topics['Smart Contracts']} onChange={handleTopicChange} name="Smart Contracts" />} label="Smart Contracts" />

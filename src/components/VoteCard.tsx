@@ -43,8 +43,8 @@ export const VoteCard: React.FC<VoteCardProps> = ({ id, speaker, tags, rating })
   const handleVoteSubmit = async () => {
     const voteData = {
       accountId,
-      vote: userVote,
-      applicationId: id
+      choice: userVote,
+      ballotId: 'application-'+id
     };
 
     try {

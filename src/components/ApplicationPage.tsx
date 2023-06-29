@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ApplicationPage.module.scss';
-import { Typography, Button, Container, Table, TableBody, TableCell, TableContainer, TableRow, Paper, TableHead, Grid, Chip } from '@mui/material';
+import { Typography, Button, Container, Table, TableBody, TableCell, TableContainer, TableRow, Paper, TableHead, Grid, Chip, Link } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -15,6 +15,13 @@ interface ApplicationData {
   moderator: boolean;
 }
 
+interface Votes {
+  accountId: string;
+  vote: number;
+  ballotId: string;
+  choice: string;
+}
+
 interface VoteData {
   accountId: string;
   vote: number;
@@ -22,37 +29,47 @@ interface VoteData {
 
 interface Props {
   applicationData: ApplicationData[];
+  votes: Votes[];
 }
 
-const ApplicationPage: React.FC<Props> = ({ applicationData }) => {
-  console.log(applicationData)
+const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData }) => {
+    console.log('votesData', votesData)
   const [votes, setVotes] = useState<VoteData[]>([]);
   const [userVote, setUserVote] = useState<number>(4);
   const [userVoted, setUserVoted] = useState<boolean>(false);
+  const [voteAverage, setVoteAverage] = useState<number>(1);
 
   const user = useUser(); // get the user data
-  const { accountId, type } = user || {};
+  const { accountId, type, setLoading } = user || {};
   const applicationId = 'applicationId'; // replace with actual application id
 
   useEffect(() => {
-    const fetchVotes = async () => {
-      const response = { data: [] }; //await axios.get('https://hgraph.io/backed'); // replace with actual API
-      const votesData: VoteData[] = response.data; // adjust according to actual response structure
-      setVotes(votesData);
-      const userVoteData = votesData.find((vote) => vote.accountId === accountId);
-      setUserVote(userVoteData ? userVoteData.vote : 1);
-      setUserVoted(userVoteData ? true : false);
-    };
-    fetchVotes();
-  }, [accountId]);
+    setVotes(votesData);
+    const userVoteData = votesData.find((vote) => vote.accountId === accountId);
+    console.log('userVoteData',userVoteData)
+    setUserVote(userVoteData ? userVoteData.choice : 1);
+    setUserVoted(userVoteData ? true : false);
+  
+    // Calculate the average
+    let totalVotes = 0;
+    let totalVotesCount = votesData.length;
+    votesData.forEach((vote) => {
+      totalVotes += vote.choice;
+    });
+    
+    let averageVote = totalVotesCount ? totalVotes / totalVotesCount : 0;
+    setVoteAverage(averageVote);
+  }, [accountId, votesData]);
 
   const handleVote = async (vote: number) => {
     setUserVote(vote);
+    setLoading(true);
     try {
-      await axios.post('/api/voting-submission', { accountId, vote, applicationId });
+      await axios.post('/api/voting-submission', { accountId, choice: vote, ballotId: applicationId });
     } catch (error) {
       console.error('Error submitting vote', error);
     }
+    setLoading(false);
   };
 
   const router = useRouter();
@@ -72,7 +89,7 @@ const ApplicationPage: React.FC<Props> = ({ applicationData }) => {
       <Grid item xs={12}>
         <Typography variant="h2">Application</Typography>
       </Grid>
-      {applicationData.map((data, index) => (
+      {applicationData && applicationData.map((data, index) => (
         <Grid item xs={12} key={index}>
           <Container className={styles.applicationContainer}>
             <Grid container spacing={2}>
@@ -82,17 +99,21 @@ const ApplicationPage: React.FC<Props> = ({ applicationData }) => {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1">Relevant Topics:</Typography>
-                {data.topics.map((topic, topicIndex) => (
-                  <Chip key={topicIndex} label={topic} color="primary" style={{backgroundColor: "black", color: "white", marginTop: '5px'}}/>
-                ))}
+                <div className={styles.topicContainer}>
+                  {data.topics.map((topic, topicIndex) => (
+                    <Chip key={topicIndex} label={topic} color="primary" style={{backgroundColor: "black", color: "white", marginTop: '5px'}}/>
+                  ))}
+                </div>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1">Links:</Typography>
-                <ul>
+                <div className={styles.linksContainer}>
                   {data.links.map((link, linkIndex) => (
-                    <li key={linkIndex}><a href={link}>{link}</a></li>
+                    <Link key={linkIndex} href={link} variant="body2" target="_blank" rel="noopener noreferrer">
+                      {link}
+                    </Link>
                   ))}
-                </ul>
+                </div>
               </Grid>
 
               {!userVoted ? (
@@ -124,10 +145,10 @@ const ApplicationPage: React.FC<Props> = ({ applicationData }) => {
                 <Typography variant="h6">Total Votes:</Typography>
                 <div className={styles.rating}>
                   {[...Array(5)].map((_, i) => (
-                    <StarIcon key={i} className={styles.star} style={{ color: i < 4 ? 'gold' : 'grey' }} />
+                    <StarIcon key={i} className={styles.star} style={{ color: i < voteAverage ? 'gold' : 'grey' }} />
                   ))}
                 </div>
-                <Typography variant="body2">4.21 out of 5</Typography>
+                <Typography variant="body2">{voteAverage} / 5</Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1">Below you can see all of the current votes on this application:</Typography>
@@ -143,7 +164,7 @@ const ApplicationPage: React.FC<Props> = ({ applicationData }) => {
                       {votes.map((vote) => (
                         <TableRow key={vote.accountId}>
                           <TableCell>{vote.accountId}</TableCell>
-                          <TableCell>{vote.vote}</TableCell>
+                          <TableCell>{vote.choice}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

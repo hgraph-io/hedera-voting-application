@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { AppBar, Toolbar, IconButton, Button, useMediaQuery, Theme, Hidden, Drawer, CircularProgress, Backdrop } from '@mui/material';
+import React, { useState, useCallback } from 'react';
+import { AppBar, Toolbar, IconButton, Button, useMediaQuery, Theme, Hidden, Drawer } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';  
@@ -16,13 +16,14 @@ export default function Header() {
   const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    !isDesktop && setMobileOpen(!mobileOpen);
   };
 
-  const handleLogout = useCallback(async () => {
+  const handleLogout = useCallback(() => {
     if (user?.disconnectHashpack) {
       user.disconnectHashpack();
     }
+    user?.setConnected(false);
     router.push('/login');
   }, [router, user]);
 
@@ -55,21 +56,23 @@ export default function Header() {
                 <div className={styles.links}>
                   {routes.map(renderLink)}
                   <div className={styles.desktopButtonContainer}>
-                    <Link href="/register">  
-                      <Button variant="outlined" className={styles.signupButton} >
-                        Sign Up
-                      </Button>
-                    </Link>
-                    {user?.connected ? (
+                    {!user?.connected ? (
+                      <>
+                        <Link href="/register">  
+                          <Button variant="outlined" className={styles.signupButton} >
+                            Sign Up
+                          </Button>
+                        </Link>
+                        <Link href="/login">  
+                          <Button variant="contained" >
+                            Login
+                          </Button>
+                        </Link>
+                      </>
+                    ) : (
                       <Button onClick={handleLogout} variant="contained" >
                         Log Out {user.accountId}
                       </Button>
-                    ) : (
-                      <Link href="/login">  
-                        <Button onClick={handleDrawerToggle} variant="contained" >
-                          Login
-                        </Button>
-                      </Link>
                     )}
                   </div>
                 </div>
@@ -100,21 +103,23 @@ export default function Header() {
                     </div>
                     {routes.map(renderLink)}
                     <div className={styles.mobileButtonContainer}>
-                      <Link href="/register">  
-                        <Button onClick={handleDrawerToggle} variant="outlined">
-                          Sign Up
-                        </Button>
-                      </Link>
-                      {user?.connected ? (
-                        <Button variant="contained" className={styles.loginButton} onClick={handleLogout}>
-                          Log Out {user.accountId}
-                        </Button>
+                      {!user?.connected ? (
+                        <>
+                          <Link href="/register">  
+                            <Button onClick={handleDrawerToggle} variant="outlined">
+                              Sign Up
+                            </Button>
+                          </Link>
+                          <Link href="/login">  
+                            <Button variant="contained" className={styles.loginButton}>
+                              Login
+                            </Button>
+                          </Link>
+                        </>
                       ) : (
-                        <Link href="/login">  
-                          <Button variant="contained" className={styles.loginButton}>
-                            Login
-                          </Button>
-                        </Link>
+                        <Button variant="contained" className={styles.loginButton} onClick={handleLogout}>
+                          Log Out
+                        </Button>
                       )}
                     </div>
                   </div>

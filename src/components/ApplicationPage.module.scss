@@ -11,6 +11,11 @@
   }
 }
 
+.topicContainer {
+  display: flex; 
+  flex-direction: row;
+}
+
 .applicationContainer {
   width: 100%;
   display: flex;
