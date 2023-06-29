@@ -159,23 +159,17 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
                     emptyIcon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
                   />
                 </div>
-                <Typography variant="body2">{voteAverage} / 5</Typography>
+                <Typography variant="body2">{voteAverage} out of 5</Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1">Below you can see all of the current votes on this application:</Typography>
                 <TableContainer component={Paper} className={styles.voteTable}>
                   <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Account ID</TableCell>
-                        <TableCell>Voted (1-5)</TableCell>
-                      </TableRow>
-                    </TableHead>
                     <TableBody>
                       {votes.map((vote) => (
                         <TableRow key={vote.accountId}>
-                          <TableCell>{vote.accountId}</TableCell>
-                          <TableCell>{vote.choice}</TableCell>
+                          <TableCell>Account: {vote.accountId}</TableCell>
+                          <TableCell>Vote: {vote.choice}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

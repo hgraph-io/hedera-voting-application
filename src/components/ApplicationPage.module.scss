@@ -1,3 +1,5 @@
+@import 'variables';
+
 .adminDashboard {
   display: flex;
   flex-direction: column;
@@ -69,6 +71,8 @@
   .rating {
     display: flex;
     align-items: center;
+    margin: 10px 0;
+    position: relative;
 
     .star {
       color: gold;
@@ -78,6 +82,9 @@
 }
 
 .voteTable {
+  background: $white;
   width: 100%;
+  border-radius: 10px;
+  max-width: 600px;
   margin-top: 20px;
 }
