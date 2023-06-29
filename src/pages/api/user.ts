@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 import cookie from 'cookie';
 
-import dbConnect from '../../helpers/dbConnect';
+import dbConnect from '../../helpers/withAuth';
 import User from '../../models/User';
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>();
