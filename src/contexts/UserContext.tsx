@@ -31,11 +31,12 @@ export const UserProvider: React.FC = ({ children }) => {
   const [hashpackTopicId, setHashpackTopicId] = useState<string | undefined>(undefined);
   const hashconnect = new HashConnect();
 
-  const disconnectHashpack = () => {
+  const disconnectHashpack = async () => {
     if (hashpackTopicId) {
-      hashconnect.disconnect(hashpackTopicId);
+      await hashconnect.disconnect(hashpackTopicId);
       setAccountId('');
       setConnected(false);
+      setType('user');
     }
   };
 

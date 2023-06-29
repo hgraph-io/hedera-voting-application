@@ -5,7 +5,6 @@ import CardComponent from '../components/Card';
 import styles from './AdminDashboard.module.scss';
 import { supabase } from '../supabaseClient'; 
 import { useUser } from '../contexts/UserContext';
-import LoadingScreen from '../components/LoadingScreen'; 
 
 const AdminDashboardPage: React.FC = () => {
   const router = useRouter();
@@ -21,6 +20,7 @@ const AdminDashboardPage: React.FC = () => {
         .from('applications')
         .select('*');
       console.log('applications', data)
+      console.log('user', user)
 
       if (error) console.error('Error loading applications', error);
       else {

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Button, useMediaQuery, Theme, Hidden, Drawer } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -7,25 +7,47 @@ import { useRouter } from 'next/router';
 import styles from './Header.module.scss';
 import logo from '../assets/Hlogo.png';
 import { useUser } from '../contexts/UserContext';
+import { supabase } from '../supabaseClient';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [sessionActive, setSessionActive] = useState(false);
   
   const router = useRouter();
   const user = useUser();
   const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
-  const handleDrawerToggle = () => {
+    const handleDrawerToggle = () => {
     !isDesktop && setMobileOpen(!mobileOpen);
   };
 
-  const handleLogout = useCallback(() => {
-    if (user?.disconnectHashpack) {
-      user.disconnectHashpack();
+
+  const handleLogout = useCallback(async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error logging out:", error.message);
+    } else {
+      setSessionActive(false)
+      user?.disconnectHashpack();
+      user?.setConnected(false);
+      user?.setType('user');
+      user?.setAccountId('');
+      router.push('/login');
     }
-    user?.setConnected(false);
-    router.push('/login');
   }, [router, user]);
+
+  // Checking for a valid user session
+  useEffect(() => {
+    const checkSession = async () => {
+      const session = await supabase.auth.getSession();
+      if (!session && user?.connected) {
+        handleLogout();
+      } else {
+        setSessionActive(true)
+      }
+    }
+    checkSession();
+  }, [handleLogout, user]);
 
   interface Route {
     label: string;

@@ -1,5 +1,3 @@
-// helpers/withAdmin.tsx
-
 import { useRouter } from 'next/router';
 import { useUser } from '../contexts/UserContext';
 import { useEffect } from 'react';
@@ -17,11 +15,14 @@ const withAdmin = (WrappedComponent) => {
           .from('admin_accounts')
           .select('accountId')
           .eq('accountId', accountId);
-        console.log('adminAccounts',adminAccounts)
+          console.log('user',user)
+          console.log('adminAccounts',adminAccounts)
+
         if (error) {
           console.error('Error: ', error);
         } else if (adminAccounts && adminAccounts.length > 0) {
-          console.log('is admin');
+          if (user?.type !=='admin') user?.setType('admin')
+          console.log('is admin', user);
         } else {
           Router.replace('/admin-login');
         }
@@ -29,8 +30,10 @@ const withAdmin = (WrappedComponent) => {
 
       if (user && user.accountId) {
         checkAdminStatus(user.accountId)
+      } else {
+        Router.replace('/admin-login');
       }
-    }, [user]);
+    }, []);
 
     return (
       <div>
