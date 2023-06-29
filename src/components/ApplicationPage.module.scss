@@ -1,0 +1,90 @@
+@import 'variables';
+
+.adminDashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 1024px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 30px; 
+}
+
+.backButton {
+  position: relative;
+  margin: 20px 0 10px;
+  min-width: 100px;
+}
+
+.titleRow {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 300px;
+}
+
+.topicContainer {
+  position: relative;
+  margin-top: 10px; 
+  width: 100px; 
+  display: flex; 
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.applicationContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  border-radius: 10px;
+
+  .title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  .topics, .links {
+    margin-bottom: 10px;
+
+    li {
+      margin-left: 20px;
+    }
+  }
+
+  .moderator {
+    font-size: 0.9em;
+    color: darkgray;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    position: relative;
+
+    .star {
+      color: gold;
+      margin-right: 5px;
+    }
+  }
+}
+
+.voteTable {
+  background: $white;
+  width: 100%;
+  border-radius: 10px;
+  max-width: 600px;
+  margin-top: 20px;
+}

@@ -1,0 +1,20 @@
+// VotingResultsPage.module.scss
+
+.resultsContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  
+  h3, h6 {
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 20px;
+  }
+  div {
+    margin: 5px 0;
+  }
+}

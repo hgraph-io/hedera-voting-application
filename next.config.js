@@ -1,6 +1,11 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
+const withFonts = require('next-fonts');
+const withTM = require('next-transpile-modules')(['hashconnect']);
 
-module.exports = nextConfig
+module.exports = withFonts(
+  withTM({
+    reactStrictMode: true,
+    webpack(config, options) {
+      return config;
+    }
+  })
+);
