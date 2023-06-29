@@ -6,10 +6,17 @@ const handler: NextApiHandler = async (req, res) => {
 
   if (code) {
     const supabase = createPagesServerClient({ req, res })
-    await supabase.auth.exchangeCodeForSession(String(code))
-  }
+    const { error } = await supabase.auth.exchangeCodeForSession(String(code))
 
-  res.redirect('/')
+    if (error) {
+      console.log('Error in exchangeCodeForSession:', error.message);
+      res.redirect('/error');
+    } else {
+      res.redirect('/dashboard')
+    }
+  } else {
+    res.redirect('/')
+  }
 }
 
 export default handler

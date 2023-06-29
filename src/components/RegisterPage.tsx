@@ -30,7 +30,7 @@ const RegisterPage: React.FC = () => {
         email,
         password,
         options: {
-          emailRedirectTo: `${location.origin}/dashboard`,
+          emailRedirectTo: `${location.origin}/login`,
         },
       });
 

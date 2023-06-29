@@ -156,7 +156,7 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
                     name="user-rating"
                     value={voteAverage}
                     icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-                    emptyIcon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+                    emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
                   />
                 </div>
                 <Typography variant="body2">{voteAverage} out of 5</Typography>

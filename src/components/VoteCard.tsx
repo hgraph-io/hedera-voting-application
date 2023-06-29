@@ -31,7 +31,7 @@ export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMain
         value={rating.currentRating}
         readOnly
         icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-        emptyIcon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+        emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
       />
     </div>
   );
@@ -100,7 +100,7 @@ export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMain
             value={rating.currentRating}
             onChange={handleVoteChange}
             icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-            emptyIcon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+            emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
           />
         </div>
 

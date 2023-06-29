@@ -86,7 +86,7 @@ export default function Header() {
                           </Button>
                         </Link>
                         <Link href="/login">  
-                          <Button variant="contained" >
+                          <Button variant="contained" className={styles.loginButton}>
                             Login
                           </Button>
                         </Link>
