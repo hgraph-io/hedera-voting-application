@@ -19,23 +19,14 @@
     "@supabase/auth-ui-react": "^0.4.2",
     "@supabase/auth-ui-shared": "^0.1.6",
     "@supabase/supabase-js": "^2.26.0",
-    "@types/bcryptjs": "^2.4.2",
-    "@types/jsonwebtoken": "^9.0.2",
     "@types/react-dom": "18.2.4",
-    "apollo-server-micro": "^3.12.0",
     "axios": "^1.4.0",
-    "bcrypt": "^5.1.0",
-    "bcryptjs": "^2.4.3",
-    "cookie": "^0.5.0",
-    "cookie-parser": "^1.4.6",
     "crypto-js": "^4.1.1",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
+    "eslint-plugin-react": "^7.32.2",
     "graphql": "^16.6.0",
     "hashconnect": "^0.2.4",
-    "jsonwebtoken": "^9.0.0",
-    "mongodb": "^5.6.0",
-    "mongoose": "^7.3.1",
     "next": "13.4.3",
     "next-connect": "^1.0.0",
     "next-fonts": "^1.5.1",
@@ -48,6 +39,7 @@
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",
     "@types/node": "^20.3.1",
-    "@types/react": "^18.2.6"
+    "@types/react": "^18.2.6",
+    "eslint-config-prettier": "^8.8.0"
   }
 }
