@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
+import { supabase } from '../supabaseClient'
 
 type User = {
   connected: boolean;
@@ -57,7 +58,8 @@ export const UserProvider: React.FC = ({ children }) => {
       if (pairingData.accountIds) {
         setAccountId(pairingData.accountIds[0]);
         setConnected(true);
-        setType('admin')
+        const userType = await checkAdminStatus(pairingData.accountIds[0]);
+        setType(userType);
       }
     });
 
@@ -70,6 +72,22 @@ export const UserProvider: React.FC = ({ children }) => {
     }
     
     setLoading(false);
+  };
+
+  const checkAdminStatus = async (accountId: string): Promise<string> => {
+    const { data: adminAccounts, error } = await supabase
+      .from('admin_accounts')
+      .select('accountId')
+      .eq('accountId', accountId);
+  
+    if (error) {
+      console.error('Error: ', error);
+      return 'user';
+    } else if (adminAccounts && adminAccounts.length > 0) {
+      return 'admin';
+    } else {
+      return 'user';
+    }
   };
 
   useEffect(() => {
@@ -102,6 +120,7 @@ export const UserProvider: React.FC = ({ children }) => {
     setLoading,
     setConnected,
     setAccountId,
+    setType,
     setPairingString: () => {},
     setHashpackTopicId,
     initWalletConnect,
