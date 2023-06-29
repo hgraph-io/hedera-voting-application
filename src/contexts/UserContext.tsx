@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
 import { supabase } from '../supabaseClient'
@@ -17,6 +18,9 @@ type User = {
   setPairingString: React.Dispatch<React.SetStateAction<string>>;
   setHashpackTopicId: React.Dispatch<React.SetStateAction<string>>;
   initWalletConnect: (firstLoad: boolean) => Promise<boolean>;
+  //todo
+  supabaseSession: any,
+  setSupabaseSession: any,
 } | null | undefined;
 
 const UserContext = createContext<User>(undefined);
@@ -30,6 +34,7 @@ export const UserProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hashpackTopicId, setHashpackTopicId] = useState<string | undefined>(undefined);
   const hashconnect = new HashConnect();
+  const [supabaseSession, setSupabaseSession] = useState()
 
   const disconnectHashpack = async () => {
     if (hashpackTopicId) {
@@ -125,6 +130,8 @@ export const UserProvider: React.FC = ({ children }) => {
     setPairingString: () => {},
     setHashpackTopicId,
     initWalletConnect,
+    supabaseSession,
+    setSupabaseSession
   };
 
   return (
