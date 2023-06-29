@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ApplicationPage.module.scss';
 import { Typography, Button, Container, Table, TableBody, TableCell, TableContainer, TableRow, Paper, TableHead, Grid, Chip, Link } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useUser } from '../contexts/UserContext'; // import the useUser hook
 import VoteCard from './VoteCard'; // import the VoteCard component
+import { Rating } from '@mui/lab';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 
 interface ApplicationData {
   name: string;
@@ -86,15 +88,15 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
   return (
     <Grid container spacing={3} className={styles.adminDashboard}>
       <Grid item xs={12}>
-        <Button variant="outlined" onClick={goBack} style={{ marginBottom: "30px", marginLeft: "20px" }}>Go Back</Button>
+        <Button variant="outlined" onClick={goBack} className={styles.backButton}>Back</Button>
       </Grid> 
       <Grid item xs={12} >
         <Typography className={styles.title}textAlign="left" variant="h3">Application</Typography>
       </Grid>
       {applicationData && applicationData.map((data, index) => (
-        <Grid item xs={12} key={index}>
+        <Grid xs={12} key={index}>
           <Container className={styles.applicationContainer}>
-            <Grid container spacing={2}>
+            <Grid container spacing={4}>
               <Grid item xs={12}>
                 <Typography variant="body2">Speaker Name</Typography>
                 <Typography variant="h6">{data.name}</Typography>
@@ -124,7 +126,7 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
                     id={data.id}
                     speaker={data.name}
                     tags={data.topics.join(', ')}
-                    isSelected={votes.find((vote) => vote.accountId === accountId) ? true : false}
+                    type="vote"
                     rating={{
                       voteNum: votes.length,
                       currentRating: votes.reduce((a, v) => a + v.vote, 0) / votes.length,
@@ -134,22 +136,28 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
               ): 
               (
                 <Grid item xs={12}>
-                  <Typography variant="h4">Your Vote: </Typography> 
-                  <div className={styles.rating}>
-                    {[...Array(5)].map((_, i) => (
-                      <StarIcon key={i} className={styles.star} style={{ color: i < userVote ? 'green' : 'grey' }} />
-                    ))}
-                  </div>
-                  <Typography variant="body1">{userVote}/5</Typography>
-                 <Link target="_blank" href={voteLink}>View your vote</Link>
+                  <Typography variant="h4">Your Vote</Typography> 
+                  <VoteCard
+                    id={data.id}
+                    type="view"
+                    hederaMainnetUrl={voteLink}
+                    rating={{
+                      voteNum: votes.length,
+                      currentRating: userVote,
+                    }}
+                  />
                 </Grid>
               )}
               <Grid item xs={12}>
-                <Typography variant="h4">Total Votes:</Typography>
+                <div className={styles.titleRow}><Typography variant="h4">Total Votes</Typography> ({votes.length} votes)</div>
                 <div className={styles.rating}>
-                  {[...Array(5)].map((_, i) => (
-                    <StarIcon key={i} className={styles.star} style={{ color: i < voteAverage ? 'gold' : 'grey' }} />
-                  ))}
+                  <Rating
+                    className={styles.ratingContainer}
+                    name="user-rating"
+                    value={voteAverage}
+                    icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+                    emptyIcon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+                  />
                 </div>
                 <Typography variant="body2">{voteAverage} / 5</Typography>
               </Grid>
