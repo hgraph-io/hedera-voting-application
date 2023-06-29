@@ -38,6 +38,7 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
   const [userVote, setUserVote] = useState<number>(4);
   const [userVoted, setUserVoted] = useState<boolean>(false);
   const [voteAverage, setVoteAverage] = useState<number>(1);
+  const [voteLink, setVoteLink] = useState<string>('');
 
   const user = useUser(); // get the user data
   const { accountId, type, setLoading } = user || {};
@@ -49,7 +50,8 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
     console.log('userVoteData',userVoteData)
     setUserVote(userVoteData ? userVoteData.choice : 1);
     setUserVoted(userVoteData ? true : false);
-  
+    userVoteData && setVoteLink(`https://explore.lworks.io/mainnet/topics/0.0.1350036/messages/${userVoteData.sequence_number}`);
+
     // Calculate the average
     let totalVotes = 0;
     let totalVotesCount = votesData.length;
@@ -84,21 +86,21 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
   return (
     <Grid container spacing={3} className={styles.adminDashboard}>
       <Grid item xs={12}>
-        <Button variant="outlined" onClick={goBack} style={{ marginTop: "20px", marginLeft: "20px" }}>Go Back</Button>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h2">Application</Typography>
+        <Button variant="outlined" onClick={goBack} style={{ marginBottom: "30px", marginLeft: "20px" }}>Go Back</Button>
+      </Grid> 
+      <Grid item xs={12} >
+        <Typography className={styles.title}textAlign="left" variant="h3">Application</Typography>
       </Grid>
       {applicationData && applicationData.map((data, index) => (
         <Grid item xs={12} key={index}>
           <Container className={styles.applicationContainer}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography variant="body1">Speaker Name</Typography>
+                <Typography variant="body2">Speaker Name</Typography>
                 <Typography variant="h6">{data.name}</Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body1">Relevant Topics:</Typography>
+                <Typography variant="body2">Relevant Topics:</Typography>
                 <div className={styles.topicContainer}>
                   {data.topics.map((topic, topicIndex) => (
                     <Chip key={topicIndex} label={topic} color="primary" style={{backgroundColor: "black", color: "white", marginTop: '5px'}}/>
@@ -106,7 +108,7 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
                 </div>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body1">Links:</Typography>
+                <Typography variant="body2">Links:</Typography>
                 <div className={styles.linksContainer}>
                   {data.links.map((link, linkIndex) => (
                     <Link key={linkIndex} href={link} variant="body2" target="_blank" rel="noopener noreferrer">
@@ -132,17 +134,18 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
               ): 
               (
                 <Grid item xs={12}>
-                  <Typography variant="h6">Your Vote: </Typography> 
+                  <Typography variant="h4">Your Vote: </Typography> 
                   <div className={styles.rating}>
                     {[...Array(5)].map((_, i) => (
-                      <StarIcon key={i} className={styles.star} style={{ color: i < userVote ? 'gold' : 'grey' }} />
+                      <StarIcon key={i} className={styles.star} style={{ color: i < userVote ? 'green' : 'grey' }} />
                     ))}
                   </div>
                   <Typography variant="body1">{userVote}/5</Typography>
+                 <Link target="_blank" href={voteLink}>View your vote</Link>
                 </Grid>
               )}
               <Grid item xs={12}>
-                <Typography variant="h6">Total Votes:</Typography>
+                <Typography variant="h4">Total Votes:</Typography>
                 <div className={styles.rating}>
                   {[...Array(5)].map((_, i) => (
                     <StarIcon key={i} className={styles.star} style={{ color: i < voteAverage ? 'gold' : 'grey' }} />

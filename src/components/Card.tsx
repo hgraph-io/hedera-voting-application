@@ -7,7 +7,7 @@ import styles from './Card.module.scss';
 interface CardProps {
   type: 'view' | 'vote' | 'approved' | 'denied' | 'default';
   speaker: string;
-  tags: string;
+  moderator: boolean;
   isSelected: boolean;
   id: number;
   rating: {
@@ -16,20 +16,28 @@ interface CardProps {
   };
 }
 
-export const Card: React.FC<CardProps> = ({ type, id, speaker, tags, isSelected, rating }) => {
+export const Card: React.FC<CardProps> = ({ type, id, speaker, moderator, isSelected, rating }) => {
   const [selected, setSelected] = useState(isSelected);
 
   const renderRating = () => {
     // get data from Hedera
-    // if (type === 'vote' || type === 'view') {
-    //   return (
-    //     <div>
-    //       <div className={styles.ratingLabel}>Current Rating with {rating.voteNum} votes</div>
-    //       <Rating className={styles.ratingContainer} name="rating" value={rating.currentRating} readOnly />
-    //     </div>
-    //   );
-    // }
+    if (type === 'vote' || type === 'view') {
+      return (
+        <div>
+          {/* <div className={styles.ratingLabel}>Current Rating with {rating.voteNum} votes</div> */}
+          {/* <Rating className={styles.ratingContainer} name="rating" value={rating.currentRating} readOnly /> */}
+        </div>
+      );
+    }
   };
+
+  // Map from 'type' to the corresponding display text.
+  const typeText = {
+    'default': 'Pending',
+    'denied': 'Not Selected',
+    'approved': 'Approved!'
+  };
+
 
   const renderButton = () => {
       return (
@@ -54,8 +62,8 @@ export const Card: React.FC<CardProps> = ({ type, id, speaker, tags, isSelected,
         </div>
 
         <div className={styles.middle}>
-          <div className={styles.titleLabel}>Tags</div>
-          <div className={styles.title}>{tags}</div>
+          <div className={styles.titleLabel}>Moderator</div>
+          <div className={styles.title}>{moderator?"True" :"False"}</div>
         </div>
 
         <div className={styles.right}>
@@ -67,7 +75,7 @@ export const Card: React.FC<CardProps> = ({ type, id, speaker, tags, isSelected,
                 className={styles.checkBox}
                 onChange={() => setSelected(!selected)}
               />
-              {type}
+              {typeText[type]} {/* display the text corresponding to the type */}
             </>
           )}
           {renderRating()}

@@ -110,4 +110,4 @@ const Proposal: React.FC<{ applicationData: any[], votes:any[] }> = ({ applicati
   return <ApplicationPage applicationData={applicationData} votes={votes} />;
 };
 
-export default withAdmin(Proposal);
+export default Proposal;

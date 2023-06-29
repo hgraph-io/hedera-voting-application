@@ -66,7 +66,7 @@ const AdminDashboardPage: React.FC = () => {
           <CardComponent 
             key={app.id}
             id={app.id}
-            tags={app.tags} 
+            moderator={app.moderator} 
             applicationId={app.applicationId} 
             rating={app.rating}
             speaker={app.name} 

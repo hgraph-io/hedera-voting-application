@@ -47,7 +47,7 @@ const DashboardPage: React.FC = () => {
             {applications.map((application, index) => (
               <CardComponent 
                 key={index}
-                tags={application.tags}
+                moderator={application.moderator}
                 applicationId={application.id} 
                 rating={{
                   voteNum:application.voteNum,

@@ -41,6 +41,7 @@ export const VoteCard: React.FC<VoteCardProps> = ({ id, speaker, tags, rating })
   };
 
   const handleVoteSubmit = async () => {
+    user?.setLoading(true)
     const voteData = {
       accountId,
       choice: userVote,
@@ -48,9 +49,11 @@ export const VoteCard: React.FC<VoteCardProps> = ({ id, speaker, tags, rating })
     };
 
     try {
-      await axios.post('/api/voting-submission', voteData);
+      const res = await axios.post('/api/voting-submission', voteData);
+      user?.setLoading(false)
     } catch (error) {
       console.error('Error submitting vote', error);
+      user?.setLoading(false)
     }
   };
 
