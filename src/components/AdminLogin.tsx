@@ -9,23 +9,21 @@ import styles from './AdminLogin.module.scss';
 import type { Database } from '@/lib/database.types';
 
 const AdminLogin: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const user = useUser();
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
 
   const handleSignIn = async () => {
     if (user) {
-      const connected = await user.initWalletConnect(false);
-      console.log(connected)
+      await user.initWalletConnect(false);
     }
   };
   useEffect(() => {
-    if (user && user.connected) {
+    console.log(user)
+    if (user && user.connected && user.type== 'admin') {
+        console.log('redirect')
         router.push('/admin-dashboard');
     }
-  }, [(user && user.connected)]);
+  }, [user]);
 
   return (
     <Container className={styles.adminLoginPageContainer} maxWidth="xs">

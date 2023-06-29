@@ -3,7 +3,7 @@ import axios from 'axios';
 import { AccountId, PrivateKey, Client, TopicMessageSubmitTransaction, TransactionId, Hbar } from '@hashgraph/sdk';
 import CryptoJS from 'crypto-js';
 
-const mainTopicId = process.env.VOTE_TOPIC_ID;
+const mainTopicId = process.env.VOTING_TOPIC_ID;
 
 const hex2a = (hexx: string): string => {
     let hex = hexx.toString().split('\\x')[1]; //force conversion
@@ -89,13 +89,24 @@ const getFilterVotes = (obj: any, accountId: string, ballotId: string, serialNum
     obj.type === 'vote' && obj.nftId === serialNumber + '@' + tokenId && obj.ballotId === ballotId && obj.accountId === accountId;
 
 const votingSubmission = async (ballotObject: any) => {
+    // Delay for HCS consensus to avoid duplicates
     const delay = new Promise((resolve) => setTimeout(resolve, 6500));
     await delay;
+
     const { initialMessageObjArray } = await getVotingStatusByAccountId(ballotObject.accountId);
     const allHolderVotes = initialMessageObjArray.filter((obj) => obj.type === 'vote');
-    const nftVotingData = allHolderVotes.filter((obj) => (obj.nftId === ballotObject.serialNumber + '@' + ballotObject.tokenId));
-    const ballotVotesOfUser = nftVotingData.filter((vote) => vote.ballotId === ballotObject.ballotId);
+    const allBallotVotes = allHolderVotes.filter((vote) => vote.ballotId === ballotObject.ballotId);
+    const ballotVotesOfUser = allBallotVotes.filter((vote) => vote.accountId === ballotObject.accountId);
+    console.log('allHolderVotes', allHolderVotes)
+    console.log(ballotVotesOfUser)
 
+    // Sense if this is a duplicate vote 
+    if (!ballotObject.accountId) {
+        console.log("Account isn't provided");
+        return "account-undefined";
+    }
+
+    // Sense if this is a duplicate vote 
     if (ballotVotesOfUser.length >= 1) {
         console.log("duplicate-votes");
         return "duplicate-votes";
@@ -107,10 +118,7 @@ const votingSubmission = async (ballotObject: any) => {
 
     const jsonb = {
         "type": "vote",
-        "nftId": ballotObject.serialNumber,
         "choice": ballotObject.choice,
-        "tokenId": ballotObject.tokenId,
-        "serialNumber": ballotObject.serialNumber,
         "ballotId": ballotObject.ballotId,
         "accountId": ballotObject.accountId,
     };
@@ -128,21 +136,18 @@ const votingSubmission = async (ballotObject: any) => {
 
 export default async function handler(req: any, res: any) {
     const { accountId, serialNumber, tokenId, ballotId, choice } = req.body;
-    console.log('Submit Vote');
-    const nft = true;
+//     console.log('Submit Vote');
+    console.log(req.body)
+    const voting = await votingSubmission({ tokenId, serialNumber, accountId, ballotId, choice });
 
-    if (nft) {
-        const voting = await votingSubmission({ tokenId, serialNumber, accountId, ballotId, choice });
-
-        if (voting === "duplicate-votes") {
-            res.status(400).json({ error: { title: "Error!", description: "This NFT has already voted. NFTs cannot vote twice on the same ballot with the same NFT" } });
-            return;
-        } else {
-            res.status(200).json({ success: { title: "Vote Submitted!", description: `You've successfully voted, your vote is now on the mainnet and counted!` } });
-            return;
-        }
+    if (voting === "duplicate-votes") {
+        res.status(400).json({ error: { title: "Error!", description: "This NFT has already voted. NFTs cannot vote twice on the same ballot with the same NFT" } });
+        return;
+    } else if (voting === "account-undefined") {
+        res.status(400).json({ error: { title: "Error!", description: "Please login as an admin with Hashpack to vote."} });
+        return;
     } else {
-        res.status(400).json({ success: { title: "Error!", description: `This NFT doesn't seem to be owned by the connected account Id` } });
+        res.status(200).json({ success: { title: "Vote Submitted!", description: `You've successfully voted, your vote is now on the mainnet and counted!` } });
         return;
     }
 }

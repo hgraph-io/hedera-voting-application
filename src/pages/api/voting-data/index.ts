@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const getVotingData = async (clientAccountId?:string) => {
-    const topicId =  process.env.VOTE_TOPIC_ID;
+    const topicId =  process.env.VOTING_TOPIC_ID;
     const votingEndpoint = process.env.HGRAPH_ENDPOINT_BETA;
     const votingHeaders = {
         "content-type": "application/json",
