@@ -25,7 +25,6 @@
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
     "eslint-plugin-react": "^7.32.2",
-    "graphql": "^16.6.0",
     "hashconnect": "^0.2.4",
     "next": "13.4.3",
     "next-connect": "^1.0.0",
