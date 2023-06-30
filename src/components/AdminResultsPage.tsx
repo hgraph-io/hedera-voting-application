@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {useEffect, useState} from 'react';
 import { Typography, Container, Button } from '@mui/material';
 import CardComponent from '../components/Card';
