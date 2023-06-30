@@ -15,6 +15,8 @@ export default function Header() {
   
   const router = useRouter();
   const user = useUser();
+  console.log('xxxxxxxxxxx')
+  console.log(user)
   const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
     const handleDrawerToggle = () => {
@@ -78,7 +80,7 @@ export default function Header() {
                 <div className={styles.links}>
                   {routes.map(renderLink)}
                   <div className={styles.desktopButtonContainer}>
-                    {!user?.connected ? (
+                    {!user?.supabaseSession ? (
                       <>
                         <Link href="/register">  
                           <Button variant="outlined" className={styles.signupButton} >
