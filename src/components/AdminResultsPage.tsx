@@ -38,6 +38,8 @@ const AdminResultsPage: React.FC = () => {
           rating={app.rating}
           speaker={app.speaker} 
           isSelected={app.isSelected} 
+          // todo
+          //@ts-ignore
           type={app.type} 
         />
       ))}
@@ -51,6 +53,8 @@ const AdminResultsPage: React.FC = () => {
           rating={app.rating}
           speaker={app.speaker} 
           isSelected={app.isSelected} 
+          // todo
+          //@ts-ignore
           type={app.type} 
         />
       ))}

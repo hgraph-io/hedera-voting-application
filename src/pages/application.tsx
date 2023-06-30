@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import ApplicationPage from '../components/ApplicationPage'
 

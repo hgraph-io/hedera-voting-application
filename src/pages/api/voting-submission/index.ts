@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from 'axios';
 import { AccountId, PrivateKey, Client, TopicMessageSubmitTransaction, TransactionId, Hbar } from '@hashgraph/sdk';

@@ -4,8 +4,8 @@ import {useRouter} from 'next/router'
 import {useUser} from '../contexts/UserContext'
 import {supabase} from '../supabaseClient' // make sure to import supabase client
 
-const withAuth = (WrappedComponent) => {
-  return (props) => {
+export default function withAuth (Component) {
+  return function WrappedComponent(props) {
     const Router = useRouter()
     const user = useUser()
     console.log(user)
@@ -26,8 +26,6 @@ const withAuth = (WrappedComponent) => {
       checkUserSession()
     }, [])
 
-    return <div>{user && <WrappedComponent {...props} />}</div>
+    return <div>{user && <Component {...props} />}</div>
   }
 }
-
-export default withAuth

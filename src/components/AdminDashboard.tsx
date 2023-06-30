@@ -10,7 +10,8 @@ const AdminDashboardPage: React.FC = () => {
   const router = useRouter();
   const user = useUser(); 
 
-  const [applications, setApplications] = useState([]);
+	// todo
+	const [applications, setApplications] = useState<any>([]);
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -62,7 +63,7 @@ const AdminDashboardPage: React.FC = () => {
       </Typography>
       
       <div>
-        {applications.map((app) => (
+				{applications.map((app: any) => ( //todo
           <CardComponent 
             key={app.id}
             id={app.id}

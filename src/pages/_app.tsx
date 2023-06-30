@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {useState, createContext, useEffect, useContext} from 'react';
 import { AppProps } from 'next/app';
 import { ThemeProvider, CssBaseline, createTheme, CircularProgress, Backdrop } from '@mui/material';

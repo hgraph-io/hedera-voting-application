@@ -5,7 +5,6 @@ import { useSnackbar } from '../contexts/SnackbarContext';
 import { supabase } from '../supabaseClient';
 import styles from './LoginPage.module.scss';
 
-import type { Database } from '@/lib/database.types';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');

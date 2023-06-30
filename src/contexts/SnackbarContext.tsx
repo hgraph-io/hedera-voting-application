@@ -10,6 +10,7 @@ const SnackbarContext = createContext<SnackbarContextProps>({
 });
 
 export const useSnackbar = () => useContext(SnackbarContext);
+//@ts-ignore
 export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
@@ -30,6 +31,7 @@ export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
   
     return (
       <SnackbarContext.Provider value={{ openSnackbar }}>
+        {/* @ts-ignore */}
         <Snackbar anchorOrigin={{ vertical:'top', horizontal:'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
             {message}

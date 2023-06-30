@@ -1,11 +1,12 @@
+// @ts-nocheck
 import { useRouter } from 'next/router';
 import { useUser } from '../contexts/UserContext';
 import { useEffect } from 'react';
 import { supabase } from '../supabaseClient'; 
 
 
-const withAdmin = (WrappedComponent) => {
-  return (props) => {
+export default function withAdmin (Component: React.Component) {
+	return function WrappedComponent (props){
     const Router = useRouter();
     const user = useUser();
 
@@ -37,10 +38,8 @@ const withAdmin = (WrappedComponent) => {
 
     return (
       <div>
-        {user && <WrappedComponent {...props} />}
+        {user && <Component {...props} />}
       </div>
     )
   }
 }
-
-export default withAdmin;

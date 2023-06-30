@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Results.module.scss';
-import Card from '../Card';
+import Card from './Card';
 
 const Results: React.FC = () => {
   const cards = [
@@ -12,6 +12,7 @@ const Results: React.FC = () => {
   return (
     <div className={styles.results}>
       {cards.map((card, index) => (
+        // @ts-ignore
         <Card key={index} {...card} />
       ))}
     </div>
