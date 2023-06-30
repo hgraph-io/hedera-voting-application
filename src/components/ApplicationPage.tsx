@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import styles from "./ApplicationPage.module.scss";
+import React, { useEffect, useState } from 'react';
+import styles from './ApplicationPage.module.scss';
 import {
   Typography,
   Button,
@@ -14,14 +14,14 @@ import {
   Grid,
   Chip,
   Link,
-} from "@mui/material";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { useUser } from "../contexts/UserContext"; // import the useUser hook
-import VoteCard from "./VoteCard"; // import the VoteCard component
-import { Rating } from "@mui/lab";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import StarIcon from "@mui/icons-material/Star";
+} from '@mui/material';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useUser } from '../contexts/UserContext'; // import the useUser hook
+import VoteCard from './VoteCard'; // import the VoteCard component
+import { Rating } from '@mui/lab';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 
 interface ApplicationData {
   id: number;
@@ -54,22 +54,22 @@ const ApplicationPage: React.FC<Props> = ({
   applicationData,
   votes: votesData,
 }) => {
-  console.log("votesData", votesData);
+  console.log('votesData', votesData);
   const [votes, setVotes] = useState<VoteData[]>([]);
   const [userVote, setUserVote] = useState<number>(4);
   const [userVoted, setUserVoted] = useState<boolean>(false);
   const [voteAverage, setVoteAverage] = useState<number>(1);
-  const [voteLink, setVoteLink] = useState<string>("");
+  const [voteLink, setVoteLink] = useState<string>('');
 
   const user = useUser(); // get the user data
   const { accountId, type, setLoading } = user || { setLoading: () => {} };
-  const applicationId = "applicationId"; // replace with actual application id
+  const applicationId = 'applicationId'; // replace with actual application id
 
   useEffect(() => {
     //@ts-ignore
     setVotes(votesData);
     const userVoteData = votesData.find((vote) => vote.accountId === accountId);
-    console.log("userVoteData", userVoteData);
+    console.log('userVoteData', userVoteData);
     // todo
     //@ts-ignore
     setUserVote(userVoteData ? userVoteData.choice : 1);
@@ -98,13 +98,13 @@ const ApplicationPage: React.FC<Props> = ({
     setUserVote(vote);
     setLoading(true);
     try {
-      await axios.post("/api/voting-submission", {
+      await axios.post('/api/voting-submission', {
         accountId,
         choice: vote,
         ballotId: applicationId,
       });
     } catch (error) {
-      console.error("Error submitting vote", error);
+      console.error('Error submitting vote', error);
     }
     setLoading(false);
   };
@@ -117,7 +117,7 @@ const ApplicationPage: React.FC<Props> = ({
 
   // determine whether user can vote or not
   const canVote =
-    type === "admin" && !votes.find((vote) => vote.accountId === accountId);
+    type === 'admin' && !votes.find((vote) => vote.accountId === accountId);
 
   return (
     <Grid container spacing={3} className={styles.adminDashboard}>
@@ -153,9 +153,9 @@ const ApplicationPage: React.FC<Props> = ({
                         label={topic}
                         color="primary"
                         style={{
-                          backgroundColor: "black",
-                          color: "white",
-                          marginTop: "5px",
+                          backgroundColor: 'black',
+                          color: 'white',
+                          marginTop: '5px',
                         }}
                       />
                     ))}
@@ -183,7 +183,7 @@ const ApplicationPage: React.FC<Props> = ({
                     <VoteCard
                       id={data.id}
                       speaker={data.name}
-                      tags={data.topics.join(", ")}
+                      tags={data.topics.join(', ')}
                       type="vote"
                       rating={{
                         voteNum: votes.length,
@@ -218,12 +218,12 @@ const ApplicationPage: React.FC<Props> = ({
                       value={voteAverage}
                       icon={
                         <StarBorderIcon
-                          style={{ color: "#07E78E", fontSize: 40 }}
+                          style={{ color: '#07E78E', fontSize: 40 }}
                         />
                       }
                       emptyIcon={
                         <StarBorderIcon
-                          style={{ color: "#ebebeb", fontSize: 40 }}
+                          style={{ color: '#ebebeb', fontSize: 40 }}
                         />
                       }
                     />

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -8,15 +8,15 @@ import {
   Theme,
   Hidden,
   Drawer,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import styles from "./Header.module.scss";
-import logo from "../assets/Hlogo.png";
-import { useUser } from "../contexts/UserContext";
-import { supabase } from "../supabaseClient";
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import styles from './Header.module.scss';
+import logo from '../assets/Hlogo.png';
+import { useUser } from '../contexts/UserContext';
+import { supabase } from '../supabaseClient';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -24,9 +24,9 @@ export default function Header() {
 
   const router = useRouter();
   const user = useUser();
-  console.log("xxxxxxxxxxx");
+  console.log('xxxxxxxxxxx');
   console.log(user);
-  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
+  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
   const handleDrawerToggle = () => {
     !isDesktop && setMobileOpen(!mobileOpen);
@@ -35,14 +35,14 @@ export default function Header() {
   const handleLogout = useCallback(async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      console.error("Error logging out:", error.message);
+      console.error('Error logging out:', error.message);
     } else {
       setSessionActive(false);
       user?.disconnectHashpack();
       user?.setConnected(false);
-      user?.setType("user");
-      user?.setAccountId("");
-      router.push("/login");
+      user?.setType('user');
+      user?.setAccountId('');
+      router.push('/login');
     }
   }, [router, user]);
 
@@ -65,9 +65,9 @@ export default function Header() {
   }
 
   const routes: Route[] = [
-    { label: "Home", path: "/" },
-    { label: "Dashboard", path: "/dashboard" },
-    { label: "Admin", path: "/admin-dashboard" },
+    { label: 'Home', path: '/' },
+    { label: 'Dashboard', path: '/dashboard' },
+    { label: 'Admin', path: '/admin-dashboard' },
   ];
 
   const renderLink = ({ label, path }: Route) => (
@@ -90,10 +90,10 @@ export default function Header() {
       <AppBar className={styles.menuBar} position="static">
         <Toolbar
           style={{
-            position: "relative",
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
+            position: 'relative',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
           <Link href="/" passHref>
@@ -144,7 +144,7 @@ export default function Header() {
 
             <Hidden lgUp implementation="css">
               <Drawer
-                anchor={"right"}
+                anchor={'right'}
                 open={mobileOpen}
                 onClose={handleDrawerToggle}
                 classes={{

@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   Container,
   Grid,
   Typography,
   Link,
   useMediaQuery,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import Image from "next/image";
-import styles from "./Footer.module.scss";
-import logo from "../assets/Hlogo.png";
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import Image from 'next/image';
+import styles from './Footer.module.scss';
+import logo from '../assets/Hlogo.png';
 
 const Footer: React.FC = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <div className={styles.footer}>
@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
             <Grid
               container
               spacing={2}
-              justifyContent={isMobile ? "center" : "flex-end"}
+              justifyContent={isMobile ? 'center' : 'flex-end'}
             >
               <Grid item className={styles.linkItem}>
                 <Link href="/privacy-policy" color="inherit">

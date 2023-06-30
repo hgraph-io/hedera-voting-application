@@ -1,8 +1,8 @@
 //@ts-nocheck
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useUser } from "../contexts/UserContext";
-import { supabase } from "../supabaseClient"; // make sure to import supabase client
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useUser } from '../contexts/UserContext';
+import { supabase } from '../supabaseClient'; // make sure to import supabase client
 
 export default function withAuth(Component) {
   return function WrappedComponent(props) {
@@ -17,7 +17,7 @@ export default function withAuth(Component) {
         } = await supabase.auth.getSession();
 
         if (!_session) {
-          Router.replace("/login");
+          Router.replace('/login');
         } else {
           user.setSupabaseSession(_session);
         }

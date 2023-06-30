@@ -1,50 +1,50 @@
-import React from "react";
-import { Typography, Container, Button } from "@mui/material";
-import CardComponent from "../components/Card";
-import styles from "./AdminResultsPage.module.scss";
-import { useRouter } from "next/router";
+import React from 'react';
+import { Typography, Container, Button } from '@mui/material';
+import CardComponent from '../components/Card';
+import styles from './AdminResultsPage.module.scss';
+import { useRouter } from 'next/router';
 
 const AdminResultsPage: React.FC = () => {
   // TODO: fetch the actual data from an API
   const approvedApplications = [
     {
-      title: "Application 1",
+      title: 'Application 1',
       applicationId: 1,
       rating: { voteNum: 1, currentRating: 5 },
       voted: true,
-      speaker: "John Doe",
+      speaker: 'John Doe',
       isSelected: true,
-      type: "approved",
+      type: 'approved',
     },
     {
-      title: "Application 2",
+      title: 'Application 2',
       applicationId: 2,
       rating: { voteNum: 1, currentRating: 5 },
       voted: false,
-      speaker: "Jane Doe",
+      speaker: 'Jane Doe',
       isSelected: true,
-      type: "approved",
+      type: 'approved',
     },
   ];
 
   const openApplications = [
     {
-      title: "Application 3",
+      title: 'Application 3',
       applicationId: 3,
       rating: { voteNum: 1, currentRating: 4 },
       voted: true,
-      speaker: "John Doe",
+      speaker: 'John Doe',
       isSelected: false,
-      type: "default",
+      type: 'default',
     },
     {
-      title: "Application 4",
+      title: 'Application 4',
       applicationId: 4,
       rating: { voteNum: 1, currentRating: 4 },
       voted: false,
-      speaker: "Jane Doe",
+      speaker: 'Jane Doe',
       isSelected: false,
-      type: "default",
+      type: 'default',
     },
   ];
 
@@ -57,7 +57,7 @@ const AdminResultsPage: React.FC = () => {
       <Button
         variant="outlined"
         onClick={goBack}
-        style={{ marginTop: "20px", marginLeft: "20px" }}
+        style={{ marginTop: '20px', marginLeft: '20px' }}
       >
         Go Back
       </Button>

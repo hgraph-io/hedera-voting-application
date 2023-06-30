@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   TextField,
   Button,
@@ -9,12 +9,12 @@ import {
   FormControl,
   InputLabel,
   CircularProgress,
-} from "@mui/material";
-import axios from "axios";
-import { useRouter } from "next/router"; // next/router instead of next/navigation
-import { useUser } from "../contexts/UserContext";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import styles from "./AdminLogin.module.scss";
+} from '@mui/material';
+import axios from 'axios';
+import { useRouter } from 'next/router'; // next/router instead of next/navigation
+import { useUser } from '../contexts/UserContext';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import styles from './AdminLogin.module.scss';
 
 const AdminLogin: React.FC = () => {
   const user = useUser();
@@ -27,9 +27,9 @@ const AdminLogin: React.FC = () => {
   };
   useEffect(() => {
     console.log(user);
-    if (user && user.connected && user.type == "admin") {
-      console.log("redirect");
-      router.push("/admin-dashboard");
+    if (user && user.connected && user.type == 'admin') {
+      console.log('redirect');
+      router.push('/admin-dashboard');
     }
   }, [user]);
 
@@ -54,7 +54,7 @@ const AdminLogin: React.FC = () => {
         <Button
           variant="outlined"
           fullWidth
-          onClick={() => router.push("/login")}
+          onClick={() => router.push('/login')}
         >
           User Login
         </Button>

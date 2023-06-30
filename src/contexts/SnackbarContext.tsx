@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
-import { Snackbar, Alert } from "@mui/material";
+import React, { createContext, useContext, useState } from 'react';
+import { Snackbar, Alert } from '@mui/material';
 
 type SnackbarContextProps = {
   openSnackbar: (
     message: string,
-    severity: "success" | "info" | "warning" | "error"
+    severity: 'success' | 'info' | 'warning' | 'error'
   ) => void;
 };
 
@@ -16,14 +16,14 @@ export const useSnackbar = () => useContext(SnackbarContext);
 //@ts-ignore
 export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState<
-    "success" | "info" | "warning" | "error"
-  >("info");
+    'success' | 'info' | 'warning' | 'error'
+  >('info');
 
   const openSnackbar = (
     message: string,
-    severity: "success" | "info" | "warning" | "error"
+    severity: 'success' | 'info' | 'warning' | 'error'
   ) => {
     setMessage(message);
     setSeverity(severity);
@@ -31,7 +31,7 @@ export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
   };
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
     setOpen(false);
@@ -41,12 +41,12 @@ export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
     <SnackbarContext.Provider value={{ openSnackbar }}>
       {/* @ts-ignore */}
       <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
           {message}
         </Alert>
       </Snackbar>

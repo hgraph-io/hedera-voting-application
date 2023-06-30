@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Button } from "@mui/material";
-import { Rating } from "@mui/lab";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import StarIcon from "@mui/icons-material/Star";
-import axios from "axios";
-import { useUser } from "../contexts/UserContext";
-import styles from "./VoteCard.module.scss";
+import React, { useState } from 'react';
+import { Button } from '@mui/material';
+import { Rating } from '@mui/lab';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
+import axios from 'axios';
+import { useUser } from '../contexts/UserContext';
+import styles from './VoteCard.module.scss';
 
 interface VoteCardProps {
   id: number;
@@ -18,7 +18,7 @@ interface VoteCardProps {
     voteNum: number;
     currentRating: number;
   };
-  type: "vote" | "view";
+  type: 'vote' | 'view';
 }
 
 export const VoteCard: React.FC<VoteCardProps> = ({
@@ -41,9 +41,9 @@ export const VoteCard: React.FC<VoteCardProps> = ({
         name="rating"
         value={rating.currentRating}
         readOnly
-        icon={<StarIcon style={{ color: "#07E78E", fontSize: 40 }} />}
+        icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
         emptyIcon={
-          <StarBorderIcon style={{ color: "#ebebeb", fontSize: 40 }} />
+          <StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />
         }
       />
     </div>
@@ -61,20 +61,20 @@ export const VoteCard: React.FC<VoteCardProps> = ({
     const voteData = {
       accountId,
       choice: userVote,
-      ballotId: "application-" + id,
+      ballotId: 'application-' + id,
     };
 
     try {
-      const res = await axios.post("/api/voting-submission", voteData);
+      const res = await axios.post('/api/voting-submission', voteData);
       user?.setLoading(false);
     } catch (error) {
-      console.error("Error submitting vote", error);
+      console.error('Error submitting vote', error);
       user?.setLoading(false);
     }
   };
 
   const RightComponent = () => {
-    if (type === "vote") {
+    if (type === 'vote') {
       return (
         <div className={styles.buttonContainer}>
           <div className={styles.buttonLabel}>
@@ -91,7 +91,7 @@ export const VoteCard: React.FC<VoteCardProps> = ({
       );
     }
 
-    if (type === "view") {
+    if (type === 'view') {
       return (
         <div className={styles.buttonContainer}>
           <div className={styles.buttonLabel}>
@@ -100,7 +100,7 @@ export const VoteCard: React.FC<VoteCardProps> = ({
           <Button
             className={styles.cardButton}
             variant="contained"
-            onClick={() => window.open(hederaMainnetUrl, "_blank")}
+            onClick={() => window.open(hederaMainnetUrl, '_blank')}
           >
             View
           </Button>
@@ -127,9 +127,9 @@ export const VoteCard: React.FC<VoteCardProps> = ({
             name="user-rating"
             value={rating.currentRating}
             onChange={handleVoteChange}
-            icon={<StarBorderIcon style={{ color: "#07E78E", fontSize: 40 }} />}
+            icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
             emptyIcon={
-              <StarBorderIcon style={{ color: "#ebebeb", fontSize: 40 }} />
+              <StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />
             }
           />
         </div>

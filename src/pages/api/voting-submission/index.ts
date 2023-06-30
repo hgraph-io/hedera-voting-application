@@ -1,6 +1,6 @@
 // @ts-nocheck
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import axios from "axios";
+import axios from 'axios';
 import {
   AccountId,
   PrivateKey,
@@ -8,14 +8,14 @@ import {
   TopicMessageSubmitTransaction,
   TransactionId,
   Hbar,
-} from "@hashgraph/sdk";
-import CryptoJS from "crypto-js";
+} from '@hashgraph/sdk';
+import CryptoJS from 'crypto-js';
 
 const mainTopicId = process.env.VOTING_TOPIC_ID;
 
 const hex2a = (hexx: string): string => {
-  let hex = hexx.toString().split("\\x")[1]; //force conversion
-  let str = "";
+  let hex = hexx.toString().split('\\x')[1]; //force conversion
+  let str = '';
   for (let i = 0; i < hex.length; i += 2) {
     str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
   }
@@ -23,7 +23,7 @@ const hex2a = (hexx: string): string => {
 };
 
 const createPostAxiosInstance = (url: string, data: any, headers: any) =>
-  axios({ url, method: "post", headers, data });
+  axios({ url, method: 'post', headers, data });
 
 const submitTopicMessage = async (jsonb: any, settings: any) => {
   // Stringify jsonb
@@ -49,17 +49,17 @@ const submitTopicMessage = async (jsonb: any, settings: any) => {
 
   // Get the status of the transaction
   const transactionStatus = getReceipt.status;
-  console.log("The message transaction status" + transactionStatus);
+  console.log('The message transaction status' + transactionStatus);
 };
 
 const getVotingStatusByAccountId = async (clientAccountId: string) => {
   const votingEndpoint = process.env.HGRAPH_ENDPOINT_BETA;
   const votingHeaders = {
-    "content-type": "application/json",
-    "x-api-key": process.env.HGRAPH_KEY,
+    'content-type': 'application/json',
+    'x-api-key': process.env.HGRAPH_KEY,
   };
   const nftVotingQuery = {
-    operationName: "GetVotingHCS",
+    operationName: 'GetVotingHCS',
     query: `query GetVotingHCS($topicId: bigint) {
             topic_message(where: {topic_id: {_eq: $topicId}}, order_by: {consensus_timestamp: asc}) {
                 message
@@ -109,8 +109,8 @@ const getFilterVotes = (
   serialNumber: string,
   tokenId: string
 ) =>
-  obj.type === "vote" &&
-  obj.nftId === serialNumber + "@" + tokenId &&
+  obj.type === 'vote' &&
+  obj.nftId === serialNumber + '@' + tokenId &&
   obj.ballotId === ballotId &&
   obj.accountId === accountId;
 
@@ -123,7 +123,7 @@ const votingSubmission = async (ballotObject: any) => {
     ballotObject.accountId
   );
   const allHolderVotes = initialMessageObjArray.filter(
-    (obj) => obj.type === "vote"
+    (obj) => obj.type === 'vote'
   );
   const allBallotVotes = allHolderVotes.filter(
     (vote) => vote.ballotId === ballotObject.ballotId
@@ -131,19 +131,19 @@ const votingSubmission = async (ballotObject: any) => {
   const ballotVotesOfUser = allBallotVotes.filter(
     (vote) => vote.accountId === ballotObject.accountId
   );
-  console.log("allHolderVotes", allHolderVotes);
+  console.log('allHolderVotes', allHolderVotes);
   console.log(ballotVotesOfUser);
 
   // Sense if this is a duplicate vote
   if (!ballotObject.accountId) {
     console.log("Account isn't provided");
-    return "account-undefined";
+    return 'account-undefined';
   }
 
   // Sense if this is a duplicate vote
   if (ballotVotesOfUser.length >= 1) {
-    console.log("duplicate-votes");
-    return "duplicate-votes";
+    console.log('duplicate-votes');
+    return 'duplicate-votes';
   }
 
   const operatorId = AccountId.fromString(
@@ -155,21 +155,21 @@ const votingSubmission = async (ballotObject: any) => {
   const client = await Client.forMainnet().setOperator(operatorId, operatorKey);
 
   const jsonb = {
-    type: "vote",
+    type: 'vote',
     choice: ballotObject.choice,
     ballotId: ballotObject.ballotId,
     accountId: ballotObject.accountId,
   };
 
   const settings = {
-    topicId: "0.0." + mainTopicId,
+    topicId: '0.0.' + mainTopicId,
     client: client,
     submitKey: await PrivateKey.fromString(process.env.VOTING_SUBMIT_KEY),
   };
 
   await submitTopicMessage(jsonb, settings);
 
-  return "success";
+  return 'success';
 };
 
 export default async function handler(req: any, res: any) {
@@ -184,27 +184,27 @@ export default async function handler(req: any, res: any) {
     choice,
   });
 
-  if (voting === "duplicate-votes") {
+  if (voting === 'duplicate-votes') {
     res.status(400).json({
       error: {
-        title: "Error!",
+        title: 'Error!',
         description:
-          "This NFT has already voted. NFTs cannot vote twice on the same ballot with the same NFT",
+          'This NFT has already voted. NFTs cannot vote twice on the same ballot with the same NFT',
       },
     });
     return;
-  } else if (voting === "account-undefined") {
+  } else if (voting === 'account-undefined') {
     res.status(400).json({
       error: {
-        title: "Error!",
-        description: "Please login as an admin with Hashpack to vote.",
+        title: 'Error!',
+        description: 'Please login as an admin with Hashpack to vote.',
       },
     });
     return;
   } else {
     res.status(200).json({
       success: {
-        title: "Vote Submitted!",
+        title: 'Vote Submitted!',
         description: `You've successfully voted, your vote is now on the mainnet and counted!`,
       },
     });

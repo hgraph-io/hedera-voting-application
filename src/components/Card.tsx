@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Checkbox, Button, Link } from "@mui/material";
-import { Rating } from "@mui/lab";
-import { useRouter } from "next/router";
-import styles from "./Card.module.scss";
+import React, { useState } from 'react';
+import { Checkbox, Button, Link } from '@mui/material';
+import { Rating } from '@mui/lab';
+import { useRouter } from 'next/router';
+import styles from './Card.module.scss';
 
 interface CardProps {
-  type: "view" | "vote" | "approved" | "denied" | "default";
+  type: 'view' | 'vote' | 'approved' | 'denied' | 'default';
   speaker: string;
   moderator: boolean;
   isSelected: boolean;
@@ -30,7 +30,7 @@ export const Card: React.FC<CardProps> = ({
 
   const renderRating = () => {
     // get data from Hedera
-    if (type === "vote" || type === "view") {
+    if (type === 'vote' || type === 'view') {
       return (
         <div>
           {/* <div className={styles.ratingLabel}>Current Rating with {rating.voteNum} votes</div> */}
@@ -42,9 +42,9 @@ export const Card: React.FC<CardProps> = ({
 
   // Map from 'type' to the corresponding display text.
   const typeText = {
-    default: "Pending",
-    denied: "Not Selected",
-    approved: "Approved!",
+    default: 'Pending',
+    denied: 'Not Selected',
+    approved: 'Approved!',
   };
 
   const renderButton = () => {
@@ -76,11 +76,11 @@ export const Card: React.FC<CardProps> = ({
 
         <div className={styles.middle}>
           <div className={styles.titleLabel}>Moderator</div>
-          <div className={styles.title}>{moderator ? "True" : "False"}</div>
+          <div className={styles.title}>{moderator ? 'True' : 'False'}</div>
         </div>
 
         <div className={styles.right}>
-          {type !== "vote" && type !== "view" && (
+          {type !== 'vote' && type !== 'view' && (
             <>
               <Checkbox
                 checked={selected}
@@ -88,7 +88,7 @@ export const Card: React.FC<CardProps> = ({
                 className={styles.checkBox}
                 onChange={() => setSelected(!selected)}
               />
-              {typeText[type]}{" "}
+              {typeText[type]}{' '}
               {/* display the text corresponding to the type */}
             </>
           )}
@@ -96,7 +96,7 @@ export const Card: React.FC<CardProps> = ({
         </div>
       </div>
 
-      {(type === "vote" || type === "view") && (
+      {(type === 'vote' || type === 'view') && (
         <div className={styles.buttonContainer}>{renderButton()}</div>
       )}
     </div>

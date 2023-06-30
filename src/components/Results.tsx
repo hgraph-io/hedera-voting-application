@@ -1,14 +1,14 @@
-import React from "react";
-import styles from "./Results.module.scss";
-import Card from "./Card";
+import React from 'react';
+import styles from './Results.module.scss';
+import Card from './Card';
 
 const Results: React.FC = () => {
   const cards = [
     // Example data for cards
     {
-      type: "denied",
-      speaker: "John Doe",
-      title: "Card 4",
+      type: 'denied',
+      speaker: 'John Doe',
+      title: 'Card 4',
       isSelected: false,
       rating: { voteNum: 50, currentRating: 2 },
     },

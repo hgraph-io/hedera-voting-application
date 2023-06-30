@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Typography, Container, Button } from "@mui/material";
-import { useRouter } from "next/router";
-import CardComponent from "../components/Card";
-import styles from "./AdminDashboard.module.scss";
-import { supabase } from "../supabaseClient";
-import { useUser } from "../contexts/UserContext";
+import React, { useEffect, useState } from 'react';
+import { Typography, Container, Button } from '@mui/material';
+import { useRouter } from 'next/router';
+import CardComponent from '../components/Card';
+import styles from './AdminDashboard.module.scss';
+import { supabase } from '../supabaseClient';
+import { useUser } from '../contexts/UserContext';
 
 const AdminDashboardPage: React.FC = () => {
   const router = useRouter();
@@ -17,15 +17,15 @@ const AdminDashboardPage: React.FC = () => {
     const fetchApplications = async () => {
       // Set loading to true
       user?.setLoading(true);
-      const { data, error } = await supabase.from("applications").select("*");
-      console.log("applications", data);
-      console.log("user", user);
+      const { data, error } = await supabase.from('applications').select('*');
+      console.log('applications', data);
+      console.log('user', user);
 
-      if (error) console.error("Error loading applications", error);
+      if (error) console.error('Error loading applications', error);
       else {
         const apps = data.map((application) => ({
           ...application,
-          type: application.votes.includes(user?.accountId) ? "vote" : "view",
+          type: application.votes.includes(user?.accountId) ? 'vote' : 'view',
         }));
         setApplications(apps);
       }
@@ -36,7 +36,7 @@ const AdminDashboardPage: React.FC = () => {
   }, []);
 
   const handleViewAll = () => {
-    router.push("/admin-results");
+    router.push('/admin-results');
   };
 
   return (

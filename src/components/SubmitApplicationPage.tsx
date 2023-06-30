@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Button,
   TextField,
@@ -9,21 +9,21 @@ import {
   FormLabel,
   Typography,
   Grid,
-} from "@mui/material";
-import { useRouter } from "next/router";
-import styles from "./SubmitApplicationPage.module.scss";
-import { supabase } from "../supabaseClient";
+} from '@mui/material';
+import { useRouter } from 'next/router';
+import styles from './SubmitApplicationPage.module.scss';
+import { supabase } from '../supabaseClient';
 
 const SubmitApplicationPage: React.FC = () => {
-  const [name, setName] = useState("");
-  const [organization, setOrganization] = useState("");
+  const [name, setName] = useState('');
+  const [organization, setOrganization] = useState('');
   const [topics, setTopics] = useState({
     HCS: false,
-    "Smart Contracts": false,
+    'Smart Contracts': false,
     dApps: false,
     Consensus: false,
   });
-  const [links, setLinks] = useState("");
+  const [links, setLinks] = useState('');
   const [interestedInModerator, setInterestedInModerator] = useState(false);
   const router = useRouter();
 
@@ -35,7 +35,7 @@ const SubmitApplicationPage: React.FC = () => {
     event.preventDefault();
 
     if (!name || !organization || !links) {
-      alert("All fields are required.");
+      alert('All fields are required.');
       return;
     }
 
@@ -51,27 +51,27 @@ const SubmitApplicationPage: React.FC = () => {
       name,
       organization,
       topics: selectedTopics,
-      links: links.split(",").map((link: string) => link.trim()),
+      links: links.split(',').map((link: string) => link.trim()),
       moderator: interestedInModerator,
       user_id: user?.id,
     };
 
     try {
       const { error } = await supabase
-        .from("applications")
+        .from('applications')
         .insert(applicationData);
 
       if (error) {
-        console.error("Error submitting application:", error);
-        alert("An error occurred. Please try again.");
+        console.error('Error submitting application:', error);
+        alert('An error occurred. Please try again.');
         return;
       }
 
-      alert("Application submitted successfully.");
-      router.push("/");
+      alert('Application submitted successfully.');
+      router.push('/');
     } catch (error) {
-      console.error("Error submitting application:", error);
-      alert("An error occurred. Please try again.");
+      console.error('Error submitting application:', error);
+      alert('An error occurred. Please try again.');
     }
   };
 
@@ -84,7 +84,7 @@ const SubmitApplicationPage: React.FC = () => {
       <Button
         variant="outlined"
         onClick={goBack}
-        style={{ margin: "20px 0px 30px" }}
+        style={{ margin: '20px 0px 30px' }}
       >
         Go Back
       </Button>
@@ -137,7 +137,7 @@ const SubmitApplicationPage: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={topics["Smart Contracts"]}
+                    checked={topics['Smart Contracts']}
                     onChange={handleTopicChange}
                     name="Smart Contracts"
                   />

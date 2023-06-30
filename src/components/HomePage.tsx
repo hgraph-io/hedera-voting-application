@@ -1,7 +1,7 @@
-import React from "react";
-import Link from "next/link";
-import { Container, Typography, Button } from "@mui/material";
-import styles from "./HomePage.module.scss";
+import React from 'react';
+import Link from 'next/link';
+import { Container, Typography, Button } from '@mui/material';
+import styles from './HomePage.module.scss';
 
 const HomePage: React.FC = () => {
   return (
@@ -22,9 +22,9 @@ const HomePage: React.FC = () => {
         </Typography>
         <div
           style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            marginTop: "2rem",
+            display: 'flex',
+            justifyContent: 'flex-start',
+            marginTop: '2rem',
           }}
         >
           <Link href="/login">

@@ -1,15 +1,15 @@
 // @ts-nocheck
-import axios from "axios";
+import axios from 'axios';
 
 const getVotingData = async (clientAccountId?: string) => {
   const topicId = process.env.VOTING_TOPIC_ID;
   const votingEndpoint = process.env.HGRAPH_ENDPOINT_BETA;
   const votingHeaders = {
-    "content-type": "application/json",
-    "x-api-key": process.env.HGRAPH_KEY,
+    'content-type': 'application/json',
+    'x-api-key': process.env.HGRAPH_KEY,
   };
   const nftVotingQuery = {
-    operationName: "GetVotingHCS",
+    operationName: 'GetVotingHCS',
     query: `query GetVotingHCS($topicId: bigint) {
             topic_message(where: {topic_id: {_eq: $topicId}}, order_by: {consensus_timestamp: asc}) {
                 message
@@ -23,7 +23,7 @@ const getVotingData = async (clientAccountId?: string) => {
   };
   const votingQueryResponse = await axios({
     url: votingEndpoint,
-    method: "post",
+    method: 'post',
     headers: votingHeaders,
     data: nftVotingQuery,
   });
@@ -81,13 +81,13 @@ export default async function handler(req, res) {
     const messageObj = parsedMessageObjs[index];
     console.log(messageObj);
     switch (messageObj.type) {
-      case "ballot":
+      case 'ballot':
         initBallots.push(messageObj);
         break;
-      case "delete-ballot":
+      case 'delete-ballot':
         deletedBallots.push(messageObj);
         break;
-      case "vote":
+      case 'vote':
         votes.push(messageObj);
         break;
     }
@@ -100,7 +100,7 @@ export default async function handler(req, res) {
     ballot.deleted = ballotDeleted;
 
     // Get all ballot votes
-    console.log("raw votes", votes);
+    console.log('raw votes', votes);
     let ballotVotes = votes.filter((vote) => vote.ballotId == ballot.id);
 
     // Add votes to ballot for easy reading by ballot
@@ -124,17 +124,17 @@ export default async function handler(req, res) {
     const currentTimeStamp = new Date().getTime() * 1000000;
 
     // Get state of ballot
-    let state = "";
+    let state = '';
     if (parseInt(ballot.endTimestamp) > currentTimeStamp) {
       if (parseInt(ballot.startTimestamp) < currentTimeStamp) {
-        state = "open";
+        state = 'open';
         ballot.active = true;
       } else {
-        state = "upcoming";
+        state = 'upcoming';
         ballot.active = false;
       }
     } else {
-      state = "closed";
+      state = 'closed';
       ballot.active = false;
     }
 
@@ -142,7 +142,7 @@ export default async function handler(req, res) {
     return ballot;
   });
 
-  console.log("votes", votes);
+  console.log('votes', votes);
   res.status(200).json({ success: { ballots: ballots, votes: votes } });
   return;
 }

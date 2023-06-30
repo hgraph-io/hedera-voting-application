@@ -1,7 +1,7 @@
 //@ts-nocheck
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { HashConnect, HashConnectTypes } from "hashconnect";
-import { supabase } from "../supabaseClient";
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { HashConnect, HashConnectTypes } from 'hashconnect';
+import { supabase } from '../supabaseClient';
 
 type User =
   | {
@@ -31,8 +31,8 @@ const UserContext = createContext<User>(undefined);
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider: React.FC = ({ children }) => {
-  const [accountId, setAccountId] = useState<string>("");
-  const [type, setType] = useState<string>("user");
+  const [accountId, setAccountId] = useState<string>('');
+  const [type, setType] = useState<string>('user');
   const [connected, setConnected] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [hashpackTopicId, setHashpackTopicId] = useState<string | undefined>(
@@ -44,9 +44,9 @@ export const UserProvider: React.FC = ({ children }) => {
   const disconnectHashpack = async () => {
     if (hashpackTopicId) {
       await hashconnect.disconnect(hashpackTopicId);
-      setAccountId("");
+      setAccountId('');
       setConnected(false);
-      setType("user");
+      setType('user');
     }
   };
 
@@ -54,12 +54,12 @@ export const UserProvider: React.FC = ({ children }) => {
     setLoading(true);
 
     let appMetadata: HashConnectTypes.AppMetadata = {
-      name: "Hedera Voting Application",
-      description: "Voting Application Created By Hedera",
-      icon: "https://launch.turtlemoon.io/_next/static/media/default-profile-picture.75ccdb8e.png",
+      name: 'Hedera Voting Application',
+      description: 'Voting Application Created By Hedera',
+      icon: 'https://launch.turtlemoon.io/_next/static/media/default-profile-picture.75ccdb8e.png',
     };
 
-    let initData = await hashconnect.init(appMetadata, "testnet", false);
+    let initData = await hashconnect.init(appMetadata, 'testnet', false);
     let topic = initData.savedPairings[0]
       ? initData.savedPairings[0].topic
       : initData.topic;
@@ -89,22 +89,22 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const checkAdminStatus = async (accountId: string): Promise<string> => {
     const { data: adminAccounts, error } = await supabase
-      .from("admin_accounts")
-      .select("accountId")
-      .eq("accountId", accountId);
+      .from('admin_accounts')
+      .select('accountId')
+      .eq('accountId', accountId);
 
     if (error) {
-      console.error("Error: ", error);
-      return "user";
+      console.error('Error: ', error);
+      return 'user';
     } else if (adminAccounts && adminAccounts.length > 0) {
-      return "admin";
+      return 'admin';
     } else {
-      return "user";
+      return 'user';
     }
   };
 
   useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem("voting_user") || "{}");
+    const savedUser = JSON.parse(localStorage.getItem('voting_user') || '{}');
 
     if (savedUser && savedUser.accountId) {
       setAccountId(savedUser.accountId);
@@ -114,7 +114,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem(
-      "voting_user",
+      'voting_user',
       JSON.stringify({ accountId, connected })
     );
   }, [accountId, connected]);

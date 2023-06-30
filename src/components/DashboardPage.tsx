@@ -1,11 +1,11 @@
 //@ts-nocheck
-import React, { useState, useEffect } from "react";
-import { Typography, Container, Button, CircularProgress } from "@mui/material";
-import { useRouter } from "next/router";
-import CardComponent from "../components/Card";
-import styles from "./DashboardPage.module.scss";
-import { supabase } from "../supabaseClient";
-import { useUser } from "../contexts/UserContext";
+import React, { useState, useEffect } from 'react';
+import { Typography, Container, Button, CircularProgress } from '@mui/material';
+import { useRouter } from 'next/router';
+import CardComponent from '../components/Card';
+import styles from './DashboardPage.module.scss';
+import { supabase } from '../supabaseClient';
+import { useUser } from '../contexts/UserContext';
 
 const DashboardPage: React.FC = () => {
   const router = useRouter();
@@ -19,11 +19,11 @@ const DashboardPage: React.FC = () => {
         data: { user: sbUser },
       } = await supabase.auth.getUser();
       const { data, error } = await supabase
-        .from("applications")
-        .select("*")
-        .eq("user_id", sbUser?.id);
+        .from('applications')
+        .select('*')
+        .eq('user_id', sbUser?.id);
 
-      if (error) console.error("Error loading applications", error);
+      if (error) console.error('Error loading applications', error);
       // @ts-ignore
       else setApplications(data);
       user?.setLoading(false); // stop loading
@@ -57,7 +57,7 @@ const DashboardPage: React.FC = () => {
         <Button
           className={styles.buttonContainer}
           variant="contained"
-          onClick={() => router.replace("/application/create")}
+          onClick={() => router.replace('/application/create')}
         >
           Submit New Application
         </Button>
