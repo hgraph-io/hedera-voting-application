@@ -46,11 +46,12 @@ const AdminDashboardPage: React.FC = () => {
         <Typography component="p">
           Welcome to the Admin Panel of the Hedera Voting Application!
         </Typography>
-        <Typography component="p">
-          This is your command center for managing all aspects of the voting process. Monitor
-          voter registrations, oversee ballot details, and analyze real-time voting data.
+        <Typography component="p" gutterBottom>
+          This is your command center for managing all aspects of the voting process. Monitor voter registrations, oversee ballot details, and analyze real-time voting data.
         </Typography>
-        <Button onClick={handleViewAll}>View All</Button>
+        <Button variant="outlined" onClick={handleViewAll}>
+          View All
+        </Button>
       </div>
 
       <Typography variant="h4">Applications</Typography>
