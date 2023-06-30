@@ -1,73 +1,79 @@
 //@ts-nocheck
-import React, {useState, createContext, useEffect, useContext} from 'react';
-import { AppProps } from 'next/app';
-import { ThemeProvider, CssBaseline, createTheme, CircularProgress, Backdrop } from '@mui/material';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { HashConnect, HashConnectTypes } from 'hashconnect';
-import '../styles/globals.scss';
-import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs';
-import { SessionContextProvider, Session } from '@supabase/auth-helpers-react';
+import React, { useState, createContext, useEffect, useContext } from "react";
+import { AppProps } from "next/app";
+import {
+  ThemeProvider,
+  CssBaseline,
+  createTheme,
+  CircularProgress,
+  Backdrop,
+} from "@mui/material";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { HashConnect, HashConnectTypes } from "hashconnect";
+import "../styles/globals.scss";
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 
-import { SnackbarProvider } from '../contexts/SnackbarContext';
-import { UserProvider, useUser } from '../contexts/UserContext';
+import { SnackbarProvider } from "../contexts/SnackbarContext";
+import { UserProvider, useUser } from "../contexts/UserContext";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#7048E8',
-      contrastText: '#ffcc00',
+      main: "#7048E8",
+      contrastText: "#ffcc00",
     },
     secondary: {
-      light: '#51CF66',
-      main: '#7048E8',
-      contrastText: '#ffcc00',
+      light: "#51CF66",
+      main: "#7048E8",
+      contrastText: "#ffcc00",
     },
     text: {
-      primary: '#212429',
-      secondary: '#495057',
+      primary: "#212429",
+      secondary: "#495057",
     },
   },
   typography: {
-    fontFamily: 'Styrene A Web, Arial',
+    fontFamily: "Styrene A Web, Arial",
   },
   components: {
     MuiButton: {
       styleOverrides: {
         text: {
-          height: '32px',
-          minWidth: '200px',
-          borderRadius: '50px',
-          border:'none',
-          color: '#212429',
-          background: '#F9F9F9',
-          textTransform: 'capitalize',
-          '&:hover': {
-            backgroundColor: 'linear-gradient(45deg, #21A056, #3EC878)',
+          height: "32px",
+          minWidth: "200px",
+          borderRadius: "50px",
+          border: "none",
+          color: "#212429",
+          background: "#F9F9F9",
+          textTransform: "capitalize",
+          "&:hover": {
+            backgroundColor: "linear-gradient(45deg, #21A056, #3EC878)",
           },
         },
         contained: {
-          height: '32px',
-          minWidth: '200px',
-          borderRadius: '50px',
-          border:'none',
-          color: '#F9F9F9',
-          background: '#8259EF',
-          textTransform: 'capitalize',
-          '&:hover': {
-            backgroundColor: 'linear-gradient(45deg, #21A056, #3EC878)',
+          height: "32px",
+          minWidth: "200px",
+          borderRadius: "50px",
+          border: "none",
+          color: "#F9F9F9",
+          background: "#8259EF",
+          textTransform: "capitalize",
+          "&:hover": {
+            backgroundColor: "linear-gradient(45deg, #21A056, #3EC878)",
           },
         },
         outlined: {
-          height: '32px',
-          minWidth: '200px',
-          color: '#212429',
-          border: '1px solid #212429',
-          borderRadius: '50px',
-          textTransform: 'capitalize',
-          '&:hover': {
-            color: '#FFFFFF',
-            backgroundColor: '#7048E8',
+          height: "32px",
+          minWidth: "200px",
+          color: "#212429",
+          border: "1px solid #212429",
+          borderRadius: "50px",
+          textTransform: "capitalize",
+          "&:hover": {
+            color: "#FFFFFF",
+            backgroundColor: "#7048E8",
           },
         },
       },
@@ -75,7 +81,7 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          margin: '20px 0px 0px',
+          margin: "20px 0px 0px",
         },
       },
     },
@@ -84,16 +90,15 @@ const theme = createTheme({
 const LoadingBackdrop = () => {
   const user = useUser();
   return (
-    <Backdrop open={user.loading} style={{zIndex: 9999, color: '#fff'}}>
+    <Backdrop open={user.loading} style={{ zIndex: 9999, color: "#fff" }}>
       <CircularProgress color="inherit" />
     </Backdrop>
   );
 };
 
-
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   // Create a new supabase browser client on every first render.
-  const [supabaseClient] = useState(() => createPagesBrowserClient())
+  const [supabaseClient] = useState(() => createPagesBrowserClient());
 
   return (
     <SessionContextProvider
@@ -104,13 +109,19 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <ThemeProvider theme={theme}>
           <SnackbarProvider>
             <CssBaseline />
-            <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+              }}
+            >
               <Header />
-              <main style={{flex: '1 0 auto'}}>
+              <main style={{ flex: "1 0 auto" }}>
                 <Component {...pageProps} />
                 <LoadingBackdrop />
               </main>
-              <footer style={{flexShrink: 0}}>
+              <footer style={{ flexShrink: 0 }}>
                 <Footer />
               </footer>
             </div>
@@ -119,6 +130,6 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       </UserProvider>
     </SessionContextProvider>
   );
-}
+};
 
 export default MyApp;

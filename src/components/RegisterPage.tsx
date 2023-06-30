@@ -1,27 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useUser } from '../contexts/UserContext';
-import { useSnackbar } from '../contexts/SnackbarContext';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import styles from './RegisterPage.module.scss';
-
+import React, { useState, useEffect } from "react";
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useUser } from "../contexts/UserContext";
+import { useSnackbar } from "../contexts/SnackbarContext";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import styles from "./RegisterPage.module.scss";
 
 const RegisterPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [method, setMethod] = useState('Email');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [method, setMethod] = useState("Email");
   const { openSnackbar } = useSnackbar();
   const user = useUser();
   const supabase = createClientComponentClient();
   const router = useRouter();
 
   const handleSignUp = async () => {
-    
     if (password !== confirmPassword) {
-      return openSnackbar('Passwords do not match', 'error');
+      return openSnackbar("Passwords do not match", "error");
     }
 
     try {
@@ -43,13 +50,15 @@ const RegisterPage: React.FC = () => {
   };
 
   const handleRegister = async () => {
-    
     try {
       const response = await user?.initWalletConnect(false);
       console.log(response);
     } catch (error) {
       // @ts-ignore
-      openSnackbar(error.response?.data?.error || 'Registration failed', 'error');
+      openSnackbar(
+        error.response?.data?.error || "Registration failed",
+        "error"
+      );
     }
   };
 
@@ -68,11 +77,11 @@ const RegisterPage: React.FC = () => {
             label="Method"
             onChange={(e) => setMethod(e.target.value)}
           >
-            <MenuItem value={'Email'}>Email</MenuItem>
-            <MenuItem value={'Hashpack'}>Hashpack</MenuItem>
+            <MenuItem value={"Email"}>Email</MenuItem>
+            <MenuItem value={"Hashpack"}>Hashpack</MenuItem>
           </Select>
         </FormControl>
-        {method === 'Email' ? (
+        {method === "Email" ? (
           <>
             <TextField
               margin="normal"
@@ -100,16 +109,30 @@ const RegisterPage: React.FC = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <Button variant="contained" color="primary" fullWidth onClick={handleSignUp}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={handleSignUp}
+            >
               Sign Up
             </Button>
           </>
         ) : (
-          <Button variant="contained" color="primary" fullWidth onClick={handleRegister}>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleRegister}
+          >
             Sign Up with Hashpack
           </Button>
         )}
-        <Button variant="outlined" fullWidth onClick={() => router.push('/admin-login')}>
+        <Button
+          variant="outlined"
+          fullWidth
+          onClick={() => router.push("/admin-login")}
+        >
           Admin Login
         </Button>
       </form>

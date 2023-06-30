@@ -1,4 +1,4 @@
-@import 'variables';
+@import "variables";
 
 .adminDashboard {
   display: flex;
@@ -10,7 +10,7 @@
 }
 
 .title {
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
 }
 
 .backButton {
@@ -31,9 +31,9 @@
 
 .topicContainer {
   position: relative;
-  margin-top: 10px; 
-  width: 100px; 
-  display: flex; 
+  margin-top: 10px;
+  width: 100px;
+  display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
@@ -55,7 +55,8 @@
     margin-bottom: 10px;
   }
 
-  .topics, .links {
+  .topics,
+  .links {
     margin-bottom: 10px;
 
     li {

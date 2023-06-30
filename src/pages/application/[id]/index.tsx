@@ -1,31 +1,35 @@
 // @ts-nocheck
-import React from 'react';
-import { GetStaticPaths, GetStaticProps } from 'next';
-import axios from 'axios';
-import ApplicationPage from '../../../components/ApplicationPage'
-import { supabase } from '../../../supabaseClient';
-import withAdmin from '../../../helpers/withAdmin'; // import the withAdmin HOC
+import React from "react";
+import { GetStaticPaths, GetStaticProps } from "next";
+import axios from "axios";
+import ApplicationPage from "../../../components/ApplicationPage";
+import { supabase } from "../../../supabaseClient";
+import withAdmin from "../../../helpers/withAdmin"; // import the withAdmin HOC
 
 // Get Metadata string
 const getMetadataString = (hexx: any) => {
   let hex = hexx.toString();
-  hex = hex.split('\\x')[1]
-  let str = '';
+  hex = hex.split("\\x")[1];
+  let str = "";
   for (let i = 0; i < hex.length; i += 2)
-      str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
   return str;
-}
+};
 
-console.log('before call')
+console.log("before call");
 // Fetch votes
-async function fetchVotes(topicId: number, lastSequenceNumber = 0, limit = 1000) {
+async function fetchVotes(
+  topicId: number,
+  lastSequenceNumber = 0,
+  limit = 1000
+) {
   const response = await fetch(process.env.HGRAPH_ENDPOINT_BETA, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': process.env.HGRAPH_KEY,
+      "Content-Type": "application/json",
+      "x-api-key": process.env.HGRAPH_KEY,
     },
-    
+
     body: JSON.stringify({
       operationName: "GetVotingData",
       query: `
@@ -50,15 +54,17 @@ async function fetchVotes(topicId: number, lastSequenceNumber = 0, limit = 1000)
   });
 
   const res = await response.json();
-  console.log('body',res.data.topic_message)
+  console.log("body", res.data.topic_message);
 
   const initVotes = res.data.topic_message;
-  const decodedVotes = initVotes.map((v) => { return {...v, ...JSON.parse(getMetadataString(v.message)), message: null}})
+  const decodedVotes = initVotes.map((v) => {
+    return { ...v, ...JSON.parse(getMetadataString(v.message)), message: null };
+  });
 
   if (decodedVotes.length < limit) {
     return decodedVotes;
   }
-  console.log('decodedVotes',decodedVotes)
+  console.log("decodedVotes", decodedVotes);
   const lastVote = decodedVotes[decodedVotes.length - 1];
   const moreVotes = await fetchVotes(topicId, lastVote.sequence_number, limit);
 
@@ -70,44 +76,47 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // You would replace '/api/voting-data' with the relevant endpoint for your application.
 
   let { data: applications, error } = await supabase
-    .from('applications')
-    .select('*')
-    console.log('applications', applications)
+    .from("applications")
+    .select("*");
+  console.log("applications", applications);
 
   const paths = applications.map((application) => ({
     params: { id: application.id.toString() },
   }));
 
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: "blocking" };
 };
-
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params;
   const topicId = Number(process.env.VOTING_TOPIC_ID);
 
   let { data: applications, error } = await supabase
-    .from('applications')
-    .select('*')
+    .from("applications")
+    .select("*");
 
   let application = applications.filter((a) => a.id === Number(id));
-  
+
   const votes = await fetchVotes(topicId, 0, 1000);
 
-  let applicationVotes = votes.filter((v) =>  Number(v.ballotId.split('-')[1]) === Number(id));
-  console.log('votes', votes)
-  console.log('applicationVotes', applicationVotes)
+  let applicationVotes = votes.filter(
+    (v) => Number(v.ballotId.split("-")[1]) === Number(id)
+  );
+  console.log("votes", votes);
+  console.log("applicationVotes", applicationVotes);
   return {
     props: {
-      applicationData: application, 
-      votes: applicationVotes
+      applicationData: application,
+      votes: applicationVotes,
     },
     revalidate: 10, // In seconds
   };
 };
 
-
-const Proposal: React.FC<{ applicationData: any[], votes:any[] }> = ({ applicationData, votes }) => {
+const Proposal: React.FC<{ applicationData: any[]; votes: any[] }> = ({
+  applicationData,
+  votes,
+}) => {
   return <ApplicationPage applicationData={applicationData} votes={votes} />;
 };
 

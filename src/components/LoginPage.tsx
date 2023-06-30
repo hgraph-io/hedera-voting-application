@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { useRouter } from 'next/router';
-import { useSnackbar } from '../contexts/SnackbarContext';
-import { supabase } from '../supabaseClient';
-import styles from './LoginPage.module.scss';
-
+import React, { useState } from "react";
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
+import { useRouter } from "next/router";
+import { useSnackbar } from "../contexts/SnackbarContext";
+import { supabase } from "../supabaseClient";
+import styles from "./LoginPage.module.scss";
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [method, setMethod] = useState('Email');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [method, setMethod] = useState("Email");
 
   const router = useRouter();
   const { openSnackbar } = useSnackbar();
@@ -21,7 +29,7 @@ const LoginPage: React.FC = () => {
     });
 
     if (error) {
-      openSnackbar(error.message, 'error');
+      openSnackbar(error.message, "error");
     } else {
       router.push("/dashboard");
     }
@@ -42,11 +50,11 @@ const LoginPage: React.FC = () => {
             label="Method"
             onChange={(e) => setMethod(e.target.value)}
           >
-            <MenuItem value={'Email'}>Email</MenuItem>
-            <MenuItem value={'Hashpack'}>Hashpack</MenuItem>
+            <MenuItem value={"Email"}>Email</MenuItem>
+            <MenuItem value={"Hashpack"}>Hashpack</MenuItem>
           </Select>
         </FormControl>
-        {method === 'Email' ? (
+        {method === "Email" ? (
           <>
             <TextField
               margin="normal"
@@ -65,16 +73,30 @@ const LoginPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button variant="contained" color="primary" fullWidth onClick={handleSignIn}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={handleSignIn}
+            >
               Login
             </Button>
           </>
         ) : (
-          <Button variant="contained" color="primary" fullWidth onClick={handleSignIn}>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleSignIn}
+          >
             Login with Hashpack
           </Button>
         )}
-        <Button variant="outlined" fullWidth onClick={() => router.push('/admin-login')}>
+        <Button
+          variant="outlined"
+          fullWidth
+          onClick={() => router.push("/admin-login")}
+        >
           Admin Login
         </Button>
       </form>
