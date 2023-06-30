@@ -56,6 +56,7 @@ const RegisterPage: React.FC = () => {
     } catch (error) {
       // @ts-ignore
       openSnackbar(
+        // @ts-ignore
         error.response?.data?.error || 'Registration failed',
         'error'
       );
@@ -109,30 +110,16 @@ const RegisterPage: React.FC = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={handleSignUp}
-            >
+            <Button variant="contained" color="primary" fullWidth onClick={handleSignUp}>
               Sign Up
             </Button>
           </>
         ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={handleRegister}
-          >
+          <Button variant="contained" color="primary" fullWidth onClick={handleRegister}>
             Sign Up with Hashpack
           </Button>
         )}
-        <Button
-          variant="outlined"
-          fullWidth
-          onClick={() => router.push('/admin-login')}
-        >
+        <Button variant="outlined" fullWidth onClick={() => router.push('/admin-login')}>
           Admin Login
         </Button>
       </form>

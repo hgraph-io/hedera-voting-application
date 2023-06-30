@@ -57,9 +57,7 @@ const SubmitApplicationPage: React.FC = () => {
     };
 
     try {
-      const { error } = await supabase
-        .from('applications')
-        .insert(applicationData);
+      const { error } = await supabase.from('applications').insert(applicationData);
 
       if (error) {
         console.error('Error submitting application:', error);
@@ -81,11 +79,7 @@ const SubmitApplicationPage: React.FC = () => {
 
   return (
     <Container className={styles.submitApplication}>
-      <Button
-        variant="outlined"
-        onClick={goBack}
-        style={{ margin: '20px 0px 30px' }}
-      >
+      <Button variant="outlined" onClick={goBack} style={{ margin: '20px 0px 30px' }}>
         Go Back
       </Button>
 
@@ -126,11 +120,7 @@ const SubmitApplicationPage: React.FC = () => {
             <FormGroup>
               <FormControlLabel
                 control={
-                  <Checkbox
-                    checked={topics.HCS}
-                    onChange={handleTopicChange}
-                    name="HCS"
-                  />
+                  <Checkbox checked={topics.HCS} onChange={handleTopicChange} name="HCS" />
                 }
                 label="HCS"
               />
@@ -146,11 +136,7 @@ const SubmitApplicationPage: React.FC = () => {
               />
               <FormControlLabel
                 control={
-                  <Checkbox
-                    checked={topics.dApps}
-                    onChange={handleTopicChange}
-                    name="dApps"
-                  />
+                  <Checkbox checked={topics.dApps} onChange={handleTopicChange} name="dApps" />
                 }
                 label="dApps"
               />

@@ -71,17 +71,8 @@ export default function Header() {
   ];
 
   const renderLink = ({ label, path }: Route) => (
-    <Link
-      href={path}
-      onClick={!isDesktop ? handleDrawerToggle : () => {}}
-      passHref
-      key={path}
-    >
-      <div
-        className={router.pathname === path ? styles.activeLink : styles.link}
-      >
-        {label}
-      </div>
+    <Link href={path} onClick={!isDesktop ? handleDrawerToggle : () => {}} passHref key={path}>
+      <div className={router.pathname === path ? styles.activeLink : styles.link}>{label}</div>
     </Link>
   );
 
@@ -107,18 +98,12 @@ export default function Header() {
                   {!user?.supabaseSession ? (
                     <>
                       <Link href="/register">
-                        <Button
-                          variant="outlined"
-                          className={styles.signupButton}
-                        >
+                        <Button variant="outlined" className={styles.signupButton}>
                           Sign Up
                         </Button>
                       </Link>
                       <Link href="/login">
-                        <Button
-                          variant="contained"
-                          className={styles.loginButton}
-                        >
+                        <Button variant="contained" className={styles.loginButton}>
                           Login
                         </Button>
                       </Link>
@@ -172,18 +157,12 @@ export default function Header() {
                     {!user?.connected ? (
                       <>
                         <Link href="/register">
-                          <Button
-                            onClick={handleDrawerToggle}
-                            variant="outlined"
-                          >
+                          <Button onClick={handleDrawerToggle} variant="outlined">
                             Sign Up
                           </Button>
                         </Link>
                         <Link href="/login">
-                          <Button
-                            variant="contained"
-                            className={styles.loginButton}
-                          >
+                          <Button variant="contained" className={styles.loginButton}>
                             Login
                           </Button>
                         </Link>

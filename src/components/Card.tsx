@@ -50,9 +50,7 @@ export const Card: React.FC<CardProps> = ({
   const renderButton = () => {
     return (
       <>
-        <div className={styles.buttonLabel}>
-          You didn’t vote on this application yet
-        </div>
+        <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
         <Link href={`/application/${id}`}>
           <Button className={styles.cardButton} variant="contained">
             {type}
@@ -63,10 +61,7 @@ export const Card: React.FC<CardProps> = ({
   };
 
   return (
-    <div
-      className={`${styles.cardContainer} ${styles[type]}`}
-      onClick={() => {}}
-    >
+    <div className={`${styles.cardContainer} ${styles[type]}`} onClick={() => {}}>
       <div className={`${styles.card} ${styles[type]}`} onClick={() => {}}>
         <div className={styles.left}>
           <div className={styles.bar}></div>
@@ -88,8 +83,7 @@ export const Card: React.FC<CardProps> = ({
                 className={styles.checkBox}
                 onChange={() => setSelected(!selected)}
               />
-              {typeText[type]}{' '}
-              {/* display the text corresponding to the type */}
+              {typeText[type]} {/* display the text corresponding to the type */}
             </>
           )}
           {renderRating()}

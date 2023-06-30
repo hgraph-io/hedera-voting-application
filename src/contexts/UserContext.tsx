@@ -35,9 +35,7 @@ export const UserProvider: React.FC = ({ children }) => {
   const [type, setType] = useState<string>('user');
   const [connected, setConnected] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [hashpackTopicId, setHashpackTopicId] = useState<string | undefined>(
-    undefined
-  );
+  const [hashpackTopicId, setHashpackTopicId] = useState<string | undefined>(undefined);
   const hashconnect = new HashConnect();
   const [supabaseSession, setSupabaseSession] = useState();
 
@@ -60,9 +58,7 @@ export const UserProvider: React.FC = ({ children }) => {
     };
 
     let initData = await hashconnect.init(appMetadata, 'testnet', false);
-    let topic = initData.savedPairings[0]
-      ? initData.savedPairings[0].topic
-      : initData.topic;
+    let topic = initData.savedPairings[0] ? initData.savedPairings[0].topic : initData.topic;
     let pairingString = initData.pairingString;
 
     setHashpackTopicId(topic);
@@ -113,10 +109,7 @@ export const UserProvider: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(
-      'voting_user',
-      JSON.stringify({ accountId, connected })
-    );
+    localStorage.setItem('voting_user', JSON.stringify({ accountId, connected }));
   }, [accountId, connected]);
 
   useEffect(() => {

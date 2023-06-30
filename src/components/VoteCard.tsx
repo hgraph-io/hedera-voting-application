@@ -21,38 +21,26 @@ interface VoteCardProps {
   type: 'vote' | 'view';
 }
 
-export const VoteCard: React.FC<VoteCardProps> = ({
-  id,
-  rating,
-  type,
-  hederaMainnetUrl,
-}) => {
+export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMainnetUrl }) => {
   const [userVote, setUserVote] = useState<number | null>(0);
   const user = useUser();
   const { accountId } = user || {};
 
   const renderRating = () => (
     <div>
-      <div className={styles.ratingLabel}>
-        Current Rating with {rating.voteNum} votes
-      </div>
+      <div className={styles.ratingLabel}>Current Rating with {rating.voteNum} votes</div>
       <Rating
         className={styles.ratingContainer}
         name="rating"
         value={rating.currentRating}
         readOnly
         icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-        emptyIcon={
-          <StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />
-        }
+        emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
       />
     </div>
   );
 
-  const handleVoteChange = (
-    event: React.ChangeEvent<{}>,
-    newValue: number | null
-  ) => {
+  const handleVoteChange = (event: React.ChangeEvent<{}>, newValue: number | null) => {
     setUserVote(newValue);
   };
 
@@ -77,14 +65,8 @@ export const VoteCard: React.FC<VoteCardProps> = ({
     if (type === 'vote') {
       return (
         <div className={styles.buttonContainer}>
-          <div className={styles.buttonLabel}>
-            You didn’t vote on this application yet
-          </div>
-          <Button
-            className={styles.cardButton}
-            variant="contained"
-            onClick={handleVoteSubmit}
-          >
+          <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
+          <Button className={styles.cardButton} variant="contained" onClick={handleVoteSubmit}>
             Submit Vote
           </Button>
         </div>
@@ -94,9 +76,7 @@ export const VoteCard: React.FC<VoteCardProps> = ({
     if (type === 'view') {
       return (
         <div className={styles.buttonContainer}>
-          <div className={styles.buttonLabel}>
-            View your vote on the Hedera mainnet
-          </div>
+          <div className={styles.buttonLabel}>View your vote on the Hedera mainnet</div>
           <Button
             className={styles.cardButton}
             variant="contained"
@@ -128,9 +108,7 @@ export const VoteCard: React.FC<VoteCardProps> = ({
             value={rating.currentRating}
             onChange={handleVoteChange}
             icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-            emptyIcon={
-              <StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />
-            }
+            emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
           />
         </div>
 

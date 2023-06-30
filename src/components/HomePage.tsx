@@ -7,18 +7,12 @@ const HomePage: React.FC = () => {
   return (
     <Container className={styles.homePageContainer}>
       <div className={styles.homePageHero}>
-        <Typography
-          component="h1"
-          variant="h2"
-          align="left"
-          color="contrastText"
-          gutterBottom
-        >
+        <Typography component="h1" variant="h2" align="left" color="contrastText" gutterBottom>
           Voting Platform
         </Typography>
         <Typography variant="h5" align="left" color="contrastText" paragraph>
-          Here is a brief description of our application. You can put any text
-          here that suits your needs.
+          Here is a brief description of our application. You can put any text here that suits
+          your needs.
         </Typography>
         <div
           style={{

@@ -50,10 +50,7 @@ interface Props {
   votes: Votes[];
 }
 
-const ApplicationPage: React.FC<Props> = ({
-  applicationData,
-  votes: votesData,
-}) => {
+const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData }) => {
   console.log('votesData', votesData);
   const [votes, setVotes] = useState<VoteData[]>([]);
   const [userVote, setUserVote] = useState<number>(4);
@@ -78,6 +75,7 @@ const ApplicationPage: React.FC<Props> = ({
     //@ts-ignore
     userVoteData &&
       setVoteLink(
+        // @ts-ignore
         `https://explore.lworks.io/mainnet/topics/0.0.1350036/messages/${userVoteData.sequence_number}`
       );
 
@@ -116,17 +114,12 @@ const ApplicationPage: React.FC<Props> = ({
   };
 
   // determine whether user can vote or not
-  const canVote =
-    type === 'admin' && !votes.find((vote) => vote.accountId === accountId);
+  const canVote = type === 'admin' && !votes.find((vote) => vote.accountId === accountId);
 
   return (
     <Grid container spacing={3} className={styles.adminDashboard}>
       <Grid item xs={12}>
-        <Button
-          variant="outlined"
-          onClick={goBack}
-          className={styles.backButton}
-        >
+        <Button variant="outlined" onClick={goBack} className={styles.backButton}>
           Back
         </Button>
       </Grid>
@@ -187,8 +180,7 @@ const ApplicationPage: React.FC<Props> = ({
                       type="vote"
                       rating={{
                         voteNum: votes.length,
-                        currentRating:
-                          votes.reduce((a, v) => a + v.vote, 0) / votes.length,
+                        currentRating: votes.reduce((a, v) => a + v.vote, 0) / votes.length,
                       }}
                     />
                   </Grid>
@@ -208,39 +200,24 @@ const ApplicationPage: React.FC<Props> = ({
                 )}
                 <Grid item xs={12}>
                   <div className={styles.titleRow}>
-                    <Typography variant="h4">Total Votes</Typography> (
-                    {votes.length} votes)
+                    <Typography variant="h4">Total Votes</Typography> ({votes.length} votes)
                   </div>
                   <div className={styles.rating}>
                     <Rating
                       className={styles.ratingContainer}
                       name="user-rating"
                       value={voteAverage}
-                      icon={
-                        <StarBorderIcon
-                          style={{ color: '#07E78E', fontSize: 40 }}
-                        />
-                      }
-                      emptyIcon={
-                        <StarBorderIcon
-                          style={{ color: '#ebebeb', fontSize: 40 }}
-                        />
-                      }
+                      icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+                      emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
                     />
                   </div>
-                  <Typography variant="body2">
-                    {voteAverage} out of 5
-                  </Typography>
+                  <Typography variant="body2">{voteAverage} out of 5</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography variant="body1">
-                    Below you can see all of the current votes on this
-                    application:
+                    Below you can see all of the current votes on this application:
                   </Typography>
-                  <TableContainer
-                    component={Paper}
-                    className={styles.voteTable}
-                  >
+                  <TableContainer component={Paper} className={styles.voteTable}>
                     <Table>
                       <TableBody>
                         {votes.map((vote) => (

@@ -73,30 +73,16 @@ const LoginPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={handleSignIn}
-            >
+            <Button variant="contained" color="primary" fullWidth onClick={handleSignIn}>
               Login
             </Button>
           </>
         ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={handleSignIn}
-          >
+          <Button variant="contained" color="primary" fullWidth onClick={handleSignIn}>
             Login with Hashpack
           </Button>
         )}
-        <Button
-          variant="outlined"
-          fullWidth
-          onClick={() => router.push('/admin-login')}
-        >
+        <Button variant="outlined" fullWidth onClick={() => router.push('/admin-login')}>
           Admin Login
         </Button>
       </form>

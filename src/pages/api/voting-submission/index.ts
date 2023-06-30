@@ -31,10 +31,7 @@ const submitTopicMessage = async (jsonb: any, settings: any) => {
 
   // Encrypt if true
   if (settings.encrypted) {
-    jsonb_string = CryptoJS.AES.encrypt(
-      jsonb_string,
-      settings.secretPassphrase
-    ).toString();
+    jsonb_string = CryptoJS.AES.encrypt(jsonb_string, settings.secretPassphrase).toString();
   }
 
   // Submit topic id message
@@ -119,12 +116,8 @@ const votingSubmission = async (ballotObject: any) => {
   const delay = new Promise((resolve) => setTimeout(resolve, 6500));
   await delay;
 
-  const { initialMessageObjArray } = await getVotingStatusByAccountId(
-    ballotObject.accountId
-  );
-  const allHolderVotes = initialMessageObjArray.filter(
-    (obj) => obj.type === 'vote'
-  );
+  const { initialMessageObjArray } = await getVotingStatusByAccountId(ballotObject.accountId);
+  const allHolderVotes = initialMessageObjArray.filter((obj) => obj.type === 'vote');
   const allBallotVotes = allHolderVotes.filter(
     (vote) => vote.ballotId === ballotObject.ballotId
   );
@@ -146,12 +139,8 @@ const votingSubmission = async (ballotObject: any) => {
     return 'duplicate-votes';
   }
 
-  const operatorId = AccountId.fromString(
-    process.env.GLOBAL_TMLP_TOPIC_ACCOUNT_ID
-  );
-  const operatorKey = PrivateKey.fromString(
-    process.env.GLOBAL_TMLP_TOPIC_ACCOUNT_PK
-  );
+  const operatorId = AccountId.fromString(process.env.GLOBAL_TMLP_TOPIC_ACCOUNT_ID);
+  const operatorKey = PrivateKey.fromString(process.env.GLOBAL_TMLP_TOPIC_ACCOUNT_PK);
   const client = await Client.forMainnet().setOperator(operatorId, operatorKey);
 
   const jsonb = {

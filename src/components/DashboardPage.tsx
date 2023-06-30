@@ -35,24 +35,16 @@ const DashboardPage: React.FC = () => {
   return (
     <Container maxWidth="md" className={styles.dashboardContainer}>
       <div className={styles.header}>
-        <Typography
-          component="h1"
-          variant="h3"
-          align="left"
-          color="textPrimary"
-          gutterBottom
-        >
+        <Typography component="h1" variant="h3" align="left" color="textPrimary" gutterBottom>
           Dashboard
         </Typography>
         <Typography align="left" color="textSecondary">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          viverra sed justo vestibulum commodo. Phasellus id urna mollis,
-          sollicitudin neque eu, dictum purus. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Vestibulum viverra sed justo vestibulum
-          commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum
-          purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Vestibulum viverra sed justo vestibulum commodo. Phasellus id urna
-          mollis, sollicitudin neque eu, dictum purus.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
+          vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
+          vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
+          vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
         </Typography>
         <Button
           className={styles.buttonContainer}
@@ -63,9 +55,7 @@ const DashboardPage: React.FC = () => {
         </Button>
       </div>
       <div className={styles.cardContainer}>
-        {applications.length > 0 && (
-          <Typography variant="h4">Previous Applications</Typography>
-        )}
+        {applications.length > 0 && <Typography variant="h4">Previous Applications</Typography>}
         <div className={styles.cardContainer}>
           {applications.map((application, index) => (
             <CardComponent

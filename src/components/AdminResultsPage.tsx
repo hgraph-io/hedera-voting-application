@@ -64,9 +64,8 @@ const AdminResultsPage: React.FC = () => {
 
       <Typography variant="h3">Voting Results</Typography>
       <Typography>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-        viverra sed justo vestibulum commodo. Phasellus id urna mollis,
-        sollicitudin neque eu, dictum purus.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
+        vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
       </Typography>
 
       <Typography variant="h3">Approved Applications</Typography>

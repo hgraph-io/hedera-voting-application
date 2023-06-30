@@ -18,11 +18,7 @@ const getMetadataString = (hexx: any) => {
 
 console.log('before call');
 // Fetch votes
-async function fetchVotes(
-  topicId: number,
-  lastSequenceNumber = 0,
-  limit = 1000
-) {
+async function fetchVotes(topicId: number, lastSequenceNumber = 0, limit = 1000) {
   const response = await fetch(process.env.HGRAPH_ENDPOINT_BETA, {
     method: 'POST',
     headers: {
@@ -75,12 +71,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // Make an API call to get all possible IDs (or other dynamic route value).
   // You would replace '/api/voting-data' with the relevant endpoint for your application.
 
-  let { data: applications, error } = await supabase
-    .from('applications')
-    .select('*');
+  let { data: applications, error } = await supabase.from('applications').select('*');
   console.log('applications', applications);
 
-  const paths = applications.map((application) => ({
+  const paths = applications?.map((application) => ({
     params: { id: application.id.toString() },
   }));
 
@@ -91,17 +85,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params;
   const topicId = Number(process.env.VOTING_TOPIC_ID);
 
-  let { data: applications, error } = await supabase
-    .from('applications')
-    .select('*');
+  let { data: applications, error } = await supabase.from('applications').select('*');
 
   let application = applications.filter((a) => a.id === Number(id));
 
   const votes = await fetchVotes(topicId, 0, 1000);
 
-  let applicationVotes = votes.filter(
-    (v) => Number(v.ballotId.split('-')[1]) === Number(id)
-  );
+  let applicationVotes = votes.filter((v) => Number(v.ballotId.split('-')[1]) === Number(id));
   console.log('votes', votes);
   console.log('applicationVotes', applicationVotes);
   return {

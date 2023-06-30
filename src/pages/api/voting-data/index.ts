@@ -44,9 +44,7 @@ const getVotingData = async (clientAccountId?: string) => {
       try {
         messageObj = JSON.parse(decodedMessage);
       } catch (e) {
-        const decodedSecondMessage = await hex2a(
-          topicMessages[index + 1].message
-        );
+        const decodedSecondMessage = await hex2a(topicMessages[index + 1].message);
         messageObj = JSON.parse(decodedMessage + decodedSecondMessage);
         index = index + 1;
       }
@@ -94,8 +92,7 @@ export default async function handler(req, res) {
   }
 
   let ballots = initBallots.map((ballot) => {
-    let ballotDeleted =
-      deletedBallots.filter((obj) => obj.id == ballot.id).length > 0;
+    let ballotDeleted = deletedBallots.filter((obj) => obj.id == ballot.id).length > 0;
 
     ballot.deleted = ballotDeleted;
 

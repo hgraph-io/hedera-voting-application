@@ -1,11 +1,9 @@
+// @ts-nocheck
 import React, { createContext, useContext, useState } from 'react';
 import { Snackbar, Alert } from '@mui/material';
 
 type SnackbarContextProps = {
-  openSnackbar: (
-    message: string,
-    severity: 'success' | 'info' | 'warning' | 'error'
-  ) => void;
+  openSnackbar: (message: string, severity: 'success' | 'info' | 'warning' | 'error') => void;
 };
 
 const SnackbarContext = createContext<SnackbarContextProps>({
@@ -17,9 +15,7 @@ export const useSnackbar = () => useContext(SnackbarContext);
 export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState<
-    'success' | 'info' | 'warning' | 'error'
-  >('info');
+  const [severity, setSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('info');
 
   const openSnackbar = (
     message: string,

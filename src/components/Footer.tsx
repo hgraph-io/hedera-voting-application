@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  Grid,
-  Typography,
-  Link,
-  useMediaQuery,
-} from '@mui/material';
+import { Container, Grid, Typography, Link, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import styles from './Footer.module.scss';
@@ -26,15 +20,9 @@ const Footer: React.FC = () => {
             item
             xs={12}
             sm={8}
-            className={
-              isMobile ? styles.linkContainerMobile : styles.linkContainer
-            }
+            className={isMobile ? styles.linkContainerMobile : styles.linkContainer}
           >
-            <Grid
-              container
-              spacing={2}
-              justifyContent={isMobile ? 'center' : 'flex-end'}
-            >
+            <Grid container spacing={2} justifyContent={isMobile ? 'center' : 'flex-end'}>
               <Grid item className={styles.linkItem}>
                 <Link href="/privacy-policy" color="inherit">
                   Privacy Policy

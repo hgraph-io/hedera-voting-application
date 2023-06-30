@@ -42,20 +42,11 @@ const AdminLogin: React.FC = () => {
         {user && user.loading ? (
           <CircularProgress />
         ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={handleSignIn}
-          >
+          <Button variant="contained" color="primary" fullWidth onClick={handleSignIn}>
             Login with Hashpack
           </Button>
         )}
-        <Button
-          variant="outlined"
-          fullWidth
-          onClick={() => router.push('/login')}
-        >
+        <Button variant="outlined" fullWidth onClick={() => router.push('/login')}>
           User Login
         </Button>
       </form>
