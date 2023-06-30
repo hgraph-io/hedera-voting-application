@@ -1,7 +1,13 @@
 //@ts-nocheck
-import React, {useState, createContext, useEffect, useContext} from 'react';
+import React, { useState, createContext, useEffect, useContext } from 'react';
 import { AppProps } from 'next/app';
-import { ThemeProvider, CssBaseline, createTheme, CircularProgress, Backdrop } from '@mui/material';
+import {
+  ThemeProvider,
+  CssBaseline,
+  createTheme,
+  CircularProgress,
+  Backdrop,
+} from '@mui/material';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
@@ -38,7 +44,7 @@ const theme = createTheme({
           height: '32px',
           minWidth: '200px',
           borderRadius: '50px',
-          border:'none',
+          border: 'none',
           color: '#212429',
           background: '#F9F9F9',
           textTransform: 'capitalize',
@@ -50,7 +56,7 @@ const theme = createTheme({
           height: '32px',
           minWidth: '200px',
           borderRadius: '50px',
-          border:'none',
+          border: 'none',
           color: '#F9F9F9',
           background: '#8259EF',
           textTransform: 'capitalize',
@@ -84,16 +90,15 @@ const theme = createTheme({
 const LoadingBackdrop = () => {
   const user = useUser();
   return (
-    <Backdrop open={user.loading} style={{zIndex: 9999, color: '#fff'}}>
+    <Backdrop open={user.loading} style={{ zIndex: 9999, color: '#fff' }}>
       <CircularProgress color="inherit" />
     </Backdrop>
   );
 };
 
-
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   // Create a new supabase browser client on every first render.
-  const [supabaseClient] = useState(() => createPagesBrowserClient())
+  const [supabaseClient] = useState(() => createPagesBrowserClient());
 
   return (
     <SessionContextProvider
@@ -104,13 +109,19 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <ThemeProvider theme={theme}>
           <SnackbarProvider>
             <CssBaseline />
-            <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '100vh',
+              }}
+            >
               <Header />
-              <main style={{flex: '1 0 auto'}}>
+              <main style={{ flex: '1 0 auto' }}>
                 <Component {...pageProps} />
                 <LoadingBackdrop />
               </main>
-              <footer style={{flexShrink: 0}}>
+              <footer style={{ flexShrink: 0 }}>
                 <Footer />
               </footer>
             </div>
@@ -119,6 +130,6 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       </UserProvider>
     </SessionContextProvider>
   );
-}
+};
 
 export default MyApp;

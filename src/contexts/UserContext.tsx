@@ -1,27 +1,30 @@
 //@ts-nocheck
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
-import { supabase } from '../supabaseClient'
+import { supabase } from '../supabaseClient';
 
-type User = {
-  connected: boolean;
-  type: string;
-  token: string;
-  accountId: string;
-  loading: boolean;
-  hashpackTopicId: string;
-  disconnectHashpack: () => void;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setConnected: React.Dispatch<React.SetStateAction<boolean>>;
-  setAccountId: React.Dispatch<React.SetStateAction<string>>;
-  setType: React.Dispatch<React.SetStateAction<string>>;
-  setPairingString: React.Dispatch<React.SetStateAction<string>>;
-  setHashpackTopicId: React.Dispatch<React.SetStateAction<string>>;
-  initWalletConnect: (firstLoad: boolean) => Promise<boolean>;
-  //todo
-  supabaseSession: any,
-  setSupabaseSession: any,
-} | null | undefined;
+type User =
+  | {
+      connected: boolean;
+      type: string;
+      token: string;
+      accountId: string;
+      loading: boolean;
+      hashpackTopicId: string;
+      disconnectHashpack: () => void;
+      setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+      setConnected: React.Dispatch<React.SetStateAction<boolean>>;
+      setAccountId: React.Dispatch<React.SetStateAction<string>>;
+      setType: React.Dispatch<React.SetStateAction<string>>;
+      setPairingString: React.Dispatch<React.SetStateAction<string>>;
+      setHashpackTopicId: React.Dispatch<React.SetStateAction<string>>;
+      initWalletConnect: (firstLoad: boolean) => Promise<boolean>;
+      //todo
+      supabaseSession: any;
+      setSupabaseSession: any;
+    }
+  | null
+  | undefined;
 
 const UserContext = createContext<User>(undefined);
 
@@ -34,7 +37,7 @@ export const UserProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hashpackTopicId, setHashpackTopicId] = useState<string | undefined>(undefined);
   const hashconnect = new HashConnect();
-  const [supabaseSession, setSupabaseSession] = useState()
+  const [supabaseSession, setSupabaseSession] = useState();
 
   const disconnectHashpack = async () => {
     if (hashpackTopicId) {
@@ -47,14 +50,14 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const initWalletConnect = async (firstLoad: boolean) => {
     setLoading(true);
-    
+
     let appMetadata: HashConnectTypes.AppMetadata = {
-      name: "Hedera Voting Application",
-      description: "Voting Application Created By Hedera",
-      icon: "https://launch.turtlemoon.io/_next/static/media/default-profile-picture.75ccdb8e.png"
+      name: 'Hedera Voting Application',
+      description: 'Voting Application Created By Hedera',
+      icon: 'https://launch.turtlemoon.io/_next/static/media/default-profile-picture.75ccdb8e.png',
     };
 
-    let initData = await hashconnect.init(appMetadata, "testnet", false);
+    let initData = await hashconnect.init(appMetadata, 'testnet', false);
     let topic = initData.savedPairings[0] ? initData.savedPairings[0].topic : initData.topic;
     let pairingString = initData.pairingString;
 
@@ -76,7 +79,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
       hashconnect.findLocalWallets();
     }
-    
+
     setLoading(false);
   };
 
@@ -85,7 +88,7 @@ export const UserProvider: React.FC = ({ children }) => {
       .from('admin_accounts')
       .select('accountId')
       .eq('accountId', accountId);
-  
+
     if (error) {
       console.error('Error: ', error);
       return 'user';
@@ -97,7 +100,7 @@ export const UserProvider: React.FC = ({ children }) => {
   };
 
   useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem("voting_user") || "{}");
+    const savedUser = JSON.parse(localStorage.getItem('voting_user') || '{}');
 
     if (savedUser && savedUser.accountId) {
       setAccountId(savedUser.accountId);
@@ -106,10 +109,7 @@ export const UserProvider: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(
-      "voting_user",
-      JSON.stringify({ accountId, connected })
-    );
+    localStorage.setItem('voting_user', JSON.stringify({ accountId, connected }));
   }, [accountId, connected]);
 
   useEffect(() => {
@@ -131,12 +131,8 @@ export const UserProvider: React.FC = ({ children }) => {
     setHashpackTopicId,
     initWalletConnect,
     supabaseSession,
-    setSupabaseSession
+    setSupabaseSession,
   };
 
-  return (
-    <UserContext.Provider value={user}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };

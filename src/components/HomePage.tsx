@@ -11,9 +11,16 @@ const HomePage: React.FC = () => {
           Voting Platform
         </Typography>
         <Typography variant="h5" align="left" color="contrastText" paragraph>
-          Here is a brief description of our application. You can put any text here that suits your needs.
+          Here is a brief description of our application. You can put any text here that suits
+          your needs.
         </Typography>
-        <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '2rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            marginTop: '2rem',
+          }}
+        >
           <Link href="/login">
             <Button variant="contained" className={styles.heroButton}>
               Submit an Application

@@ -12,7 +12,7 @@
 .toolBar {
   @include flex(row, space-between, flex-start);
   background-color: whitesmoke;
-  
+
   a {
     text-decoration: none;
   }
@@ -30,7 +30,7 @@
 .links {
   @include flex(column);
   height: 65px;
-  
+
   @media (min-width: 900px) {
     @include flex(row, flex-end, flex-end);
     width: 100%;
@@ -55,9 +55,9 @@
 }
 
 .drawerPaper {
-  padding: 20px; 
+  padding: 20px;
   min-width: 300px;
-  
+
   .link,
   .activeLink {
     margin: 10px 0px;
@@ -66,14 +66,14 @@
 }
 
 .menuCloseButton {
-  width: 40px; 
-  height: 40px; 
+  width: 40px;
+  height: 40px;
 }
 
 .logoContainer,
 .desktopButtonContainer {
   @include flex(row, space-between, flex-end, wrap);
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
   width: 100%;
 }
 
@@ -81,7 +81,7 @@
 .signupButton {
   min-width: 250px;
   text-transform: capitalize;
-  width: 100%; 
+  width: 100%;
   margin-top: 30px;
 
   @media (min-width: 900px) {
@@ -92,7 +92,7 @@
 }
 
 .mobileButtonContainer {
-  margin-top: 30px; 
+  margin-top: 30px;
   width: 100%;
   position: relative;
 }
@@ -107,7 +107,7 @@
   border: 1px solid $black;
   background: $white;
   color: $black;
-  
+
   @media (min-width: 900px) {
     width: 45%;
   }

@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
 import { useRouter } from 'next/router';
 import { useSnackbar } from '../contexts/SnackbarContext';
 import { supabase } from '../supabaseClient';
 import styles from './LoginPage.module.scss';
-
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,7 +31,7 @@ const LoginPage: React.FC = () => {
     if (error) {
       openSnackbar(error.message, 'error');
     } else {
-      router.push("/dashboard");
+      router.push('/dashboard');
     }
   };
 

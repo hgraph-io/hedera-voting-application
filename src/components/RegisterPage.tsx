@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useUser } from '../contexts/UserContext';
 import { useSnackbar } from '../contexts/SnackbarContext';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import styles from './RegisterPage.module.scss';
-
 
 const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -19,7 +27,6 @@ const RegisterPage: React.FC = () => {
   const router = useRouter();
 
   const handleSignUp = async () => {
-    
     if (password !== confirmPassword) {
       return openSnackbar('Passwords do not match', 'error');
     }
@@ -34,22 +41,25 @@ const RegisterPage: React.FC = () => {
       });
 
       if (error) throw error;
-      openSnackbar("Signup successful!", "success");
-      router.push("/login");
+      openSnackbar('Signup successful!', 'success');
+      router.push('/login');
     } catch (error) {
       // @ts-ignore
-      openSnackbar(error.message, "error");
+      openSnackbar(error.message, 'error');
     }
   };
 
   const handleRegister = async () => {
-    
     try {
       const response = await user?.initWalletConnect(false);
       console.log(response);
     } catch (error) {
       // @ts-ignore
-      openSnackbar(error.response?.data?.error || 'Registration failed', 'error');
+      openSnackbar(
+        // @ts-ignore
+        error.response?.data?.error || 'Registration failed',
+        'error'
+      );
     }
   };
 

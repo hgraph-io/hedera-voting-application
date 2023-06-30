@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {useEffect, useState} from 'react';
 import { Typography, Container, Button } from '@mui/material';
 import CardComponent from '../components/Card';
@@ -51,43 +52,44 @@ useEffect(() => {
   const router = useRouter();
   const goBack = () => {
     router.back();
-  }
+  };
   return (
     <Container maxWidth="md" className={styles.resultsContainer}>
       <Button variant="outlined" onClick={goBack} className={styles.backButton}>Back</Button>
 
       <Typography variant="h3">Voting Results</Typography>
       <Typography>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
+        vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
       </Typography>
       
       {approvedApplications.length > 1 && <Typography variant="h4">Approved Applications</Typography>}
       {approvedApplications.map((app) => (
-        <CardComponent 
+        <CardComponent
           key={app.applicationId}
-          title={app.title} 
-          applicationId={app.applicationId} 
+          title={app.title}
+          applicationId={app.applicationId}
           rating={app.rating}
           speaker={app.name} 
           isSelected={app.isSelected} 
           // todo
           //@ts-ignore
-          type={app.type} 
+          type={app.type}
         />
       ))}
       
       {openApplications.length > 1 && <Typography variant="h6">Open Applications</Typography>}
       {openApplications.map((app) => (
-        <CardComponent 
+        <CardComponent
           key={app.applicationId}
-          title={app.title} 
-          applicationId={app.applicationId} 
+          title={app.title}
+          applicationId={app.applicationId}
           rating={app.rating}
           speaker={app.name} 
           isSelected={app.isSelected} 
           // todo
           //@ts-ignore
-          type={app.type} 
+          type={app.type}
         />
       ))}
     </Container>

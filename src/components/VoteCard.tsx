@@ -45,19 +45,19 @@ export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMain
   };
 
   const handleVoteSubmit = async () => {
-    user?.setLoading(true)
+    user?.setLoading(true);
     const voteData = {
       accountId,
       choice: userVote,
-      ballotId: 'application-'+id
+      ballotId: 'application-' + id,
     };
 
     try {
       const res = await axios.post('/api/voting-submission', voteData);
-      user?.setLoading(false)
+      user?.setLoading(false);
     } catch (error) {
       console.error('Error submitting vote', error);
-      user?.setLoading(false)
+      user?.setLoading(false);
     }
   };
 
@@ -67,25 +67,29 @@ export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMain
         <div className={styles.buttonContainer}>
           <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
           <Button className={styles.cardButton} variant="contained" onClick={handleVoteSubmit}>
-              Submit Vote
+            Submit Vote
           </Button>
         </div>
-      )
+      );
     }
 
     if (type === 'view') {
       return (
         <div className={styles.buttonContainer}>
           <div className={styles.buttonLabel}>View your vote on the Hedera mainnet</div>
-          <Button className={styles.cardButton} variant="contained" onClick={() => window.open(hederaMainnetUrl, '_blank')}>
+          <Button
+            className={styles.cardButton}
+            variant="contained"
+            onClick={() => window.open(hederaMainnetUrl, '_blank')}
+          >
             View
           </Button>
         </div>
-      )
+      );
     }
 
     return null;
-  }
+  };
 
   return (
     <div className={styles.cardContainer}>
