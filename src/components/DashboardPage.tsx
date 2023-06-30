@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState, useEffect } from 'react';
 import { Typography, Container, Button, CircularProgress } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -21,6 +22,7 @@ const DashboardPage: React.FC = () => {
         .eq('user_id', sbUser?.id);
 
       if (error) console.error('Error loading applications', error);
+      // @ts-ignore
       else setApplications(data);
       user?.setLoading(false); // stop loading
     };

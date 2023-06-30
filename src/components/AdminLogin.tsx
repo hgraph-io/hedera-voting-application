@@ -6,8 +6,6 @@ import { useUser } from '../contexts/UserContext';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import styles from './AdminLogin.module.scss';
 
-import type { Database } from '@/lib/database.types';
-
 const AdminLogin: React.FC = () => {
   const user = useUser();
   const router = useRouter();

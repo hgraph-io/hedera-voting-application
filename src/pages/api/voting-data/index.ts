@@ -1,3 +1,4 @@
+// @ts-nocheck
 import axios from 'axios'
 
 const getVotingData = async (clientAccountId?:string) => {

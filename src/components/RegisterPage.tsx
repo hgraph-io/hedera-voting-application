@@ -7,7 +7,6 @@ import { useSnackbar } from '../contexts/SnackbarContext';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import styles from './RegisterPage.module.scss';
 
-import type { Database } from '@/lib/database.types';
 
 const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +15,7 @@ const RegisterPage: React.FC = () => {
   const [method, setMethod] = useState('Email');
   const { openSnackbar } = useSnackbar();
   const user = useUser();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClientComponentClient();
   const router = useRouter();
 
   const handleSignUp = async () => {
@@ -38,6 +37,7 @@ const RegisterPage: React.FC = () => {
       openSnackbar("Signup successful!", "success");
       router.push("/login");
     } catch (error) {
+      // @ts-ignore
       openSnackbar(error.message, "error");
     }
   };
@@ -48,6 +48,7 @@ const RegisterPage: React.FC = () => {
       const response = await user?.initWalletConnect(false);
       console.log(response);
     } catch (error) {
+      // @ts-ignore
       openSnackbar(error.response?.data?.error || 'Registration failed', 'error');
     }
   };

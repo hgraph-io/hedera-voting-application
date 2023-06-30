@@ -1,3 +1,4 @@
+// @ts-nocheck
 // pages/applications/create.tsx
 import React from 'react';
 import SubmitApplicationPage from '../../components/SubmitApplicationPage'

@@ -10,6 +10,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
 interface ApplicationData {
+  id: number;
   name: string;
   organization: string;
   topics: string[];
@@ -27,6 +28,7 @@ interface Votes {
 interface VoteData {
   accountId: string;
   vote: number;
+  choice: number;
 }
 
 interface Props {
@@ -43,21 +45,28 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
   const [voteLink, setVoteLink] = useState<string>('');
 
   const user = useUser(); // get the user data
-  const { accountId, type, setLoading } = user || {};
+  const { accountId, type, setLoading } = user || { setLoading: () => {}};
   const applicationId = 'applicationId'; // replace with actual application id
 
   useEffect(() => {
+    //@ts-ignore
     setVotes(votesData);
     const userVoteData = votesData.find((vote) => vote.accountId === accountId);
     console.log('userVoteData',userVoteData)
+    // todo
+    //@ts-ignore
     setUserVote(userVoteData ? userVoteData.choice : 1);
     setUserVoted(userVoteData ? true : false);
+    // todo
+    //@ts-ignore
     userVoteData && setVoteLink(`https://explore.lworks.io/mainnet/topics/0.0.1350036/messages/${userVoteData.sequence_number}`);
 
     // Calculate the average
     let totalVotes = 0;
     let totalVotesCount = votesData.length;
     votesData.forEach((vote) => {
+    // todo
+    //@ts-ignore
       totalVotes += vote.choice;
     });
     

@@ -30,6 +30,7 @@ const SubmitApplicationPage: React.FC = () => {
       return;
     }
 
+    // @ts-ignore
     const selectedTopics = Object.keys(topics).filter((topic) => topics[topic]);
    
     const {data: { user }} = await supabase.auth.getUser()

@@ -9,7 +9,11 @@ import styles from './VoteCard.module.scss';
 
 interface VoteCardProps {
   id: number;
-  hederaMainnetUrl: string;
+  // todo
+  // are these optional?
+  hederaMainnetUrl?: string;
+  speaker?: string;
+  tags?: string;
   rating: {
     voteNum: number;
     currentRating: number;

@@ -10,6 +10,8 @@ interface CardProps {
   moderator: boolean;
   isSelected: boolean;
   id: number;
+	//todo
+	applicationId: any;
   rating: {
     voteNum: number;
     currentRating: number;
