@@ -1,7 +1,6 @@
-import React from 'react';
 import Link from 'next/link';
 import { Container, Typography, Button } from '@mui/material';
-import styles from './HomePage.module.scss';
+import styles from './page.module.scss';
 
 const HomePage: React.FC = () => {
   return (

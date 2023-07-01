@@ -11,7 +11,7 @@ import {
   Grid,
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import styles from './SubmitApplicationPage.module.scss';
+import styles from './styles.module.scss';
 import { supabase } from '../supabaseClient';
 
 const SubmitApplicationPage: React.FC = () => {
