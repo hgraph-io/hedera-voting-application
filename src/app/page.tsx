@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { Container, Typography, Button } from '@mui/material';
-import styles from './page.module.scss';
+import styles from './styles.module.scss';
 
-const HomePage: React.FC = () => {
+export default function HomePage() {
   return (
     <Container className={styles.homePageContainer}>
       <div className={styles.homePageHero}>
@@ -29,6 +29,4 @@ const HomePage: React.FC = () => {
       </div>
     </Container>
   );
-};
-
-export default HomePage;
+}

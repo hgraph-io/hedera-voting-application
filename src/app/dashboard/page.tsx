@@ -1,9 +1,9 @@
 //@ts-nocheck
 import React, { useState, useEffect } from 'react';
-import { Typography, Container, Button, CircularProgress } from '@mui/material';
+import { Typography, Container, Button} from '@mui/material';
 import { useRouter } from 'next/router';
 import CardComponent from '../components/Card';
-import styles from './DashboardPage.module.scss';
+import styles from './styles.module.scss';
 import { supabase } from '../supabaseClient';
 import { useUser } from '../contexts/UserContext';
 

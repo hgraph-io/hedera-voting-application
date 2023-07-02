@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { Rating } from '@mui/lab';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import StarIcon from '@mui/icons-material/Star';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
-import styles from './VoteCard.module.scss';
+import styles from './styles.module.scss';
 
 interface VoteCardProps {
   id: number;
@@ -25,20 +24,6 @@ export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMain
   const [userVote, setUserVote] = useState<number | null>(0);
   const user = useUser();
   const { accountId } = user || {};
-
-  const renderRating = () => (
-    <div>
-      <div className={styles.ratingLabel}>Current Rating with {rating.voteNum} votes</div>
-      <Rating
-        className={styles.ratingContainer}
-        name="rating"
-        value={rating.currentRating}
-        readOnly
-        icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-        emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
-      />
-    </div>
-  );
 
   const handleVoteChange = (event: React.ChangeEvent<{}>, newValue: number | null) => {
     setUserVote(newValue);

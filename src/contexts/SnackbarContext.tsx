@@ -1,32 +1,28 @@
-// @ts-nocheck
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { Snackbar, Alert } from '@mui/material';
-
-type SnackbarContextProps = {
-  openSnackbar: (message: string, severity: 'success' | 'info' | 'warning' | 'error') => void;
-};
+import type { SnackbarContextProps } from '@/types';
+import { SnackbarMessageSeverity } from '@/types';
 
 const SnackbarContext = createContext<SnackbarContextProps>({
   openSnackbar: () => {},
 });
 
 export const useSnackbar = () => useContext(SnackbarContext);
-//@ts-ignore
-export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
+
+export default function SnackbarProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('info');
+  const [severity, setSeverity] = useState<SnackbarMessageSeverity>(
+    SnackbarMessageSeverity.Info
+  );
 
-  const openSnackbar = (
-    message: string,
-    severity: 'success' | 'info' | 'warning' | 'error'
-  ) => {
+  const openSnackbar = (message: string, severity: SnackbarMessageSeverity) => {
     setMessage(message);
     setSeverity(severity);
     setOpen(true);
   };
 
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+  const handleClose = (_: React.SyntheticEvent<any> | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -35,7 +31,6 @@ export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
 
   return (
     <SnackbarContext.Provider value={{ openSnackbar }}>
-      {/* @ts-ignore */}
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={open}
@@ -49,4 +44,4 @@ export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
       {children}
     </SnackbarContext.Provider>
   );
-};
+}

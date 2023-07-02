@@ -1,11 +1,10 @@
-import React from 'react';
+import Image from 'next/image';
 import { Container, Grid, Typography, Link, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import Image from 'next/image';
-import styles from './Footer.module.scss';
+import styles from './styles.module.scss';
 import logo from '../assets/Hlogo.png';
 
-const Footer: React.FC = () => {
+export default function Footer() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -54,6 +53,4 @@ const Footer: React.FC = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

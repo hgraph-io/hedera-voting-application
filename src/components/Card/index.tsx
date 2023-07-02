@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Checkbox, Button, Link } from '@mui/material';
-import { Rating } from '@mui/lab';
-import { useRouter } from 'next/router';
-import styles from './Card.module.scss';
+import styles from './styles.module.scss';
 
 interface CardProps {
   type: 'view' | 'vote' | 'approved' | 'denied' | 'default';
