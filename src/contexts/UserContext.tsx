@@ -30,7 +30,7 @@ const UserContext = createContext<User>(undefined);
 
 export const useUser = () => useContext(UserContext);
 
-export const UserProvider: React.FC = ({ children }) => {
+export const UserProvider: React.FC<{children?: React.ReactNode}> = ({ children }) => {
   const [accountId, setAccountId] = useState<string>('');
   const [type, setType] = useState<string>('user');
   const [connected, setConnected] = useState<boolean>(false);

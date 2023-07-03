@@ -1,6 +1,7 @@
-// @ts-nocheck
-import React, { createContext, useContext, useState } from 'react';
-import { Snackbar, Alert } from '@mui/material';
+//@ts-nocheck
+import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { Snackbar, SnackbarCloseReason } from '@mui/material';
+import { Alert } from '@mui/material';
 
 type SnackbarContextProps = {
   openSnackbar: (message: string, severity: 'success' | 'info' | 'warning' | 'error') => void;
@@ -11,8 +12,12 @@ const SnackbarContext = createContext<SnackbarContextProps>({
 });
 
 export const useSnackbar = () => useContext(SnackbarContext);
-//@ts-ignore
-export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
+
+type SnackbarProviderProps = {
+  children: ReactNode;
+};
+
+export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('info');
@@ -26,7 +31,7 @@ export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
     setOpen(true);
   };
 
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+  const handleClose = (event?: React.SyntheticEvent, reason?: SnackbarCloseReason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -35,7 +40,6 @@ export const SnackbarProvider: React.PropsWithChildren<{}> = ({ children }) => {
 
   return (
     <SnackbarContext.Provider value={{ openSnackbar }}>
-      {/* @ts-ignore */}
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={open}
