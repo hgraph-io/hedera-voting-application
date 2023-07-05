@@ -2,7 +2,7 @@
 //@ts-nocheck
 import React, { useState, useEffect } from 'react';
 import { Typography, Container, Button } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import CardComponent from '@/components/Card';
 import styles from './styles.module.scss';
 import { useHashpack } from '@/contexts/HashpackContext';

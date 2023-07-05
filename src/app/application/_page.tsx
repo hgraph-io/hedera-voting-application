@@ -16,7 +16,7 @@ import {
   Link,
 } from '@mui/material';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useHashpack } from '@/contexts/HashpackContext';
 import VoteCard from '@/components/VoteCard';
 import { Rating } from '@mui/lab';

@@ -2,7 +2,7 @@
 // import { Typography, Container, Button } from '@mui/material';
 // import CardComponent from '@/components/Card';
 // import styles from './styles.module.scss';
-// import { useRouter } from 'next/router';
+// import { useRouter } from 'next/navigation';
 // import { supabase } from '../supabaseClient';
 // import { useUser } from '../contexts/UserContext';
 

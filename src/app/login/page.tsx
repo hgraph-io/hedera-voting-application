@@ -11,7 +11,7 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useSnackbar } from '@/contexts/SnackbarContext';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import styles from './styles.module.scss';
