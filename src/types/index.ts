@@ -1,3 +1,5 @@
+export * from './supabase';
+
 export enum SnackbarMessageSeverity {
   Success = 'success',
   Info = 'info',
