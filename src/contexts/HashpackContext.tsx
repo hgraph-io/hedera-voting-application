@@ -1,5 +1,3 @@
-'use client';
-
 import { createContext, useContext, useState, useEffect } from 'react';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
 import { HashpackAccount } from '@/types';
@@ -47,7 +45,7 @@ export default function HashpackProvider({ children }: { children: React.ReactNo
 
     if (!firstLoad) {
       hashconnect.foundExtensionEvent.once((appMetadata) => {
-        hashconnect.connectToLocalWallet(pairingString, appMetadata);
+        // hashconnect.connectToLocalWallet(pairingString, appMetadata);
       });
 
       hashconnect.findLocalWallets();
@@ -87,5 +85,6 @@ export default function HashpackProvider({ children }: { children: React.ReactNo
     initWalletConnect,
   };
 
+  //@ts-ignore
   return <HashpackContext.Provider value={user}>{children}</HashpackContext.Provider>;
 }

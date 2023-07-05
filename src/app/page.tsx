@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Container, Typography, Button } from '@mui/material';
 import styles from './styles.module.scss';

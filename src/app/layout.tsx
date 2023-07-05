@@ -1,14 +1,14 @@
+'use client';
+
 import './global.css';
-import { CssBaseline } from '@mui/material';
 import { Providers } from './providers';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <CssBaseline />
         <Providers>
           <div
             style={{
