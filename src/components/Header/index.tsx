@@ -18,7 +18,7 @@ export default function Header() {
           }}
         >
           <Link href="/" passHref>
-            <Image className={styles.logo} src="/logo.png" alt="Logo" />
+            <Image className={styles.logo} src="/logo.png" width={100} height={30} alt="Logo" />
           </Link>
           <div>
             <Hidden lgDown implementation="css">

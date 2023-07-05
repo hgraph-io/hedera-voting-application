@@ -38,7 +38,7 @@ const RegisterPage: React.FC = () => {
         email,
         password,
         options: {
-          emailRedirectTo: `${location.origin}/login`,
+          // emailRedirectTo: `${location.origin}/login`,
         },
       });
 

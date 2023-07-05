@@ -10,11 +10,11 @@
     "format": "prettier -w src"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.0",
+    "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.133",
-    "@mui/material": "^5.13.1",
+    "@mui/material": "^5.13.7",
     "@supabase/auth-helpers-nextjs": "^0.7.2",
     "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/auth-ui-react": "^0.4.2",
@@ -23,6 +23,7 @@
     "@types/react-dom": "18.2.4",
     "axios": "^1.4.0",
     "crypto-js": "^4.1.1",
+    "encoding": "^0.1.13",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
     "eslint-plugin-react": "^7.32.2",

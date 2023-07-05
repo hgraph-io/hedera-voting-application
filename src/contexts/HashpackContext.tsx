@@ -67,9 +67,9 @@ export default function HashpackProvider({ children }: { children: React.ReactNo
     localStorage.setItem('voting_user', JSON.stringify({ accountId, connected }));
   }, [accountId, connected]);
 
-  useEffect(() => {
-    initWalletConnect(true);
-  }, []);
+  // useEffect(() => {
+  //   initWalletConnect(true);
+  // }, []);
 
   const user = {
     connected,

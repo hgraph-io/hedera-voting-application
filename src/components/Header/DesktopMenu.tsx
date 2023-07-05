@@ -7,15 +7,13 @@ export default function DesktopMenu() {
   return (
     <div className={styles.links}>
       <Link href="/">
-        <div className={location.pathname === '/' ? styles.activeLink : styles.link}>Home</div>
+        <div className={true ? styles.activeLink : styles.link}>Home</div>
       </Link>
       <Link href="/dashboard">
-        <div className={location.pathname === '/' ? styles.activeLink : styles.link}>
-          Dashboard
-        </div>
+        <div className={true ? styles.activeLink : styles.link}>Dashboard</div>
       </Link>
       <Link href="/admin">
-        <div className={location.pathname === '/' ? styles.activeLink : styles.link}>Admin</div>
+        <div className={true ? styles.activeLink : styles.link}>Admin</div>
       </Link>
       <div className={styles.desktopButtonContainer}>
         <Link href="/register">
