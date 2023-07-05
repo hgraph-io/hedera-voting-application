@@ -1,50 +1,25 @@
-//@ts-nocheck
-import React, { createContext, useContext, useState, useEffect } from 'react';
+'use client';
+
+import { createContext, useContext, useState, useEffect } from 'react';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
-import { supabase } from '../supabaseClient';
+import { HashpackAccount } from '@/types';
 
-type User =
-  | {
-      connected: boolean;
-      type: string;
-      token: string;
-      accountId: string;
-      loading: boolean;
-      hashpackTopicId: string;
-      disconnectHashpack: () => void;
-      setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-      setConnected: React.Dispatch<React.SetStateAction<boolean>>;
-      setAccountId: React.Dispatch<React.SetStateAction<string>>;
-      setType: React.Dispatch<React.SetStateAction<string>>;
-      setPairingString: React.Dispatch<React.SetStateAction<string>>;
-      setHashpackTopicId: React.Dispatch<React.SetStateAction<string>>;
-      initWalletConnect: (firstLoad: boolean) => Promise<boolean>;
-      //todo
-      supabaseSession: any;
-      setSupabaseSession: any;
-    }
-  | null
-  | undefined;
+const HashpackContext = createContext<HashpackAccount | undefined>(undefined);
 
-const UserContext = createContext<User>(undefined);
+export const useHashpack = () => useContext(HashpackContext);
 
-export const useUser = () => useContext(UserContext);
-
-export const UserProvider: React.FC = ({ children }) => {
+export default function HashpackProvider({ children }: { children: React.ReactNode }) {
   const [accountId, setAccountId] = useState<string>('');
-  const [type, setType] = useState<string>('user');
   const [connected, setConnected] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [hashpackTopicId, setHashpackTopicId] = useState<string | undefined>(undefined);
   const hashconnect = new HashConnect();
-  const [supabaseSession, setSupabaseSession] = useState();
 
   const disconnectHashpack = async () => {
     if (hashpackTopicId) {
       await hashconnect.disconnect(hashpackTopicId);
       setAccountId('');
       setConnected(false);
-      setType('user');
     }
   };
 
@@ -67,8 +42,6 @@ export const UserProvider: React.FC = ({ children }) => {
       if (pairingData.accountIds) {
         setAccountId(pairingData.accountIds[0]);
         setConnected(true);
-        const userType = await checkAdminStatus(pairingData.accountIds[0]);
-        setType(userType);
       }
     });
 
@@ -81,22 +54,6 @@ export const UserProvider: React.FC = ({ children }) => {
     }
 
     setLoading(false);
-  };
-
-  const checkAdminStatus = async (accountId: string): Promise<string> => {
-    const { data: adminAccounts, error } = await supabase
-      .from('admin_accounts')
-      .select('accountId')
-      .eq('accountId', accountId);
-
-    if (error) {
-      console.error('Error: ', error);
-      return 'user';
-    } else if (adminAccounts && adminAccounts.length > 0) {
-      return 'admin';
-    } else {
-      return 'user';
-    }
   };
 
   useEffect(() => {
@@ -118,7 +75,6 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const user = {
     connected,
-    type,
     accountId,
     hashpackTopicId,
     loading,
@@ -126,13 +82,10 @@ export const UserProvider: React.FC = ({ children }) => {
     setLoading,
     setConnected,
     setAccountId,
-    setType,
     setPairingString: () => {},
     setHashpackTopicId,
     initWalletConnect,
-    supabaseSession,
-    setSupabaseSession,
   };
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
-};
+  return <HashpackContext.Provider value={user}>{children}</HashpackContext.Provider>;
+}

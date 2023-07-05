@@ -1,4 +1,4 @@
-import 'global.scss';
+import './global.scss';
 import { CssBaseline } from '@mui/material';
 import { Providers } from './providers';
 import Header from '../components/Header';
