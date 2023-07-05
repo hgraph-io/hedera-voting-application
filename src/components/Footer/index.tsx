@@ -1,11 +1,11 @@
+'use client';
+
 import Image from 'next/image';
-import { Container, Grid, Typography, Link, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Container, Grid, Typography, Link } from '@mui/material';
 import styles from './styles.module.scss';
 
 export default function Footer() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = false;
 
   return (
     <footer style={{ flexShrink: 0 }}>

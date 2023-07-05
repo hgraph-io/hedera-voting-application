@@ -5,17 +5,17 @@ import { Typography, Container, Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import CardComponent from '@/components/Card';
 import styles from './styles.module.scss';
-import { useHashpack } from '@/contexts/HashpackContext';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const DashboardPage: React.FC = () => {
   const router = useRouter();
   const [applications, setApplications] = useState([]);
-  const user = useHashpack();
+  const user = {}; // this was a hashpack user
 
   useEffect(() => {
     const supabase = createClientComponentClient();
     const fetchApplications = async () => {
+			// @ts-ignore
       user?.setLoading(true); // start loading
       const {
         data: { user: sbUser },
@@ -28,6 +28,7 @@ const DashboardPage: React.FC = () => {
       if (error) console.error('Error loading applications', error);
       // @ts-ignore
       else setApplications(data);
+			// @ts-ignore
       user?.setLoading(false); // stop loading
     };
 

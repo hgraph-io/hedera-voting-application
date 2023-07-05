@@ -1,9 +1,8 @@
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Typography, Container, Button } from '@mui/material';
+import { Typography, Container, Button, Card } from '@/components';
+import type { Database } from '@/types';
 import styles from './styles.module.scss';
-import Card from '../../../components/Card';
-import type { Database } from '@/lib/database.types';
 
 async function fetchApplications() {
   const supabase = createServerComponentClient<Database>({ cookies });

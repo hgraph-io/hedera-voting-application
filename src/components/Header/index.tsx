@@ -1,3 +1,5 @@
+'use client';
+
 import { AppBar, Toolbar, Hidden } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';

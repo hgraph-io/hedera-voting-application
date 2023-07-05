@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   TextField,
   Button,
@@ -10,10 +11,8 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-} from '@mui/material';
-import { useRouter } from 'next/navigation';
-import { useHashpack } from '@/contexts/HashpackContext';
-import { useSnackbar } from '@/contexts/SnackbarContext';
+} from '@/components';
+import { useSnackbar } from '@/context';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { SnackbarMessageSeverity } from '@/types';
 import styles from './styles.module.scss';
@@ -24,7 +23,7 @@ const RegisterPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [method, setMethod] = useState('Email');
   const { openSnackbar } = useSnackbar();
-  const user = useHashpack();
+  const user = {}; // hashpack user?
   const supabase = createClientComponentClient();
   const router = useRouter();
 

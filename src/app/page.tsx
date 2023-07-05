@@ -1,7 +1,5 @@
-'use client';
-
 import Link from 'next/link';
-import { Container, Typography, Button } from '@mui/material';
+import { Container, Typography, Button } from '@/components';
 import styles from './styles.module.scss';
 
 export default function HomePage() {

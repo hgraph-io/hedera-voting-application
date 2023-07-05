@@ -1,9 +1,8 @@
 'use client';
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import SnackbarProvider from '@/contexts/SnackbarContext';
-import EmotionCacheProvider from '@/contexts/EmotionCacheProvider';
-import theme from './_theme';
+import {SnackbarProvider, EmotionCacheProvider} from '@/context';
+import theme from '@/components/theme';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

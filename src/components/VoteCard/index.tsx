@@ -1,9 +1,10 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { Rating } from '@mui/lab';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import axios from 'axios';
-import { useHashpack } from '@/contexts/HashpackContext';
 import styles from './styles.module.scss';
 
 interface VoteCardProps {
@@ -18,11 +19,11 @@ interface VoteCardProps {
     currentRating: number;
   };
   type: 'vote' | 'view';
+	user: any // hashpack user
 }
 
-export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMainnetUrl }) => {
+export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMainnetUrl, user }) => {
   const [userVote, setUserVote] = useState<number | null>(0);
-  const user = useHashpack();
   const { accountId } = user || {};
 
   const handleVoteChange = (event: React.ChangeEvent<{}>, newValue: number | null) => {
