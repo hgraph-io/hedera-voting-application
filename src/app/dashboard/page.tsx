@@ -1,18 +1,20 @@
+'use client';
 //@ts-nocheck
 import React, { useState, useEffect } from 'react';
-import { Typography, Container, Button} from '@mui/material';
+import { Typography, Container, Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import CardComponent from '../components/Card';
+import CardComponent from '@/components/Card';
 import styles from './styles.module.scss';
-import { supabase } from '../supabaseClient';
-import { useUser } from '../contexts/UserContext';
+import { useHashpack } from '@/contexts/HashpackContext';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const DashboardPage: React.FC = () => {
   const router = useRouter();
   const [applications, setApplications] = useState([]);
-  const user = useUser();
+  const user = useHashpack();
 
   useEffect(() => {
+    const supabase = createClientComponentClient();
     const fetchApplications = async () => {
       user?.setLoading(true); // start loading
       const {

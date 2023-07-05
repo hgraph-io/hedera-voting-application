@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import {
   TextField,
   Button,
@@ -9,12 +11,12 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material';
-import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useUser } from '../contexts/UserContext';
-import { useSnackbar } from '../contexts/SnackbarContext';
+import { useHashpack } from '@/contexts/HashpackContext';
+import { useSnackbar } from '@/contexts/SnackbarContext';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import styles from './RegisterPage.module.scss';
+import { SnackbarMessageSeverity } from '@/types';
+import styles from './styles.module.scss';
 
 const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -22,13 +24,13 @@ const RegisterPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [method, setMethod] = useState('Email');
   const { openSnackbar } = useSnackbar();
-  const user = useUser();
+  const user = useHashpack();
   const supabase = createClientComponentClient();
   const router = useRouter();
 
   const handleSignUp = async () => {
     if (password !== confirmPassword) {
-      return openSnackbar('Passwords do not match', 'error');
+      return openSnackbar('Passwords do not match', SnackbarMessageSeverity.Error);
     }
 
     try {
@@ -41,11 +43,11 @@ const RegisterPage: React.FC = () => {
       });
 
       if (error) throw error;
-      openSnackbar('Signup successful!', 'success');
+      openSnackbar('Signup successful!', SnackbarMessageSeverity.Success);
       router.push('/login');
     } catch (error) {
       // @ts-ignore
-      openSnackbar(error.message, 'error');
+      openSnackbar(error.message, SnackbarMessageSeverity.Error);
     }
   };
 
@@ -58,7 +60,7 @@ const RegisterPage: React.FC = () => {
       openSnackbar(
         // @ts-ignore
         error.response?.data?.error || 'Registration failed',
-        'error'
+        SnackbarMessageSeverity.Error
       );
     }
   };

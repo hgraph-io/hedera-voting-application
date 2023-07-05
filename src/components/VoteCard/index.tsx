@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { Rating } from '@mui/lab';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import axios from 'axios';
-import { useUser } from '../contexts/UserContext';
+import { useHashpack } from '@/contexts/HashpackContext';
 import styles from './styles.module.scss';
 
 interface VoteCardProps {
@@ -22,7 +22,7 @@ interface VoteCardProps {
 
 export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMainnetUrl }) => {
   const [userVote, setUserVote] = useState<number | null>(0);
-  const user = useUser();
+  const user = useHashpack();
   const { accountId } = user || {};
 
   const handleVoteChange = (event: React.ChangeEvent<{}>, newValue: number | null) => {

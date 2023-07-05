@@ -1,5 +1,6 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
-import styles from './ApplicationPage.module.scss';
 import {
   Typography,
   Button,
@@ -10,18 +11,17 @@ import {
   TableContainer,
   TableRow,
   Paper,
-  TableHead,
   Grid,
   Chip,
   Link,
 } from '@mui/material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useUser } from '../contexts/UserContext'; // import the useUser hook
-import VoteCard from './VoteCard'; // import the VoteCard component
+import { useHashpack } from '@/contexts/HashpackContext';
+import VoteCard from '@/components/VoteCard';
 import { Rating } from '@mui/lab';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import StarIcon from '@mui/icons-material/Star';
+import styles from './styles.module.scss';
 
 interface ApplicationData {
   id: number;
@@ -58,8 +58,9 @@ const ApplicationPage: React.FC<Props> = ({ applicationData, votes: votesData })
   const [voteAverage, setVoteAverage] = useState<number>(1);
   const [voteLink, setVoteLink] = useState<string>('');
 
-  const user = useUser(); // get the user data
-  const { accountId, type, setLoading } = user || { setLoading: () => {} };
+  const user = useHashpack(); // get the user data
+  const { accountId, setLoading } = user || { setLoading: () => {} };
+  const type = 'admin';
   const applicationId = 'applicationId'; // replace with actual application id
 
   useEffect(() => {

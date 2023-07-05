@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import {
   Button,
@@ -11,8 +13,9 @@ import {
   Grid,
 } from '@mui/material';
 import { useRouter } from 'next/router';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
 import styles from './styles.module.scss';
-import { supabase } from '../supabaseClient';
 
 const SubmitApplicationPage: React.FC = () => {
   const [name, setName] = useState('');
@@ -42,6 +45,7 @@ const SubmitApplicationPage: React.FC = () => {
     // @ts-ignore
     const selectedTopics = Object.keys(topics).filter((topic) => topics[topic]);
 
+    const supabase = createClientComponentClient();
     const {
       data: { user },
     } = await supabase.auth.getUser();

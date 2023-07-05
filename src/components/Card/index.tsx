@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Checkbox, Button, Link } from '@mui/material';
 import styles from './styles.module.scss';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import {
   TextField,
@@ -10,11 +12,13 @@ import {
   InputLabel,
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useSnackbar } from '../contexts/SnackbarContext';
-import { supabase } from '../supabaseClient';
-import styles from './LoginPage.module.scss';
+import { useSnackbar } from '@/contexts/SnackbarContext';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import styles from './styles.module.scss';
+import { SnackbarMessageSeverity } from '@/types';
 
-const LoginPage: React.FC = () => {
+export default function LoginPage() {
+  const supabase = createClientComponentClient();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [method, setMethod] = useState('Email');
@@ -29,7 +33,7 @@ const LoginPage: React.FC = () => {
     });
 
     if (error) {
-      openSnackbar(error.message, 'error');
+      openSnackbar(error.message, SnackbarMessageSeverity.Error);
     } else {
       router.push('/dashboard');
     }
@@ -88,6 +92,4 @@ const LoginPage: React.FC = () => {
       </form>
     </Container>
   );
-};
-
-export default LoginPage;
+}
