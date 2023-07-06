@@ -29,6 +29,17 @@ export type SnackbarContextProps = {
 export type Vote = {
   type: 'vote';
   choice: string;
+  rating: number;
   ballotId: string;
   accountId: string;
+};
+
+// call for paper application
+export type CFPSubmission = {
+  id: number;
+  name: string;
+  organization: string;
+  topics: string[];
+  links: string[];
+  moderator: boolean;
 };

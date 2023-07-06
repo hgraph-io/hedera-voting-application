@@ -1,6 +1,8 @@
 'use client';
 
 export * from './mui';
+export { Rating } from '@mui/lab';
+export {StarBorder as StarBorderIcon} from '@mui/icons-material';
 
 export { default as Header } from './Header';
 export { default as Card } from './Card';
