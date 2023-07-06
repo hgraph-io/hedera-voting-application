@@ -1,14 +1,7 @@
 // @ts-nocheck
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from 'axios';
-import {
-  AccountId,
-  PrivateKey,
-  Client,
-  TopicMessageSubmitTransaction,
-  TransactionId,
-  Hbar,
-} from '@hashgraph/sdk';
+import { AccountId, PrivateKey, Client, TopicMessageSubmitTransaction } from '@hashgraph/sdk';
 import CryptoJS from 'crypto-js';
 
 const mainTopicId = process.env.VOTING_TOPIC_ID;

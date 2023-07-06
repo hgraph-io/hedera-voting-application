@@ -11,17 +11,24 @@ export type SnackbarContextProps = {
   openSnackbar: (message: string, severity: SnackbarMessageSeverity) => void;
 };
 
-export type HashpackAccount = {
-  connected: boolean;
-  token?: string;
+// export type HashpackAccount = {
+//   connected: boolean;
+//   token?: string;
+//   accountId: string;
+//   loading: boolean;
+//   hashpackTopicId?: string;
+//   disconnectHashpack: () => void;
+//   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+//   setConnected: React.Dispatch<React.SetStateAction<boolean>>;
+//   setAccountId: React.Dispatch<React.SetStateAction<string>>;
+//   setPairingString: React.Dispatch<React.SetStateAction<string>>;
+//   setHashpackTopicId: React.Dispatch<React.SetStateAction<string | undefined>>;
+//   initWalletConnect: (firstLoad: boolean) => Promise<boolean>;
+// };
+
+export type Vote = {
+  type: 'vote';
+  choice: string;
+  ballotId: string;
   accountId: string;
-  loading: boolean;
-  hashpackTopicId?: string;
-  disconnectHashpack: () => void;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setConnected: React.Dispatch<React.SetStateAction<boolean>>;
-  setAccountId: React.Dispatch<React.SetStateAction<string>>;
-  setPairingString: React.Dispatch<React.SetStateAction<string>>;
-  setHashpackTopicId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  initWalletConnect: (firstLoad: boolean) => Promise<boolean>;
 };
