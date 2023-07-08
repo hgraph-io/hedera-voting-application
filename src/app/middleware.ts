@@ -11,13 +11,8 @@ export async function middleware(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // if user is signed in and the current path is / redirect the user to /submit
-  if (user && req.nextUrl.pathname === '/')
-    return NextResponse.redirect(new URL('/submit', req.url));
-  // if user is not signed in and the current path is not / or /login redirect the user to /
-  else if (!user && !['/', '/login'].includes(req.nextUrl.pathname)) {
+  if (!user && !['/', '/speaker/login'].includes(req.nextUrl.pathname))
     return NextResponse.redirect(new URL('/', req.url));
-  }
 
   return res;
 }
@@ -32,6 +27,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!vote|public|_next/static|_next/image|favicon.ico).*)',
+    '/((?!committee|public|_next/static|_next/image|favicon.ico).*)',
   ],
 };
