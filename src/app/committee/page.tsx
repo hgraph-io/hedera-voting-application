@@ -4,29 +4,18 @@ import type { Database } from '@/types';
 import { Typography, Container, Button, Card } from '@/components';
 import styles from './styles.module.scss';
 
-async function fetchApplications() {
+export default async function AdminDashboardPage() {
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  const { data, error } = await supabase.from('applications').select('*');
-
-  if (error) throw new Error('Error loading applications');
-
-  return data.map((application) => ({
-    ...application,
-    // type: application.votes.includes(user?.accountId) ? 'vote' : 'view',
-    type: true ? 'vote' : 'view',
-  }));
-}
-
-export default async function AdminDashboardPage() {
-  const applications = await fetchApplications();
+  const { data: submissions } = await supabase.from('applications').select('*');
+  console.log(submissions);
 
   return (
     <Container maxWidth="md" className={styles.adminDashboardContainer}>
       <div className={styles.header}>
-        <Typography variant="h3">Admin Dashboard</Typography>
+        <Typography variant="h3">Committee Dashboard</Typography>
         <Typography component="p">
-          Welcome to the Admin Panel of the Hedera Voting Application!
+          Welcome to the Committee Panel of the Call for Papers!
         </Typography>
         <Typography component="p" gutterBottom>
           This is your command center for managing all aspects of the voting process. Monitor
@@ -44,22 +33,10 @@ export default async function AdminDashboardPage() {
       </Typography>
 
       <div>
-        {applications.map(
-          (
-            app: any //todo
-          ) => (
-            <Card
-              key={app.id}
-              id={app.id}
-              moderator={app.moderator}
-              applicationId={app.applicationId}
-              rating={app.rating}
-              speaker={app.name}
-              isSelected={app.isSelected}
-              type={app.type}
-            />
-          )
-        )}
+        {/* // @ts-ignore */}
+        {submissions?.map((submission) => (
+          <Card key={submission.id} {...submission} />
+        ))}
       </div>
     </Container>
   );

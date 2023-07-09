@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { useRouter } from 'next/navigation';
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
   Typography,
   Button,
@@ -18,23 +18,20 @@ import {
   VoteCard,
   StarBorderIcon,
 } from '@/components';
-import type { Vote, CFPSubmission, Database } from '@/types';
+import type { Database } from '@/types';
 import styles from './styles.module.scss';
 
 //`https://explore.lworks.io/mainnet/topics/0.0.1350036/messages/${userVoteData.sequence_number}`
 //
-const supabase = createServerActionClient<Database>({ cookies });
-
-async function getSubmissions() {
-  const { data } = await supabase.from('submission').select('*');
-  // .order('type', { ascending: false });
-
-  return data;
-}
+// https://github.com/vercel/next.js/issues/49373
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function AdminDashboard() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const { data: submissions } = await supabase.from('submission').select('*');
   const router = useRouter();
-  const submissions = await getSubmissions();
+  const voteAverage = 0;
 
   return (
     <Grid container spacing={3} className={styles.adminDashboard}>
@@ -58,6 +55,7 @@ export default async function AdminDashboard() {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body2">Relevant Topics:</Typography>
+                {/*
                 <div className={styles.topicContainer}>
                   {data.topics.map((topic, topicIndex) => (
                     <Chip
@@ -72,9 +70,11 @@ export default async function AdminDashboard() {
                     />
                   ))}
                 </div>
+								*/}
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body2">Links:</Typography>
+                {/*
                 <div className={styles.linksContainer}>
                   {data.links.map((link, linkIndex) => (
                     <Link
@@ -88,9 +88,10 @@ export default async function AdminDashboard() {
                     </Link>
                   ))}
                 </div>
+									*/}
               </Grid>
 
-              {!userVoted ? (
+              {/*!userVoted ? (
                 <Grid item xs={12}>
                   <VoteCard
                     id={data.id}
@@ -116,10 +117,10 @@ export default async function AdminDashboard() {
                     }}
                   />
                 </Grid>
-              )}
+								)*/}
               <Grid item xs={12}>
                 <div className={styles.titleRow}>
-                  <Typography variant="h4">Total Votes</Typography> ({votes.length} votes)
+                  {/*<Typography variant="h4">Total Votes</Typography> ({votes.length} votes) */}
                 </div>
                 <div className={styles.rating}>
                   <Rating
@@ -138,6 +139,7 @@ export default async function AdminDashboard() {
                 </Typography>
                 <TableContainer component={Paper} className={styles.voteTable}>
                   <Table>
+                    {/*
                     <TableBody>
                       {votes.map((vote) => (
                         <TableRow key={vote.accountId}>
@@ -146,6 +148,7 @@ export default async function AdminDashboard() {
                         </TableRow>
                       ))}
                     </TableBody>
+										*/}
                   </Table>
                 </TableContainer>
               </Grid>
