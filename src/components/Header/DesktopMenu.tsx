@@ -1,33 +1,25 @@
 import { Button } from '@mui/material';
 import Link from 'next/link';
-
 import styles from './styles.module.scss';
 
 export default function DesktopMenu() {
   return (
     <div className={styles.links}>
-      <Link href="/">
-        <div className={true ? styles.activeLink : styles.link}>Home</div>
-      </Link>
-      <Link href="/dashboard">
+      <Link href="/speaker">
         <div className={true ? styles.activeLink : styles.link}>Dashboard</div>
       </Link>
-      <Link href="/admin">
+      <Link href="/committee">
         <div className={true ? styles.activeLink : styles.link}>Admin</div>
       </Link>
       <div className={styles.desktopButtonContainer}>
-        <Link href="/register">
-          <Button variant="outlined" className={styles.signupButton}>
-            Sign Up
-          </Button>
-        </Link>
-        <Link href="/login">
-          <Button variant="contained" className={styles.loginButton}>
-            Login
-          </Button>
-        </Link>
-        <Button onClick={() => alert('not implemented')} variant="contained">
-          Log Out Hashpack
+        <Link href="/speaker">Login</Link>
+        <Button
+          component="a"
+          href="/speaker"
+          variant="outlined"
+          className={styles.signupButton}
+        >
+          Sign Up
         </Button>
       </div>
     </div>

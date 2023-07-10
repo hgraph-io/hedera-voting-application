@@ -1,28 +1,13 @@
-.dashboardContainer {
-  margin-top: 40px;
-  max-width: 1024px;
+// AdminLogin.module.scss
+.loginPageContainer {
+  margin: 50px auto;
+  // Style as needed
+
+  button {
+    margin-top: 30px;
+  }
 }
 
-.buttonContainer {
+.formContent {
   margin-top: 30px;
-}
-
-.header {
-  margin-bottom: 50px;
-}
-
-.cardContainer {
-  > div > div {
-    &:first-of-type {
-      margin-top: 30px;
-    }
-    margin: 0px;
-  }
-
-  @media (max-width: 900px) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: center;
-  }
 }

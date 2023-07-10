@@ -1,0 +1,28 @@
+.dashboardContainer {
+  margin-top: 40px;
+  max-width: 1024px;
+}
+
+.buttonContainer {
+  margin-top: 30px;
+}
+
+.header {
+  margin-bottom: 50px;
+}
+
+.cardContainer {
+  > div > div {
+    &:first-of-type {
+      margin-top: 30px;
+    }
+    margin: 0px;
+  }
+
+  @media (max-width: 900px) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+  }
+}
