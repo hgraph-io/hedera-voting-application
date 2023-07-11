@@ -23,7 +23,7 @@ export default async function SpeakerSubmissionPage() {
 
   async function submit(data: FormData) {
     'use server';
-    console.log(user!.id);
+    console.log(user?.id);
     console.log(data);
   }
 

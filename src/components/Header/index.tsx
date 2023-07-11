@@ -19,7 +19,7 @@ export default function Header() {
             justifyContent: 'space-between',
           }}
         >
-          <Link href="/" passHref>
+          <Link href="/">
             <Image className={styles.logo} src="/logo.png" width={100} height={30} alt="Logo" />
           </Link>
           <div>

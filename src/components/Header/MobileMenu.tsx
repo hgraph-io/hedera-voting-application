@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Hidden, IconButton, Button, Drawer } from '@mui/material';
 import { Close, Menu } from '@mui/icons-material';
 
@@ -11,6 +12,7 @@ import styles from './styles.module.scss';
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <Hidden lgUp implementation="css">
@@ -49,17 +51,22 @@ export default function MobileMenu() {
           </div>
 
           <Link href="/">
-            <div className={true ? styles.activeLink : styles.link}>Home</div>
+            <div className={pathname === '/' ? styles.activeLink : styles.link}>Home</div>
           </Link>
           <Link href="/dashboard">
-            <div className={true ? styles.activeLink : styles.link}>Dashboard</div>
+            <div
+              className={pathname.startsWith('/dashboard') ? styles.activeLink : styles.link}
+            >
+              Dashboard
+            </div>
           </Link>
           <Link href="/admin">
-            {/*<div className={location?.pathname === '/' ? styles.activeLink : styles.link}> */}
-            <div className={true ? styles.activeLink : styles.link}>Admin</div>
+            <div className={pathname.startsWith('/admin') ? styles.activeLink : styles.link}>
+              Admin
+            </div>
           </Link>
           <div className={styles.mobileButtonContainer}>
-            <Link href="/register">
+            <Link href="/login?new">
               <Button variant="outlined">Sign Up</Button>
             </Link>
             <Link href="/login">

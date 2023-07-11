@@ -9,9 +9,11 @@ export default async function SubmitPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  console.log(user);
   const submissions = await supabase.from('submission').select('*').eq('id', user!.id);
 
   console.log(submissions);
+  return <div></div>;
 
   return (
     <Container maxWidth="md" className={styles.dashboardContainer}>
