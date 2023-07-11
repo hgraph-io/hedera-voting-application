@@ -34,7 +34,63 @@ export interface Database {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      hedera_admin_account: {
+        Row: {
+          account_id: string
+          created_at: string | null
+          id: number
+        }
+        Insert: {
+          account_id: string
+          created_at?: string | null
+          id?: number
+        }
+        Update: {
+          account_id?: string
+          created_at?: string | null
+          id?: number
+        }
+        Relationships: []
+      }
+      submission: {
+        Row: {
+          created_at: string | null
+          id: number
+          links: Json | null
+          moderator: boolean | null
+          name: string | null
+          organization: string | null
+          topics: Json | null
+          type: string | null
+          user_id: string
+          votes: Json | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          links?: Json | null
+          moderator?: boolean | null
+          name?: string | null
+          organization?: string | null
+          topics?: Json | null
+          type?: string | null
+          user_id: string
+          votes?: Json | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          links?: Json | null
+          moderator?: boolean | null
+          name?: string | null
+          organization?: string | null
+          topics?: Json | null
+          type?: string | null
+          user_id?: string
+          votes?: Json | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
