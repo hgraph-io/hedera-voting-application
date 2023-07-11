@@ -1,31 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Checkbox, Button, Link } from '@mui/material';
+import { useState } from 'react';
+import { Checkbox, Button, Link } from '@/components';
+import type { Database } from '@/types';
 import styles from './styles.module.scss';
 
-interface CardProps {
-  type: 'view' | 'vote' | 'approved' | 'denied' | 'default';
-  speaker: string;
-  moderator: boolean;
-  isSelected: boolean;
-  id: number;
-  //todo
-  applicationId: any;
-  rating: {
-    voteNum: number;
-    currentRating: number;
-  };
-}
+type Submission = Database['public']['Tables']['submission']['Row'];
 
-export const Card: React.FC<CardProps> = ({
-  type,
-  id,
-  speaker,
-  moderator,
-  isSelected,
-  rating,
-}) => {
+type Props = Submission & {
+  speaker: string;
+  isSelected: boolean;
+  rating: any;
+};
+
+export default function Card({ type, id, speaker, moderator, isSelected, rating }: Props) {
   const [selected, setSelected] = useState(isSelected);
 
   const renderRating = () => {
@@ -95,6 +83,4 @@ export const Card: React.FC<CardProps> = ({
       )}
     </div>
   );
-};
-
-export default Card;
+}
