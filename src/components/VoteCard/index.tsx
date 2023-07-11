@@ -1,9 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@mui/material';
-import { Rating } from '@mui/lab';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { Button, Rating, StarBorderIcon } from '@/components';
 import axios from 'axios';
 import styles from './styles.module.scss';
 
@@ -19,10 +17,16 @@ interface VoteCardProps {
     currentRating: number;
   };
   type: 'vote' | 'view';
-	user: any // hashpack user
+  user: any; // hashpack user
 }
 
-export const VoteCard: React.FC<VoteCardProps> = ({ id, rating, type, hederaMainnetUrl, user }) => {
+export const VoteCard: React.FC<VoteCardProps> = ({
+  id,
+  rating,
+  type,
+  hederaMainnetUrl,
+  user,
+}) => {
   const [userVote, setUserVote] = useState<number | null>(0);
   const { accountId } = user || {};
 

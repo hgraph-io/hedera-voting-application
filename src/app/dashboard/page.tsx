@@ -6,13 +6,15 @@ import styles from './styles.module.scss';
 
 export default async function SubmitPage() {
   const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  console.log(user);
-  const submissions = await supabase.from('submission').select('*').eq('id', user!.id);
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
+  console.log('aaaaaaaaaaaaaaaa');
+  const test = await supabase.auth.getUser();
+  console.log(test);
+  // const submissions = await supabase.from('submission').select('*').eq('id', user!.id);
 
-  console.log(submissions);
+  // console.log(submissions);
   return <div></div>;
 
   return (

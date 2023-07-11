@@ -1,10 +1,17 @@
+'use client';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Session } from '@supabase/auth-helpers-nextjs';
+import { VIEWS } from '@supabase/auth-ui-shared';
 import { Button } from '@mui/material';
+
 import styles from './styles.module.scss';
 
-export default function DesktopMenu() {
+//https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs
+export default function DesktopMenu({ session }: { session: Session | null }) {
   const pathname = usePathname();
+
   return (
     <div className={styles.links}>
       <Link href="/">
@@ -21,15 +28,27 @@ export default function DesktopMenu() {
         </div>
       </Link>
       <div className={styles.desktopButtonContainer}>
-        <Link href="/login">Login</Link>
-        <Button
-          component="a"
-          href="/login?new"
-          variant="outlined"
-          className={styles.signupButton}
-        >
-          Sign Up
-        </Button>
+        {session?.user && (
+          <form action="/auth/signout" method="post">
+            <Button variant="contained" type="submit">
+              Sign Out
+            </Button>
+          </form>
+        )}
+
+        {!session?.user && (
+          <>
+            <Link href={`/login?v=${VIEWS.SIGN_IN}`}>Login</Link>
+            <Button
+              component="a"
+              href={`/login?v=${VIEWS.SIGN_UP}`}
+              variant="outlined"
+              className={styles.signupButton}
+            >
+              Sign Up
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

@@ -2,15 +2,14 @@
 
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { Hidden, IconButton, Button, Drawer } from '@mui/material';
-import { Close, Menu } from '@mui/icons-material';
-
 import Link from 'next/link';
 import Image from 'next/image';
-
+import { Session } from '@supabase/auth-helpers-nextjs';
+import { VIEWS } from '@supabase/auth-ui-shared';
+import { Hidden, IconButton, Button, Drawer, MenuIcon, CloseIcon } from '@/components';
 import styles from './styles.module.scss';
 
-export default function MobileMenu() {
+export default function MobileMenu({ session }: { session: Session | null }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -23,7 +22,7 @@ export default function MobileMenu() {
         aria-label="menu"
         onClick={() => setOpen(!open)}
       >
-        <Menu />
+        <MenuIcon />
       </IconButton>
       <Drawer
         anchor="right"
@@ -46,7 +45,7 @@ export default function MobileMenu() {
               aria-label="menu"
               onClick={() => setOpen(false)}
             >
-              <Close />
+              <CloseIcon />
             </IconButton>
           </div>
 
@@ -66,17 +65,25 @@ export default function MobileMenu() {
             </div>
           </Link>
           <div className={styles.mobileButtonContainer}>
-            <Link href="/login?new">
-              <Button variant="outlined">Sign Up</Button>
-            </Link>
-            <Link href="/login">
-              <Button variant="contained" className={styles.loginButton}>
-                Login
-              </Button>
-            </Link>
-            <Button variant="contained" className={styles.loginButton}>
-              Log Out
-            </Button>
+            {session?.user && (
+              <form action="/auth/signout" method="post">
+                <Button variant="contained" className={styles.loginButton}>
+                  Log Out
+                </Button>
+              </form>
+            )}
+            {!session?.user && (
+              <>
+                <Link href={`/login?v=${VIEWS.SIGN_UP}`}>
+                  <Button variant="outlined">Sign Up</Button>
+                </Link>
+                <Link href={`/login?v=${VIEWS.SIGN_IN}`}>
+                  <Button variant="contained" className={styles.loginButton}>
+                    Login
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </Drawer>

@@ -3,11 +3,12 @@
 import { AppBar, Toolbar, Hidden } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Session } from '@supabase/auth-helpers-nextjs';
 import MobileMenu from './MobileMenu';
 import DesktopMenu from './DesktopMenu';
 import styles from './styles.module.scss';
 
-export default function Header() {
+export default function Header({ session }: { session: Session | null }) {
   return (
     <div className={styles.root}>
       <AppBar className={styles.menuBar} position="static">
@@ -24,11 +25,11 @@ export default function Header() {
           </Link>
           <div>
             <Hidden lgDown implementation="css">
-              <DesktopMenu />
+              <DesktopMenu session={session} />
             </Hidden>
 
             <Hidden lgUp implementation="css">
-              <MobileMenu />
+              <MobileMenu session={session} />
             </Hidden>
           </div>
         </Toolbar>
