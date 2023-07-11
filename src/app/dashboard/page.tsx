@@ -2,20 +2,21 @@ import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Typography, Container, Button } from '@/components';
 import Card from '@/components/Card';
+import type { Database } from '@/types';
 import styles from './styles.module.scss';
 
-export default async function SubmitPage() {
-  const supabase = createServerComponentClient({ cookies });
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();
-  console.log('aaaaaaaaaaaaaaaa');
-  const test = await supabase.auth.getUser();
-  console.log(test);
-  // const submissions = await supabase.from('submission').select('*').eq('id', user!.id);
+export default async function DashboardPage() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  // console.log(submissions);
-  return <div></div>;
+  const { data: submissions } = await supabase
+    .from('submission')
+    .select('*')
+    .eq('user_id', session!.user.id);
+
+  console.log(submissions);
 
   return (
     <Container maxWidth="md" className={styles.dashboardContainer}>
@@ -33,7 +34,7 @@ export default async function SubmitPage() {
         </Typography>
         <Button
           component="a"
-          href="/speaker/submit"
+          href="/submission"
           className={styles.buttonContainer}
           variant="contained"
         >
@@ -41,7 +42,7 @@ export default async function SubmitPage() {
         </Button>
       </div>
       <div className={styles.cardContainer}>
-        {submissions && <Typography variant="h4">Previous Applications</Typography>}
+        {!!submissions!.length && <Typography variant="h4">Previous Applications</Typography>}
         <div className={styles.cardContainer}>
           {/*// @ts-ignore */}
           {submissions.map((submission, index) => (

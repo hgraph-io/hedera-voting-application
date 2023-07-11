@@ -1,7 +1,9 @@
+migrations:
 https://supabase.com/docs/guides/cli/managing-environments
 `npx supabase gen types typescript --local > src/types/supabase.ts`
 `https://supabase.com/docs/guides/cli`
 `npx supabase status`
+
 
 
 

@@ -15,7 +15,7 @@ import {
 
 import styles from './styles.module.scss';
 
-export default async function SpeakerSubmissionPage() {
+export default async function SubmissionPage() {
   const supabase = createServerActionClient<Database>({ cookies });
   const {
     data: { user },
@@ -31,7 +31,7 @@ export default async function SpeakerSubmissionPage() {
     <Container className={styles.submitApplication}>
       <Button
         component="a"
-        href="/speaker"
+        href="/dashboard"
         variant="outlined"
         style={{ margin: '20px 0px 30px' }}
       >
