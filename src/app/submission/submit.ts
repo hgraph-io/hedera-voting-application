@@ -6,7 +6,6 @@ import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 import type { Database } from '@/types';
 
 export default async function submit(data: FormData) {
-  'use server';
   const supabase = createServerActionClient<Database>({ cookies });
   const {
     data: { user },
