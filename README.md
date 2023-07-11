@@ -5,6 +5,11 @@ https://supabase.com/docs/guides/cli/managing-environments
 `npx supabase status`
 `npx supabase db reset`
 
+`src/supabase/config.toml`
+"# Email testing server. Emails sent with the local dev setup are not actually sent - rather, they
+# are monitored, and you can view the emails that would have been sent from the web interface.
+"
+
 
 
 

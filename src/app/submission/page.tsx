@@ -1,6 +1,5 @@
-import { cookies } from 'next/headers';
-import { Database } from '@/types';
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
+import submit from './submit';
+
 import {
   Button,
   TextField,
@@ -16,17 +15,6 @@ import {
 import styles from './styles.module.scss';
 
 export default async function SubmissionPage() {
-  const supabase = createServerActionClient<Database>({ cookies });
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  async function submit(data: FormData) {
-    'use server';
-    console.log(user?.id);
-    console.log(data);
-  }
-
   return (
     <Container className={styles.submitApplication}>
       <Button

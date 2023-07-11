@@ -89,7 +89,14 @@ export interface Database {
           user_id?: string
           votes?: Json | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "submission_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
