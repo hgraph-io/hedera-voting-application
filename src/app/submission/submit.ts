@@ -1,6 +1,7 @@
 'use server';
 import { cookies } from 'next/headers';
-import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 import type { Database } from '@/types';
 
@@ -20,8 +21,7 @@ export default async function submit(data: FormData) {
     moderator: data.get('moderator'),
     user_id: user!.id,
   };
-  console.log(fields);
-  const test = await supabase.from('submission').insert(fields);
-  console.log(test);
-  // revalidatePath('/submission');
+  const result = await supabase.from('submission').insert(fields);
+  if (result.status === 201) redirect('/dashboard');
+  //todo: handle error
 }
