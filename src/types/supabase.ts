@@ -36,17 +36,14 @@ export interface Database {
     Tables: {
       hedera_admin_account: {
         Row: {
-          account_id: string
           created_at: string | null
           id: number
         }
         Insert: {
-          account_id: string
           created_at?: string | null
-          id?: number
+          id: number
         }
         Update: {
-          account_id?: string
           created_at?: string | null
           id?: number
         }
@@ -55,39 +52,33 @@ export interface Database {
       submission: {
         Row: {
           created_at: string | null
-          id: number
-          links: Json | null
+          id: string
+          links: string[] | null
           moderator: boolean | null
-          name: string | null
+          name: string
           organization: string | null
-          topics: Json | null
-          type: string | null
+          topics: string[] | null
           user_id: string
-          votes: Json | null
         }
         Insert: {
           created_at?: string | null
-          id?: number
-          links?: Json | null
+          id?: string
+          links?: string[] | null
           moderator?: boolean | null
-          name?: string | null
+          name: string
           organization?: string | null
-          topics?: Json | null
-          type?: string | null
+          topics?: string[] | null
           user_id: string
-          votes?: Json | null
         }
         Update: {
           created_at?: string | null
-          id?: number
-          links?: Json | null
+          id?: string
+          links?: string[] | null
           moderator?: boolean | null
-          name?: string | null
+          name?: string
           organization?: string | null
-          topics?: Json | null
-          type?: string | null
+          topics?: string[] | null
           user_id?: string
-          votes?: Json | null
         }
         Relationships: [
           {

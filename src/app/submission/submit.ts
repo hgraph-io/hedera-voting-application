@@ -11,17 +11,18 @@ export default async function submit(data: FormData) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  // console.log(user?.id);
-  // console.log(data);
+
   const fields = {
-    name: data.get('name'),
-    organization: data.get('organization'),
-    links: data.get('links'),
-    topics: data.getAll('topics'),
-    moderator: data.get('moderator'),
+    id: data.get('id')?.toString() || undefined,
     user_id: user!.id,
+    name: String(data.get('name')),
+    organization: String(data.get('organization')),
+    links: String(data.get('links')).split(','),
+    topics: data.getAll('topics') as string[],
+    moderator: Boolean(data.get('moderator')),
   };
-  const result = await supabase.from('submission').insert(fields);
+  console.log(fields);
+  const result = await supabase.from('submission').upsert(fields);
   if (result.status === 201) redirect('/dashboard');
   //todo: handle error
 }

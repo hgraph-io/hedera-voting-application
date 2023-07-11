@@ -1,3 +1,4 @@
+// https://nextjs.org/docs/app/building-your-application/routing/middleware
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 
