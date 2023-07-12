@@ -7,7 +7,7 @@
 // import { useUser } from '../contexts/UserContext';
 
 export default function AdminResultsPage() {
-	return <div>results</div>
+  return <div>results</div>;
   //const [approvedApplications, setApprovedApplications] = useState([]);
   //const [openApplications, setOpenApplications] = useState([]);
   //const user = useUser();

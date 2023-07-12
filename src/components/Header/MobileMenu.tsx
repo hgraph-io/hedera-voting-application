@@ -36,7 +36,13 @@ export default function MobileMenu({ session }: { session: Session | null }) {
         <div className={styles.links}>
           <div className={styles.logoContainer}>
             <Link href="/">
-              <Image className={styles.logo} src="/assets/logo.png" width={100} height={30} alt="Logo" />
+              <Image
+                className={styles.logo}
+                src="/assets/logo.png"
+                width={100}
+                height={30}
+                alt="Logo"
+              />
             </Link>
             <IconButton
               edge="start"
@@ -67,21 +73,30 @@ export default function MobileMenu({ session }: { session: Session | null }) {
           <div className={styles.mobileButtonContainer}>
             {session?.user && (
               <form action="/auth/signout" method="post">
-                <Button variant="contained" className={styles.loginButton}>
-                  Log Out
+                <Button variant="contained" type="submit">
+                  Sign Out
                 </Button>
               </form>
             )}
+
             {!session?.user && (
               <>
-                <Link href={`/login?v=${VIEWS.SIGN_UP}`}>
-                  <Button variant="outlined">Sign Up</Button>
-                </Link>
-                <Link href={`/login?v=${VIEWS.SIGN_IN}`}>
-                  <Button variant="contained" className={styles.loginButton}>
-                    Login
-                  </Button>
-                </Link>
+                <Button
+                  component="a"
+                  href={`/login?v=${VIEWS.SIGN_UP}`}
+                  variant="outlined"
+                  className={styles.signupButton}
+                >
+                  Login
+                </Button>
+                <Button
+                  component="a"
+                  href={`/login?v=${VIEWS.SIGN_UP}`}
+                  variant="contained"
+                  className={styles.signupButton}
+                >
+                  Sign Up
+                </Button>
               </>
             )}
           </div>
