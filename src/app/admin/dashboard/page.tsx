@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import { useRouter } from 'next/navigation';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
   Typography,
@@ -24,19 +23,18 @@ import styles from './styles.module.scss';
 //`https://explore.lworks.io/mainnet/topics/0.0.1350036/messages/${userVoteData.sequence_number}`
 //
 // https://github.com/vercel/next.js/issues/49373
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// export const dynamic = 'force-dynamic';
+// export const revalidate = 0;
 
 export default async function AdminDashboard() {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: submissions } = await supabase.from('submission').select('*');
-  const router = useRouter();
   const voteAverage = 0;
 
   return (
     <Grid container spacing={3} className={styles.adminDashboard}>
       <Grid item xs={12}>
-        <Button variant="outlined" onClick={() => router.back()} className={styles.backButton}>
+        <Button variant="outlined" className={styles.backButton}>
           Back
         </Button>
       </Grid>
@@ -46,7 +44,7 @@ export default async function AdminDashboard() {
         </Typography>
       </Grid>
       {submissions?.map((data, index) => (
-        <Grid xs={12} key={index}>
+        <Grid item xs={12} key={index}>
           <Container className={styles.applicationContainer}>
             <Grid container spacing={4}>
               <Grid item xs={12}>
