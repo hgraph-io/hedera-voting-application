@@ -14,7 +14,7 @@ export default function HomePage() {
             Submit your application to the upcoming Hedera conference
           </Typography>
           <Link href="/login">
-            <Button variant="contained" className={styles.heroButton}>
+            <Button variant="gradient" className={styles.heroButton}>
               Submit an Application
             </Button>
           </Link>
