@@ -1,43 +1,50 @@
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import type { Database } from '@/types';
-import { Typography, Container, Button, Card } from '@/components';
+// @ts-nocheck
+'use client';
+
+import { Button, Container, Typography } from '@/components';
+import { useHashpack } from '@/app/admin/providers';
 import styles from './styles.module.scss';
 
-export default async function AdminDashboardPage() {
-  const supabase = createServerComponentClient<Database>({ cookies });
-
-  const { data: submissions } = await supabase.from('applications').select('*');
-  console.log(submissions);
-
+export default function AdminLoginPage() {
+  const hp = useHashpack();
+  console.log('xxxxxxxxxxxx');
+  console.log(hp);
   return (
-    <Container maxWidth="md" className={styles.adminDashboardContainer}>
-      <div className={styles.header}>
-        <Typography variant="h3">Committee Dashboard</Typography>
-        <Typography component="p">
-          Welcome to the Committee Panel of the Call for Papers!
-        </Typography>
-        <Typography component="p" gutterBottom>
-          This is your command center for managing all aspects of the voting process. Monitor
-          voter registrations, oversee ballot details, and analyze real-time voting data.
-        </Typography>
-        <Button component="a" variant="outlined" href="/admin/results">
-          View All
-        </Button>
-      </div>
-
-      <Typography variant="h4">Applications</Typography>
-      <Typography className={styles.descriptionParagraph} component="p">
-        Below you can review, manage and select applications from individuals eager to share
-        their insights at our upcoming conference.
+    <Container className={styles.adminLoginPageContainer} maxWidth="xs">
+      <Typography component="h1" variant="h2">
+        Admin Login
       </Typography>
-
-      <div>
-        {/* // @ts-ignore */}
-        {submissions?.map((submission) => (
-          <Card key={submission.id} {...submission} />
-        ))}
-      </div>
+      <Typography>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+        dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum
+      </Typography>
+      <form className={styles.formContent} noValidate autoComplete="off">
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={() => hp.client.connectToLocalWallet()}
+        >
+          Connect to Hashpack
+        </Button>
+        {hp?.initData?.savedPairings?.map((pairingData, index) => {
+          return (
+            <Button
+              key={index}
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={() => hp.client.disconnect(pairingData.topic)}
+            >
+              {pairingData.accountIds.join(',')} - Disconnect from to Hashpack
+            </Button>
+          );
+        })}
+      </form>
     </Container>
   );
 }
