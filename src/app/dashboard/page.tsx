@@ -24,27 +24,27 @@ export default async function DashboardPage() {
         <Typography component="h1" variant="h3" align="left" color="textPrimary" gutterBottom>
           Dashboard
         </Typography>
-        <Typography align="left" color="textSecondary"gutterBottom>
-          Welcome to the Hedera conference submission portal. Here, you can submit your papers 
+        <Typography align="left" color="textSecondary" gutterBottom>
+          Welcome to the Hedera conference submission portal. Here, you can submit your papers
           and track your submission status.
         </Typography>
         <div className={styles.buttonContainer}>
-          <Button
-            component="a"
-            href="/submission"
-            variant="contained"
-          >
+          <Button component="a" href="/submission" variant="contained">
             Submit New Application
           </Button>
         </div>
       </div>
       <div className={styles.cardContainer}>
-        {submissions && !!submissions!.length && <Typography variant="h4">Previous Applications</Typography>}
+        {submissions && !!submissions!.length && (
+          <Typography variant="h4">Previous Applications</Typography>
+        )}
         <div className={styles.cardContainer}>
           {/*// @ts-ignore */}
-          {submissions && submissions.map((submission, index) => (
-            <Card key={index} {...submission} />
-          ))}
+          {submissions &&
+            submissions.map((submission, index) => {
+              /*// @ts-ignore */
+              return <Card key={index} {...submission} />;
+            })}
         </div>
       </div>
     </Container>
