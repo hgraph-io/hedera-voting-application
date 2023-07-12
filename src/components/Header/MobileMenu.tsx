@@ -36,7 +36,7 @@ export default function MobileMenu({ session }: { session: Session | null }) {
         <div className={styles.links}>
           <div className={styles.logoContainer}>
             <Link href="/">
-              <Image className={styles.logo} src="/logo.png" alt="Logo" />
+              <Image className={styles.logo} src="/assets/logo.png" width={100} height={30} alt="Logo" />
             </Link>
             <IconButton
               edge="start"

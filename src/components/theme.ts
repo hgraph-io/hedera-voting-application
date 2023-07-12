@@ -41,6 +41,7 @@ export default createTheme({
       styleOverrides: {
         root: {
           backgroundColor: colors.white, // Set AppBar background to white
+          color: colors.black, // Set text color to black
         },
       },
     },
