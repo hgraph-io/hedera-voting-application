@@ -5,6 +5,7 @@ import { Auth } from '@supabase/auth-ui-react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { ThemeSupa, VIEWS } from '@supabase/auth-ui-shared';
 import { Container } from '@/components';
+import styles from './styles.module.scss';
 
 export default function SupabaseAuthUI() {
   const supabase = createClientComponentClient();
@@ -12,7 +13,7 @@ export default function SupabaseAuthUI() {
   const view = VIEWS[searchParams.get('v')?.toUpperCase() || 'SIGN_IN'] || VIEWS.SIGN_IN;
 
   return (
-    <Container style={{ maxWidth: 600, margin: 'auto' }}>
+    <Container className={styles.loginPageContainer}>
       <Auth
         supabaseClient={supabase}
         appearance={{
@@ -20,10 +21,10 @@ export default function SupabaseAuthUI() {
           variables: {
             default: {
               colors: {
-                brand: '#7048e8', // Button background color
-                brandAccent: '#f9f9f9', // Button hover background color
+                brand: '#6541d2', // Button background color
+                brandAccent: '#7048e8', // Button hover background color
                 brandButtonText: '#ffffff', // Button text color
-                defaultButtonBackground: '#7048e8', // Default button background color
+                defaultButtonBackground: '#6541d2', // Default button background color
                 defaultButtonBorder: '#000000', // Default button border color
                 defaultButtonText: '#000000', // Default button text color
                 inputLabelText: '#000000', // Label text color

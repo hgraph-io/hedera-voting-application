@@ -1,11 +1,8 @@
 .submitApplication {
-  max-width: 500px;
-  margin: 0 auto;
+  max-width: 600px;
+  min-width: 300px; 
+  margin: 0 auto 40px;
   padding: 20px;
-
-  .buttonContainer {
-    margin-top: 20px;
-  }
 
   h2 {
     text-align: center;

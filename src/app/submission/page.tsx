@@ -16,7 +16,7 @@ import styles from './styles.module.scss';
 
 export default async function SubmissionPage() {
   return (
-    <Container className={styles.submitApplication}>
+    <div className={styles.submitApplication}>
       <div className={styles.buttonContainer}>
         <Button
           component="a"
@@ -32,7 +32,7 @@ export default async function SubmissionPage() {
         Submit Application
       </Typography>
       <form action={submit}>
-        <Grid container spacing={2}>
+        <Grid container spacing={4}>
           <Grid item xs={12}>
             <TextField name="name" label="Speaker Name" fullWidth required />
           </Grid>
@@ -77,12 +77,12 @@ export default async function SubmissionPage() {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" color="primary" type="submit">
+            <Button fullWidth variant="contained" color="primary" type="submit">
               Submit
             </Button>
           </Grid>
         </Grid>
       </form>
-    </Container>
+    </div>
   );
 }
