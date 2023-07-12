@@ -10,6 +10,8 @@ let appMetadata: HashConnectTypes.AppMetadata = {
 
 export default class Client {
   hashconnect: HashConnect;
+  signer: any;
+  provider: any;
   constructor() {
     this.hashconnect = new HashConnect(); // pass true to enable debug mode
 
@@ -51,8 +53,20 @@ export default class Client {
 
     // hashconnect.findLocalWallets();
   }
-  init() {
-    this.hashconnect.init(appMetadata, 'testnet', false);
+  async init() {
+    const initData = await this.hashconnect.init(appMetadata, 'testnet', false);
+    console.log('initData');
+    console.log(initData);
+    console.log(initData.savedPairings);
+    this.provider = this.hashconnect.getProvider(
+      'testnet',
+      initData.topic,
+      //@ts-ignore
+      initData.savedPairings[0].accountIds[0]
+    );
+    this.signer = this.hashconnect.getSigner(this.provider);
+    //@ts-ignore
+    window.hp = this;
   }
 }
 

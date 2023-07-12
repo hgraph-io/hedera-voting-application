@@ -32,7 +32,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     setClient(client);
     // for debugging
     //@ts-ignore
-    window.hc = client.hashconnect;
+    // window.hc = client.hashconnect;
   }, []);
 
   console.log(client);
