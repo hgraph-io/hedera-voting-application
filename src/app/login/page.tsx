@@ -1,0 +1,58 @@
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+import { Auth } from '@supabase/auth-ui-react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { ThemeSupa, VIEWS } from '@supabase/auth-ui-shared';
+import { Container } from '@/components';
+
+export default function SupabaseAuthUI() {
+  const supabase = createClientComponentClient();
+  const searchParams = useSearchParams();
+  const view = VIEWS[searchParams.get('v')?.toUpperCase() || 'SIGN_IN'] || VIEWS.SIGN_IN;
+
+  return (
+    <Container style={{ maxWidth: 600, margin: 'auto' }}>
+      <Auth
+        supabaseClient={supabase}
+        appearance={{
+          theme: ThemeSupa,
+          variables: {
+            default: {
+              colors: {
+                brand: '#7048e8', // Button background color
+                brandAccent: '#f9f9f9', // Button hover background color
+                brandButtonText: '#ffffff', // Button text color
+                defaultButtonBackground: '#7048e8', // Default button background color
+                defaultButtonBorder: '#000000', // Default button border color
+                defaultButtonText: '#000000', // Default button text color
+                inputLabelText: '#000000', // Label text color
+              },
+              space: {
+                buttonPadding: '10px 20px', // Button padding
+              },
+              fontSizes: {
+                baseButtonSize: '16px', // Button font size
+                baseLabelSize: '18px', // Label font size
+              },
+              fonts: {
+                buttonFontFamily: '"Styrene A", Arial', // Button font family
+                labelFontFamily: '"Styrene A", Arial', // Label font family
+              },
+              borderWidths: {
+                buttonBorderWidth: '1px', // Button border width
+              },
+              radii: {
+                borderRadiusButton: '50px', // Button border radius
+              },
+            },
+          },
+        }}
+        // theme="dark"
+        providers={[]}
+        view={view}
+        redirectTo="http://localhost:3000/auth/callback"
+      />
+    </Container>
+  );
+}

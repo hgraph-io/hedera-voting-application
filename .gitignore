@@ -128,3 +128,4 @@ dist
 
 *.sw[a-z]
 .vercel
+.env*.local

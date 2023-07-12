@@ -1,11 +1,8 @@
-const withFonts = require('next-fonts');
-const withTM = require('next-transpile-modules')(['hashconnect']);
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    serverActions: true,
+  },
+};
 
-module.exports = withFonts(
-  withTM({
-    reactStrictMode: true,
-    webpack(config, options) {
-      return config;
-    }
-  })
-);
+module.exports = nextConfig;
