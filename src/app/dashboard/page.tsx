@@ -41,9 +41,9 @@ export default async function DashboardPage() {
         <div className={styles.cardContainer}>
           {/*// @ts-ignore */}
           {submissions?.map((submission, index) => {
-              /*// @ts-ignore */
-              return <Card key={index} {...submission} />;
-            })}
+            /*// @ts-ignore */
+            return <Card key={index} {...submission} />;
+          })}
         </div>
       </div>
     </Container>
