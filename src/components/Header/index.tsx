@@ -21,14 +21,20 @@ export default function Header({ session }: { session: Session | null }) {
           }}
         >
           <Link href="/">
-            <Image className={styles.logo} src="/logo.png" width={100} height={30} alt="Logo" />
+            <Image
+              className={styles.logo}
+              src="/assets/logo.png"
+              width={100}
+              height={30}
+              alt="Logo"
+            />
           </Link>
           <div>
-            <Hidden lgDown implementation="css">
+            <Hidden mdDown implementation="css">
               <DesktopMenu session={session} />
             </Hidden>
 
-            <Hidden lgUp implementation="css">
+            <Hidden mdUp implementation="css">
               <MobileMenu session={session} />
             </Hidden>
           </div>
