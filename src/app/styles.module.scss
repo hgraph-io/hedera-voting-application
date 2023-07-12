@@ -1,14 +1,24 @@
 .homePageContainer {
+  display: flex !important;
   position: relative;
-  background-image: url('https://images.hedera.com/HH-Homepage-Mobile-Hero.jpg?w=780&auto=compress%2Cformat&fit=crop&dm=1680225199&s=f1c676e0dd7b57e46aa9eafa97823a72');
+  background-image: url('/assets/homepage-bg-mobile.webp');
   background-size: cover;
   height: 90vh;
   max-width: 100%;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: left;
   text-align: left;
+
+  @media (min-width: 900px) {
+    background-image: url('/assets/homepage-bg-desktop.png');
+  }
+}
+
+.ctaContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 2rem;
 }
 
 .homePageHero {
