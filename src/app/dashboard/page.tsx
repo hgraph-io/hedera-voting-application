@@ -24,31 +24,26 @@ export default async function DashboardPage() {
         <Typography component="h1" variant="h3" align="left" color="textPrimary" gutterBottom>
           Dashboard
         </Typography>
-        <Typography align="left" color="textSecondary">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
-          vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
-          vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
-          vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
+        <Typography align="left" color="textSecondary" gutterBottom>
+          Welcome to the Hedera conference submission portal. Here, you can submit your papers
+          and track your submission status.
         </Typography>
-        <Button
-          component="a"
-          href="/submission"
-          className={styles.buttonContainer}
-          variant="contained"
-        >
-          Submit New Application
-        </Button>
+        <div className={styles.buttonContainer}>
+          <Button component="a" href="/submission" variant="contained">
+            Submit New Application
+          </Button>
+        </div>
       </div>
       <div className={styles.cardContainer}>
-        {!!submissions!.length && <Typography variant="h4">Previous Applications</Typography>}
+        {submissions && !!submissions!.length && (
+          <Typography variant="h4">Previous Applications</Typography>
+        )}
         <div className={styles.cardContainer}>
           {/*// @ts-ignore */}
-          {submissions.map((submission, index) => {
-            // @ts-ignore
-            return <Card key={index} {...submission} />;
-          })}
+          {submissions?.map((submission, index) => {
+              /*// @ts-ignore */
+              return <Card key={index} {...submission} />;
+            })}
         </div>
       </div>
     </Container>

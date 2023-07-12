@@ -38,11 +38,18 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
 
         {!session?.user && (
           <>
-            <Link href={`/login?v=${VIEWS.SIGN_IN}`}>Login</Link>
             <Button
               component="a"
               href={`/login?v=${VIEWS.SIGN_UP}`}
               variant="outlined"
+              className={styles.signupButton}
+            >
+              Login
+            </Button>
+            <Button
+              component="a"
+              href={`/login?v=${VIEWS.SIGN_UP}`}
+              variant="contained"
               className={styles.signupButton}
             >
               Sign Up
