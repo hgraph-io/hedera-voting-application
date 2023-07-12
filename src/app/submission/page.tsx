@@ -17,14 +17,16 @@ import styles from './styles.module.scss';
 export default async function SubmissionPage() {
   return (
     <Container className={styles.submitApplication}>
-      <Button
-        component="a"
-        href="/dashboard"
-        variant="outlined"
-        style={{ margin: '20px 0px 30px' }}
-      >
-        Go Back
-      </Button>
+      <div className={styles.buttonContainer}>
+        <Button
+          component="a"
+          href="/dashboard"
+          variant="outlined"
+          style={{ margin: '20px 0px 30px' }}
+        >
+          Go Back
+        </Button>
+      </div>
 
       <Typography variant="h4" gutterBottom>
         Submit Application

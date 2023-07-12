@@ -35,6 +35,19 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+
+  --blue: #4263eb;
+  --purple: #7048e8;
+  --green: #51cf66;
+  --yellow: #eada0b;
+  --lime: #b7f133;
+  --main-gradient: linear-gradient(to right, #2d84eb, #8259ef);
+  --cta-gradient: linear-gradient(45deg, #3ec878, #21a056);
+  --black: #212429;
+  --white: #f9f9f9;
+  --grey-1: #dde2e5;
+  --grey-2: #acb5bd;
+  --grey-3: #495057;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -84,6 +97,9 @@ body {
 
 body {
   font-family: 'Styrene A Web' !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 a {

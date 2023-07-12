@@ -22,10 +22,7 @@ export default function SnackbarProvider({ children }: { children: React.ReactNo
     setOpen(true);
   };
 
-  const handleClose = (_: React.SyntheticEvent<any> | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  const handleClose = () => {
     setOpen(false);
   };
 
