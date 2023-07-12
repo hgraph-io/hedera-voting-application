@@ -1,5 +1,3 @@
-@import '../variables';
-
 @mixin flex($direction: row, $justify: flex-start, $align: flex-start, $wrap: nowrap) {
   display: flex;
   flex-direction: $direction;
@@ -11,7 +9,7 @@
 .menuBar,
 .toolBar {
   @include flex(row, space-between, flex-start);
-  background-color: whitesmoke;
+  color: var(--black);
 
   a {
     text-decoration: none;
@@ -19,7 +17,7 @@
 }
 
 .menuButton {
-  color: black;
+  color: var(--black);
 }
 
 .logo {
@@ -44,13 +42,13 @@
 }
 
 .link {
-  color: $grey-3;
+  color: var(--grey-3);
   padding-bottom: 10px;
 }
 
 .activeLink {
-  color: $black;
-  border-bottom: 2px solid $purple;
+  color: var(--black);
+  border-bottom: 2px solid var(--purple);
   padding-bottom: 8px;
 }
 
@@ -103,9 +101,9 @@
 }
 
 .signupButton {
-  border: 1px solid $black;
-  background: $white;
-  color: $black;
+  border: 1px solid var(--black);
+  background: var(--white);
+  color: var(--black);
 
   @media (min-width: 900px) {
     width: 45%;
