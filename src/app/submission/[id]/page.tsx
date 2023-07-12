@@ -34,7 +34,7 @@ export default async function EditPage({ params: { id } }: { params: { id: strin
   const { name, organization, links, topics, moderator } = submission;
 
   return (
-    <Container className={styles.submitApplication}>
+    <div className={styles.submitApplication}>
       <Button
         component="a"
         href="/dashboard"
@@ -136,6 +136,6 @@ export default async function EditPage({ params: { id } }: { params: { id: strin
           </Grid>
         </Grid>
       </form>
-    </Container>
+    </div>
   );
 }
