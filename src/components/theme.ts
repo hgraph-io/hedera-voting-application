@@ -2,26 +2,48 @@
 
 import { createTheme } from '@mui/material';
 
+// Define your colors
+const colors = {
+  blue: "#4263eb",
+  purple: "#7048e8",
+  green: "#51cf66",
+  yellow: "#eada0b",
+  lime: "#b7f133",
+  black: "#212429",
+  white: "#f9f9f9",
+  grey1: "#dde2e5",
+  grey2: "#acb5bd",
+  grey3: "#495057",
+};
+
+// Use these colors in your theme
 export default createTheme({
   palette: {
     primary: {
-      main: '#7048E8',
-      contrastText: '#ffcc00',
+      main: colors.blue,
+      contrastText: colors.yellow,
     },
     secondary: {
-      light: '#51CF66',
-      main: '#7048E8',
-      contrastText: '#ffcc00',
+      light: colors.green,
+      main: colors.purple,
+      contrastText: colors.yellow,
     },
     text: {
-      primary: '#212429',
-      secondary: '#495057',
+      primary: colors.black,
+      secondary: colors.grey3,
     },
   },
   typography: {
-    fontFamily: 'Styrene A Web, Arial',
+    fontFamily: "Styrene A Web, Arial",
   },
   components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.white, // Set AppBar background to white
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         text: {
