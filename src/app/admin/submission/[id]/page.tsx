@@ -15,11 +15,11 @@ import {
   Grid,
   Chip,
   Link,
-  Rating,
   VoteCard,
   StarBorderIcon,
 } from '@/components';
 import type { Database } from '@/types';
+import Rating from './Rating';
 import styles from './styles.module.scss';
 
 //`https://explore.lworks.io/mainnet/topics/0.0.1350036/messages/${userVoteData.sequence_number}`
