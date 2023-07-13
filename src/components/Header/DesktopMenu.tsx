@@ -47,10 +47,37 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
             Disconnect wallet {pairedWalletId}
           </Button>
         )}
+        {pathname.startsWith('/admin') && !pairedWalletId && !session?.user && (
+          <>
+            <Button
+              component="a"
+              href={`/login?v=${VIEWS.SIGN_IN}`}
+              variant="outlined"
+              className={styles.signupButton}
+            >
+              Login
+            </Button>
+            <Button
+              component="a"
+              href={`/login?v=${VIEWS.SIGN_UP}`}
+              variant="contained"
+              className={styles.signupButton}
+            >
+              Sign Up
+            </Button>
+          </>
+        )}
+        {pathname.startsWith('/admin') && !pairedWalletId && session?.user && (
+          <form action="/auth/signout" method="post">
+            <Button variant="contained" type="submit">
+              Sign Out
+            </Button>
+          </form>
+        )}
 
         {!pathname.startsWith('/admin') && session?.user && (
-          <form className={styles.desktopSignoutForm} action="/auth/signout" method="post">
-            <Button fullWidth variant="contained" type="submit">
+          <form action="/auth/signout" method="post">
+            <Button variant="contained" type="submit">
               Sign Out
             </Button>
           </form>
@@ -59,7 +86,7 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
           <>
             <Button
               component="a"
-              href={`/login?v=${VIEWS.SIGN_UP}`}
+              href={`/login?v=${VIEWS.SIGN_IN}`}
               variant="outlined"
               className={styles.signupButton}
             >
