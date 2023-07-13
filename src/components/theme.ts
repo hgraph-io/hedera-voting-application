@@ -99,6 +99,7 @@ export default createTheme({
           '&:hover': {
             color: colors.whiteText,
             backgroundColor: colors.purple,
+            border: `none`,
           },
         },
       },
