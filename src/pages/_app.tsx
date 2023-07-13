@@ -129,6 +129,7 @@ const LoadingBackdrop = () => {
   return (
     <>
       {user && <Backdrop open={user.loading} style={{zIndex: 9999, color: '#fff'}}>
+        Loading...
         <CircularProgress color="inherit" />
       </Backdrop>}
     </>

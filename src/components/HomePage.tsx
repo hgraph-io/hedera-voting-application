@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
           }}
         >
           <Link href="/application/create">
-            <Button variant="contained" className={styles.heroButton}>
+            <Button className={styles.heroButton}>
               Submit an Application
             </Button>
           </Link>
