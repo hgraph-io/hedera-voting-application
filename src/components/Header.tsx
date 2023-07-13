@@ -20,11 +20,9 @@ import { supabase } from '../supabaseClient';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [sessionActive, setSessionActive] = useState(false);
 
   const router = useRouter();
   const user = useUser();
-  console.log('xxxxxxxxxxx');
   console.log(user);
   const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
@@ -37,9 +35,10 @@ export default function Header() {
     if (error) {
       console.error('Error logging out:', error.message);
     } else {
-      setSessionActive(false);
-      user?.disconnectHashpack();
+      console.log('header')
+      if (user?.accountId) user?.disconnectHashpack();
       user?.setConnected(false);
+      user?.setSupabaseSession(false);
       user?.setType('user');
       user?.setAccountId('');
       router.push('/login');
@@ -47,17 +46,15 @@ export default function Header() {
   }, [router, user]);
 
   // Checking for a valid user session
-  useEffect(() => {
-    const checkSession = async () => {
-      const session = await supabase.auth.getSession();
-      if (!session && user?.connected) {
-        handleLogout();
-      } else {
-        setSessionActive(true);
-      }
-    };
-    checkSession();
-  }, [handleLogout, user]);
+  // useEffect(() => {
+  //   const checkSession = async () => {
+  //     const {data:{session}} = await supabase.auth.getSession();
+  //     if (!session && user?.type =='user') {
+  //       handleLogout();
+  //     } 
+  //   };
+  //   checkSession();
+  // }, [user]);
 
   interface Route {
     label: string;
@@ -95,7 +92,7 @@ export default function Header() {
               <div className={styles.links}>
                 {routes.map(renderLink)}
                 <div className={styles.desktopButtonContainer}>
-                  {!user?.supabaseSession ? (
+                  {!user?.supabaseSession && !user?.accountId? (
                     <>
                       <Link href="/register">
                         <Button variant="outlined" className={styles.signupButton}>
@@ -109,9 +106,14 @@ export default function Header() {
                       </Link>
                     </>
                   ) : (
-                    <Button onClick={handleLogout} variant="contained">
+                    user?.accountId ?
+                    <Button onClick={handleLogout} fullWidth variant="contained">
                       Log Out {user.accountId}
-                    </Button>
+                    </Button> 
+                    :
+                    <Button onClick={handleLogout} fullWidth variant="contained">
+                      Log Out
+                    </Button> 
                   )}
                 </div>
               </div>
@@ -154,27 +156,31 @@ export default function Header() {
                   </div>
                   {routes.map(renderLink)}
                   <div className={styles.mobileButtonContainer}>
-                    {!user?.connected ? (
+                    {!user?.supabaseSession && !user?.accountId ? (
                       <>
                         <Link href="/register">
-                          <Button onClick={handleDrawerToggle} variant="outlined">
+                          <Button onClick={handleDrawerToggle} fullWidth variant="outlined">
                             Sign Up
                           </Button>
                         </Link>
                         <Link href="/login">
-                          <Button variant="contained" className={styles.loginButton}>
+                          <Button variant="contained" fullWidth className={styles.loginButton}>
                             Login
                           </Button>
                         </Link>
                       </>
                     ) : (
-                      <Button
-                        variant="contained"
-                        className={styles.loginButton}
-                        onClick={handleLogout}
-                      >
+
+                      user?.accountId ?
+                      <Button onClick={handleLogout} fullWidth 
+                      className={styles.loginButton} variant="contained">
+                        Log Out {user.accountId}
+                      </Button> 
+                      :
+                      <Button onClick={handleLogout} fullWidth
+                      className={styles.loginButton}  variant="contained">
                         Log Out
-                      </Button>
+                      </Button> 
                     )}
                   </div>
                 </div>

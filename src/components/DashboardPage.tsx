@@ -34,45 +34,47 @@ const DashboardPage: React.FC = () => {
 
   return (
     <Container maxWidth="md" className={styles.dashboardContainer}>
-      <div className={styles.header}>
-        <Typography component="h1" variant="h3" align="left" color="textPrimary" gutterBottom>
-          Dashboard
-        </Typography>
-        <Typography align="left" color="textSecondary">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
-          vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
-          vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
-          vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
-        </Typography>
-        <Button
-          className={styles.buttonContainer}
-          variant="contained"
-          onClick={() => router.replace('/application/create')}
-        >
-          Submit New Application
-        </Button>
-      </div>
-      <div className={styles.cardContainer}>
-        {applications.length > 0 && <Typography variant="h4">Previous Applications</Typography>}
-        <div className={styles.cardContainer}>
-          {applications.map((application, index) => (
-            <CardComponent
-              key={index}
-              moderator={application.moderator}
-              applicationId={application.id}
-              rating={{
-                voteNum: application.voteNum,
-                currentRating: application.currentRating,
-              }}
-              speaker={application.name}
-              isSelected={application.isSelected}
-              type={application.type}
-            />
-          ))}
+      {user?.supabaseSession && <>
+        <div className={styles.header}>
+          <Typography component="h1" variant="h3" align="left" color="textPrimary" gutterBottom>
+            Dashboard
+          </Typography>
+          <Typography align="left" color="textSecondary">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
+            vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
+            vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
+            vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
+          </Typography>
+          <Button
+            className={styles.buttonContainer}
+            variant="contained"
+            onClick={() => router.replace('/application/create')}
+          >
+            Submit New Application
+          </Button>
         </div>
-      </div>
+        <div className={styles.cardContainer}>
+          {applications.length > 0 && <Typography variant="h4">Previous Applications</Typography>}
+          <div className={styles.cardContainer}>
+            {applications.map((application, index) => (
+              <CardComponent
+                key={index}
+                moderator={application.moderator}
+                applicationId={application.id}
+                rating={{
+                  voteNum: application.voteNum,
+                  currentRating: application.currentRating,
+                }}
+                speaker={application.name}
+                isSelected={application.isSelected}
+                type={application.type}
+              />
+            ))}
+          </div>
+        </div>
+      </>}
     </Container>
   );
 };
