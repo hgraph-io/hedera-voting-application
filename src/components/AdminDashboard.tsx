@@ -41,7 +41,7 @@ const AdminDashboardPage: React.FC = () => {
 
   return (
     <Container maxWidth="md" className={styles.adminDashboardContainer}>
-      <div className={styles.header}>
+      {user?.accountId && <><div className={styles.header}>
         <Typography variant="h3">Admin Dashboard</Typography>
         <Typography component="p">
           Welcome to the Admin Panel of the Hedera Voting Application!
@@ -78,6 +78,7 @@ const AdminDashboardPage: React.FC = () => {
           )
         )}
       </div>
+      </>}
     </Container>
   );
 };
