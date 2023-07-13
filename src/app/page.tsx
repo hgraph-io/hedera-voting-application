@@ -7,10 +7,15 @@ export default function HomePage() {
     <div className={styles.homePageContainer}>
       <Container>
         <div className={styles.homePageHero}>
-          <Typography variant="h1" align="left" color="contrastText" gutterBottom>
-            Call for Papers
+          <Typography variant="h1" align="left" color="contrastText">
+            Call For Papers
           </Typography>
-          <Typography variant="h5" align="left" color="contrastText" paragraph>
+          <Typography
+            variant="h5"
+            align="left"
+            color="contrastText"
+            className={styles.homePageDescription}
+          >
             Submit your application to the upcoming Hedera conference
           </Typography>
           <Link href="/login">
