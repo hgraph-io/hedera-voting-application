@@ -2,6 +2,5 @@
 import { Rating } from '@/components';
 
 export default function StarRating(props: any) {
-  console.log(props);
-  return <Rating {...props} onChange={(event) => console.log(event.target.value)} />;
+  return <Rating {...props} onChange={(_, value) => console.log(value)} />;
 }
