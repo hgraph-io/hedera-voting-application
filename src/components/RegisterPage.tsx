@@ -69,7 +69,7 @@ const RegisterPage: React.FC = () => {
         Register
       </Typography>
       <form className={styles.formContent} noValidate autoComplete="off">
-        <FormControl fullWidth>
+        {/* <FormControl fullWidth>
           <InputLabel id="method-select-label">Method</InputLabel>
           <Select
             labelId="method-select-label"
@@ -81,7 +81,7 @@ const RegisterPage: React.FC = () => {
             <MenuItem value={'Email'}>Email</MenuItem>
             <MenuItem value={'Hashpack'}>Hashpack</MenuItem>
           </Select>
-        </FormControl>
+        </FormControl> */}
         {method === 'Email' ? (
           <>
             <TextField

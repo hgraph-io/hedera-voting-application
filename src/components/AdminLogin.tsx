@@ -21,13 +21,16 @@ const AdminLogin: React.FC = () => {
   const router = useRouter();
 
   const handleSignIn = async () => {
+
     if (user) {
-      await user.initWalletConnect(false);
+      user.setLoading(true)
+      await user.initWalletConnect(false); 
+      user.setLoading(false)
     }
   };
   useEffect(() => {
     console.log(user);
-    if (user && user.connected && user.type == 'admin') {
+    if (user && user.accountId && user.type == 'admin') {
       console.log('redirect');
       router.push('/admin-dashboard');
     }

@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
             marginTop: '2rem',
           }}
         >
-          <Link href="/login">
+          <Link href="/application/create">
             <Button variant="contained" className={styles.heroButton}>
               Submit an Application
             </Button>
