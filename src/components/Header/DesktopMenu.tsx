@@ -49,8 +49,8 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
         )}
 
         {!pathname.startsWith('/admin') && session?.user && (
-          <form action="/auth/signout" method="post">
-            <Button variant="contained" type="submit">
+          <form className={styles.desktopSignoutForm} action="/auth/signout" method="post">
+            <Button fullWidth variant="contained" type="submit">
               Sign Out
             </Button>
           </form>
