@@ -40,12 +40,7 @@ const DashboardPage: React.FC = () => {
             Dashboard
           </Typography>
           <Typography align="left" color="textSecondary">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
-            vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
-            vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra sed justo
-            vestibulum commodo. Phasellus id urna mollis, sollicitudin neque eu, dictum purus.
+          Welcome to your dashboard. Here, you have the opportunity to submit an application to present at the upcoming Hedera event. Once submitted, your application will be reviewed and voted upon by our committee members for approval.
           </Typography>
           <Button
             className={styles.buttonContainer}
