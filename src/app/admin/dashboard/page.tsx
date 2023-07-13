@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 // import { createClient } from '@supabase/supabase-js';
 import type { Database } from '@/types';
-import { Typography, Container, Button, Card } from '@/components';
+import { Typography, Container, Button, AdminCard } from '@/components';
 import styles from './styles.module.scss';
 
 export default async function AdminDashboardPage() {
@@ -47,7 +47,7 @@ export default async function AdminDashboardPage() {
           (
             submission: any // TODO:
           ) => (
-            <Card key={submission.id} {...submission} />
+            <AdminCard key={submission.id} {...submission} />
           )
         )}
       </div>
