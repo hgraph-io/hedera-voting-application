@@ -99,6 +99,12 @@ export const UserProvider: React.FC<{children?: React.ReactNode}> = ({ children 
     }
   };
 
+  const getSession = async (): Promise<any> => {
+    const {data:{session}} = await supabase.auth.getSession();
+    console.log('session', session)
+    setSupabaseSession(session)
+  };
+
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem('voting_user') || '{}');
 
@@ -106,6 +112,9 @@ export const UserProvider: React.FC<{children?: React.ReactNode}> = ({ children 
       setAccountId(savedUser.accountId);
       setConnected(savedUser.connected);
     }
+
+    getSession()
+
   }, []);
 
   useEffect(() => {
