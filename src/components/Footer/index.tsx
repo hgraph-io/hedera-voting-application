@@ -23,12 +23,12 @@ export default function Footer() {
             >
               <Grid container spacing={2} justifyContent={isMobile ? 'center' : 'flex-end'}>
                 <Grid item className={styles.linkItem}>
-                  <Link href="https://hedera.com/privacy" target='_blank' color="inherit">
+                  <Link href="https://hedera.com/privacy" target="_blank" color="inherit">
                     Privacy Policy
                   </Link>
                 </Grid>
                 <Grid item className={styles.linkItem}>
-                  <Link href="https://hedera.com/terms" target='_blank' color="inherit">
+                  <Link href="https://hedera.com/terms" target="_blank" color="inherit">
                     Terms & Conditions
                   </Link>
                 </Grid>
