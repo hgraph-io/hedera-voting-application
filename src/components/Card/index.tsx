@@ -1,61 +1,17 @@
-// @ts-nocheck
-'use client';
-
-import { useState } from 'react';
-import { Checkbox, Button, Link } from '@/components';
+import { Checkbox, Link, FormGroup, FormControlLabel } from '@/components';
 import type { Database } from '@/types';
 import styles from './styles.module.scss';
 
 type Submission = Database['public']['Tables']['submission']['Row'];
 
-type Props = Submission & {
-  speaker: string;
-  isSelected: boolean;
-  rating: any;
-};
-
-export default function Card({ type, id, speaker, moderator, isSelected, rating }: Props) {
-  const [selected, setSelected] = useState(isSelected);
-
-  const renderRating = () => {
-    // get data from Hedera
-    if (type === 'vote' || type === 'view') {
-      return (
-        <div>
-          {/* <div className={styles.ratingLabel}>Current Rating with {rating.voteNum} votes</div> */}
-          {/* <Rating className={styles.ratingContainer} name="rating" value={rating.currentRating} readOnly /> */}
-        </div>
-      );
-    }
-  };
-
-  // Map from 'type' to the corresponding display text.
-  const typeText = {
-    default: 'Pending',
-    denied: 'Not Selected',
-    approved: 'Approved!',
-  };
-
-  const renderButton = () => {
-    return (
-      <>
-        <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
-        <Link href={`/application/${id}`}>
-          <Button className={styles.cardButton} variant="contained">
-            {type}
-          </Button>
-        </Link>
-      </>
-    );
-  };
-
+export default function AdminCard({ id, name, moderator }: Submission) {
   return (
-    <Link href={`/submission/${id}`} className={`${styles.cardContainer} ${styles[type]}`}>
-      <div className={`${styles.card} ${styles[type]}`}>
+    <Link href={`/submission/${id}`} className={`${styles.cardContainer} {$styles.vote}`}>
+      <div className={`${styles.card} ${styles.vote}`}>
         <div className={styles.left}>
           <div className={styles.bar}></div>
-          <div className={styles.speakerLabel}>Speaker</div>
-          <div className={styles.speaker}>{speaker}</div>
+          <div className={styles.speakerLabel}>Name</div>
+          <div className={styles.speaker}>{name}</div>
         </div>
 
         <div className={styles.middle}>
@@ -64,24 +20,14 @@ export default function Card({ type, id, speaker, moderator, isSelected, rating 
         </div>
 
         <div className={styles.right}>
-          {type !== 'vote' && type !== 'view' && (
-            <>
-              <Checkbox
-                checked={selected}
-                disabled={true}
-                className={styles.checkBox}
-                onChange={() => setSelected(!selected)}
-              />
-              {typeText[type]} {/* display the text corresponding to the type */}
-            </>
-          )}
-          {renderRating()}
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox defaultChecked color="success" />}
+              label="Approved"
+            />
+          </FormGroup>
         </div>
       </div>
-
-      {(type === 'vote' || type === 'view') && (
-        <div className={styles.buttonContainer}>{renderButton()}</div>
-      )}
     </Link>
   );
 }

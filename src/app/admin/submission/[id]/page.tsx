@@ -68,6 +68,11 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
               <Typography variant="h6">{name}</Typography>
             </Grid>
             <Grid item xs={12}>
+              <Typography variant="body2">Organization</Typography>
+              <Typography variant="h6">{organization}</Typography>
+            </Grid>
+
+            <Grid item xs={12}>
               <Typography variant="body2">Relevant Topics:</Typography>
               <div className={styles.topicContainer}>
                 {topics!.map((topic, topicIndex) => (
