@@ -2,13 +2,13 @@
 'use client';
 
 import { Button, Container, Typography } from '@/components';
-import { useHashpack } from '@/app/admin/providers';
+import { useHashConnect } from '@/context';
 import styles from './styles.module.scss';
 
 export default function AdminLoginPage() {
-  const hp = useHashpack();
+  const hc = useHashConnect();
   console.log('xxxxxxxxxxxx');
-  console.log(hp);
+  console.log(hc);
   return (
     <Container className={styles.adminLoginPageContainer} maxWidth="xs">
       <Typography component="h1" variant="h2">
@@ -27,20 +27,20 @@ export default function AdminLoginPage() {
           variant="contained"
           color="primary"
           fullWidth
-          onClick={() => hp.client.connectToLocalWallet()}
+          onClick={() => hc.client.connectToLocalWallet()}
         >
           Connect to Hashpack
         </Button>
-        {hp?.initData?.savedPairings?.map((pairingData, index) => {
+        {hc?.initData?.savedPairings?.map((pairingData, index) => {
           return (
             <Button
               key={index}
               variant="contained"
               color="primary"
               fullWidth
-              onClick={() => hp.client.disconnect(pairingData.topic)}
+              onClick={() => hc.client.disconnect(pairingData.topic)}
             >
-              {pairingData.accountIds.join(',')} - Disconnect from to Hashpack
+              Disconnect wallet {pairingData.accountIds.join(',')}
             </Button>
           );
         })}

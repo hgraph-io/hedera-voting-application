@@ -4,13 +4,21 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Session } from '@supabase/auth-helpers-nextjs';
 import { VIEWS } from '@supabase/auth-ui-shared';
-import { Button } from '@mui/material';
+import { Button } from '@/components';
+import { useHashConnect } from '@/context';
 
 import styles from './styles.module.scss';
 
 //https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs
 export default function DesktopMenu({ session }: { session: Session | null }) {
   const pathname = usePathname();
+  console.log(pathname);
+  const hc = useHashConnect();
+  //@ts-ignore
+  const pairedWalletId =
+    hc?.connectionStatusChangeEvent == 'Paired' &&
+    // @ts-ignore
+    hc?.client?.hcData.pairingData.find(Boolean).accountIds.find(Boolean);
 
   return (
     <div className={styles.links}>
@@ -28,15 +36,26 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
         </div>
       </Link>
       <div className={styles.desktopButtonContainer}>
-        {session?.user && (
+        {pathname.startsWith('/admin') && pairedWalletId && (
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            // @ts-ignore
+            onClick={() => hc.client.disconnect(hc.client.hcData.topic)}
+          >
+            Disconnect wallet {pairedWalletId}
+          </Button>
+        )}
+
+        {!pathname.startsWith('/admin') && session?.user && (
           <form action="/auth/signout" method="post">
             <Button variant="contained" type="submit">
               Sign Out
             </Button>
           </form>
         )}
-
-        {!session?.user && (
+        {!pathname.startsWith('/admin') && !session?.user && (
           <>
             <Button
               component="a"

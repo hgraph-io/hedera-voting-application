@@ -1,7 +1,7 @@
 'use client';
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import { SnackbarProvider, EmotionCacheProvider } from '@/context';
+import { SnackbarProvider, EmotionCacheProvider, HashConnectProvider } from '@/context';
 import theme from '@/components/theme';
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -9,7 +9,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <EmotionCacheProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <SnackbarProvider>{children}</SnackbarProvider>
+        <SnackbarProvider>
+          <HashConnectProvider>{children}</HashConnectProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </EmotionCacheProvider>
   );
