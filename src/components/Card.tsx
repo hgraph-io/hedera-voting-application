@@ -52,7 +52,7 @@ export const Card: React.FC<CardProps> = ({
       <>
         <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
         <Link href={`/application/${id}`}>
-          <Button className={styles.cardButton} variant="contained">
+          <Button className={styles.cardButton} variant="outlined">
             {type}
           </Button>
         </Link>

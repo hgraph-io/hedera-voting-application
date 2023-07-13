@@ -2,9 +2,9 @@
   display: flex !important;
   position: relative;
   background-image: url('/assets/homepage-bg-mobile.webp');
-  background-size: cover;
-  height: 90vh;
-  max-width: 100%;
+  background-size: cover!important;
+  height: 90vh!important;
+  max-width: 100%!important;
   flex-direction: column;
   justify-content: center;
   align-items: left;
@@ -23,7 +23,7 @@
 }
 
 .heroButton {
-  color: white;
+  color: white!important;
   min-width: 250px!important;
   background: #21a056!important;
 

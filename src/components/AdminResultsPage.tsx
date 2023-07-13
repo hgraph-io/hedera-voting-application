@@ -37,7 +37,7 @@ useEffect(() => {
           openApps.push(application);
         }
       });
-
+      console.log(openApps)
       setApprovedApplications(approvedApps);
       setOpenApplications(openApps);
     }
@@ -66,9 +66,9 @@ useEffect(() => {
         {approvedApplications.length > 0 && <Typography variant="h4" gutterBottom>Approved Applications</Typography>}
         {approvedApplications.map((app) => (
           <CardComponent
-            key={app.applicationId}
+            key={"approved-"+app.id}
             title={app.title}
-            applicationId={app.applicationId}
+            id={app.id}
             rating={app.rating}
             speaker={app.name} 
             isSelected={app.isSelected} 
@@ -83,9 +83,9 @@ useEffect(() => {
         {openApplications.length > 0 && <Typography variant="h6">Open Applications</Typography>}
         {openApplications.map((app) => (
           <CardComponent
-            key={app.applicationId}
+            key={"open-"+app.id}
             title={app.title}
-            applicationId={app.applicationId}
+            id={app.id}
             rating={app.rating}
             speaker={app.name} 
             isSelected={app.isSelected} 

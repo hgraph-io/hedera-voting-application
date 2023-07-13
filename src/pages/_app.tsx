@@ -108,7 +108,7 @@ const theme = createTheme({
           '&:hover': {
             color: colors.whiteText,
             backgroundColor: colors.purple,
-            border: `none`,
+            border: `1px solid transparent`,
           },
         },
       },
