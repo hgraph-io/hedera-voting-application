@@ -43,10 +43,13 @@ export default async function AdminDashboardPage() {
       </Typography>
 
       <div>
-        {/* // @ts-ignore */}
-        {submissions?.map((submission) => (
-          <Card key={submission.id} {...submission} />
-        ))}
+        {submissions?.map(
+          (
+            submission: any // TODO:
+          ) => (
+            <Card key={submission.id} {...submission} />
+          )
+        )}
       </div>
     </Container>
   );
