@@ -139,9 +139,9 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
               </div>
               <div className={styles.rating}>
                 <Rating
+                  submissionId={id}
                   className={styles.ratingContainer}
-                  name="user-rating"
-                  value={voteAverage}
+                  // value={voteAverage}
                   icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
                   emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
                 />
