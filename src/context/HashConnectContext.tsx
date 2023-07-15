@@ -22,9 +22,14 @@ enum HashconnectEvents {
   SignRequestEvent = 'signRequestEvent',
 }
 
-const HashpackContext = createContext<{
-  [key in HashconnectEvents | 'client' | 'initData']?: unknown;
-}>({});
+type HashConnectContext = {
+  [key in HashconnectEvents]?: unknown;
+} & {
+  client?: HashConnect;
+  initData?: HashConnectTypes.InitilizationData;
+};
+
+const HashpackContext = createContext<HashConnectContext>({});
 
 export function useHashConnect() {
   return useContext(HashpackContext);
@@ -33,7 +38,6 @@ export function useHashConnect() {
 function reducer(state: object, action: { type: string; payload: unknown }) {
   switch (action.type) {
     default:
-      console.log(action);
       // store last action
       return { ...state, [action.type]: action.payload };
   }
@@ -42,7 +46,6 @@ function reducer(state: object, action: { type: string; payload: unknown }) {
 function Router({ children }: { children: React.ReactNode }) {
   const hc = useHashConnect();
   const pathname = usePathname();
-  console.log(hc);
 
   switch (hc?.connectionStatusChangeEvent) {
     // case HashConnectConnectionState.Paired:
@@ -50,6 +53,7 @@ function Router({ children }: { children: React.ReactNode }) {
       if (pathname === '/admin') redirect('/admin/dashboard');
 
     default:
+      //TODO: handle not paired on other routes
       console.log(hc?.connectionStatusChangeEvent);
     // if (pathname !== '/admin') redirect('/admin');
   }
@@ -70,10 +74,8 @@ export default function HashConnectProvider({ children }: { children: React.Reac
       /*
        * Register event listeners
        */
-      // console.log(HashconnectEvents);
 
       for (const event of Object.values(HashconnectEvents)) {
-        console.log(event);
         //@ts-ignore
         client[event].on((data) => {
           dispatch({ type: event, payload: data });
