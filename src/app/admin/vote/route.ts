@@ -70,7 +70,7 @@ export async function GET() {
   };
 
   const hg = new HgraphClient(options);
-  console.log(hg);
+  console.log(hg.query);
   // const response = await hg.subscribe(TopicMessage, {);
   // console.log(response);
   return NextResponse.json({ test: 'best' });
