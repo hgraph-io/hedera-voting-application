@@ -106,6 +106,7 @@ export default function HashConnectProvider({ children }: { children: React.Reac
        * Get provider and signer
        */
       const accountId = initData.savedPairings[0]?.accountIds[0];
+      // const accountId = '0.0.3579797'; // test with different account
       if (accountId) {
         const provider = client.getProvider(network!, initData.topic, accountId);
         const signer = client.getSigner(provider);

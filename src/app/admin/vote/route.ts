@@ -6,7 +6,7 @@ import {
   TopicMessageSubmitTransaction,
   TopicId,
 } from '@hashgraph/sdk';
-import HgraphClient from '@hgraph.io/sdk';
+import HgraphClient, { ClientOptions } from '@hgraph.io/sdk';
 import TopicMessage from './TopicMessage.gql';
 
 import type { Vote } from '@/types';
@@ -59,7 +59,19 @@ export async function POST(request: Request) {
  *
  */
 
-const hg = new HgraphClient();
 export async function GET() {
-  return hg.query(TopicMessage);
+  const options: ClientOptions = {
+    // network: Network.HederaMainnet,
+    // environment: Environment.Development,
+    //@ts-ignore
+    network: 'testnet.hedera',
+    //@ts-ignore
+    environment: 'dev',
+  };
+
+  const hg = new HgraphClient(options);
+  console.log(hg);
+  // const response = await hg.subscribe(TopicMessage, {);
+  // console.log(response);
+  return NextResponse.json({ test: 'best' });
 }
