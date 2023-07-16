@@ -4,6 +4,10 @@ import { useReducer, useEffect, createContext, useContext } from 'react';
 import { usePathname, redirect } from 'next/navigation';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
 
+const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK;
+if (!network)
+  throw new Error('Error: Missing NEXT_PUBLIC_HEDERA_NETWORK in environment variables');
+
 const appMetadata: HashConnectTypes.AppMetadata = {
   name: 'Hedera Voting Application',
   description: 'Voting Application Created By Hedera',
@@ -27,6 +31,9 @@ type HashConnectContext = {
 } & {
   client?: HashConnect;
   initData?: HashConnectTypes.InitilizationData;
+  // todo:
+  provider?: any;
+  signer?: any;
 };
 
 const HashpackContext = createContext<HashConnectContext>({});
@@ -83,10 +90,6 @@ export default function HashConnectProvider({ children }: { children: React.Reac
       }
 
       /*
-       * Get provider and signer
-       */
-
-      /*
        * Initialize application
        */
       const initData = await client.init(
@@ -99,12 +102,29 @@ export default function HashConnectProvider({ children }: { children: React.Reac
 
       dispatch({ type: 'client', payload: client });
 
-      // for debugging
-      // @ts-ignore
-      window.hc = client;
+      /*
+       * Get provider and signer
+       */
+      const accountId = initData.savedPairings[0]?.accountIds[0];
+      if (accountId) {
+        const provider = client.getProvider(network!, initData.topic, accountId);
+        const signer = client.getSigner(provider);
+        dispatch({
+          type: 'provider',
+          payload: provider,
+        });
+        dispatch({
+          type: 'signer',
+          payload: signer,
+        });
+      }
     }
+
     if (!state.client) init();
-  }, [pathname, state.client]);
+    // for debugging
+    // @ts-ignore
+    window.hc = state;
+  }, [pathname, state]);
 
   return (
     <HashpackContext.Provider value={state}>
