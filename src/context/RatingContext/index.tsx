@@ -91,7 +91,7 @@ export default function RatingProvider({ children }: { children: React.ReactNode
       );
       return unsubscribe;
     }
-	}, []);
+  }, []);
 
   return <RatingContext.Provider value={{ state, submit }}>{children}</RatingContext.Provider>;
 }

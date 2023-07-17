@@ -1,7 +1,6 @@
-import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { createClient } from '@supabase/supabase-js';
 
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
   Typography,
   Button,
@@ -23,8 +22,14 @@ import type { Database } from '@/types';
 import Rating from './Rating';
 import styles from './styles.module.scss';
 
+const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+if (!NEXT_PUBLIC_SUPABASE_URL || !SUPABASE_SERVICE_KEY)
+  throw new Error('Missing Supabase URL or Service Key');
+
 export default async function AdminDashboard({ params: { id } }: { params: { id: string } }) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
   const { data: submission } = await supabase
     .from('submission')
     .select('*')
