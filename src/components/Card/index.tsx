@@ -21,10 +21,7 @@ export default function AdminCard({ id, name, moderator }: Submission) {
 
         <div className={styles.right}>
           <FormGroup>
-            <FormControlLabel
-              control={<Checkbox defaultChecked color="success" />}
-              label="Approved"
-            />
+            <FormControlLabel control={<Checkbox color="default" />} label="Pending review" />
           </FormGroup>
         </div>
       </div>
