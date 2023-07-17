@@ -1,14 +1,42 @@
 'use client';
 
-import { useHashConnect } from '@/context';
-import { Button, Rating, StarIcon, StarBorderIcon } from '@/components';
+import { useParams } from 'next/navigation';
+import { useHashConnect, useRating } from '@/context';
+import { Button, Rating } from '@/components';
 import styles from './styles.module.scss';
 
+const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK;
+const topicId = process.env.NEXT_PUBLIC_HEDERA_TOPIC_ID;
+
+if (!network || !topicId) throw new Error('Missing network or topic id env vars');
+
 export default function VoteCard() {
+  const { id } = useParams();
   const { accountId } = useHashConnect();
-  const type = 'vote';
+  const { state } = useRating();
+
+  const currentAccountRating = accountId && state?.[id]?.ratings?.[accountId];
+  console.log('xxxxxx');
+  console.log(currentAccountRating);
+
   const RightComponent = () => {
-    if (type === 'vote') {
+    if (currentAccountRating)
+      return (
+        <div className={styles.buttonContainer}>
+          <div className={styles.buttonLabel}>View your vote on the Hedera mainnet</div>
+          <Button
+            component="a"
+            className={styles.cardButton}
+            variant="contained"
+            // TODO: link to actual transaction
+            href={`https://hashscan.io/${network}/topic/${topicId}`}
+            target="_blank"
+          >
+            View
+          </Button>
+        </div>
+      );
+    else
       return (
         <div className={styles.buttonContainer}>
           <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
@@ -21,25 +49,6 @@ export default function VoteCard() {
           </Button>
         </div>
       );
-    }
-
-    if (type === 'view') {
-      return (
-        <div className={styles.buttonContainer}>
-          <div className={styles.buttonLabel}>View your vote on the Hedera mainnet</div>
-          <Button
-            className={styles.cardButton}
-            variant="contained"
-            // NEXT_PUBLIC_HEDERA_TOPIC_ID='0.0.15412191'
-            onClick={() => window.open(`https://hashscan.io/`, '_blank')}
-          >
-            View
-          </Button>
-        </div>
-      );
-    }
-
-    return null;
   };
 
   return (
@@ -52,17 +61,11 @@ export default function VoteCard() {
         </div>
 
         <div className={styles.middle}>
-          <div className={styles.ratingLabel}>Your Vote</div>
-          <Rating
-            className={styles.ratingContainer}
-            icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-            emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
-          />
+          <Rating className={styles.ratingContainer} readOnly={currentAccountRating} />
         </div>
-
-        <div className={styles.right}>
-          <RightComponent />
-        </div>
+      </div>
+      <div className={styles.right}>
+        <RightComponent />
       </div>
     </div>
   );

@@ -10,5 +10,6 @@ export { default as Header } from './Header';
 export { default as AdminCard } from './AdminCard';
 export { default as Card } from './Card';
 export { default as VoteCard } from './VoteCard';
+export { default as Rating } from './Rating';
 export { default as Footer } from './Footer';
 export { default as theme } from './theme';

@@ -3,7 +3,6 @@ import submit from './submit';
 import {
   Button,
   TextField,
-  Container,
   Checkbox,
   FormControlLabel,
   FormGroup,

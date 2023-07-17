@@ -40,6 +40,20 @@ export default createTheme({
     fontFamily: 'Styrene A Web, Arial',
   },
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        gutterBottom: {
+          marginBottom: 20,
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textDecoration: 'none',
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {

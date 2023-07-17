@@ -17,20 +17,20 @@ export default async function AdminDashboardPage() {
   return (
     <Container maxWidth="md" className={styles.adminDashboardContainer}>
       <div className={styles.header}>
-        <Typography variant="h3">Admin Dashboard</Typography>
-        <Typography component="p">
+        <Typography variant="h3" gutterBottom>Admin Dashboard</Typography>
+        <Typography component="p" gutterBottom>
           Welcome to the Admin Panel of the Hedera Voting Application!
         </Typography>
         <Typography component="p" gutterBottom>
           This is your command center for managing all aspects of the voting process. Monitor
           voter registrations, oversee ballot details, and analyze real-time voting data.
         </Typography>
-        <Button component="a" variant="outlined" href="/admin/results">
+        <Button component="a" variant="contained" href="/admin/results">
           View All
         </Button>
       </div>
 
-      <Typography variant="h4">Applications</Typography>
+      <Typography variant="h4" gutterBottom>Submissions</Typography>
       <Typography className={styles.descriptionParagraph} component="p">
         Below you can review, manage and select applications from individuals eager to share
         their insights at our upcoming conference.
