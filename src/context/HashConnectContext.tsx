@@ -4,6 +4,10 @@ import { useReducer, useEffect, createContext, useContext } from 'react';
 import { usePathname, redirect } from 'next/navigation';
 import { HashConnect, HashConnectTypes } from 'hashconnect';
 
+const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK;
+if (!network)
+  throw new Error('Error: Missing NEXT_PUBLIC_HEDERA_NETWORK in environment variables');
+
 const appMetadata: HashConnectTypes.AppMetadata = {
   name: 'Hedera Voting Application',
   description: 'Voting Application Created By Hedera',
@@ -22,9 +26,17 @@ enum HashconnectEvents {
   SignRequestEvent = 'signRequestEvent',
 }
 
-const HashpackContext = createContext<{
-  [key in HashconnectEvents | 'client' | 'initData']?: unknown;
-}>({});
+type HashConnectContext = {
+  [key in HashconnectEvents]?: unknown;
+} & {
+  client?: HashConnect;
+  initData?: HashConnectTypes.InitilizationData;
+  // todo:
+  provider?: any;
+  signer?: any;
+};
+
+const HashpackContext = createContext<HashConnectContext>({});
 
 export function useHashConnect() {
   return useContext(HashpackContext);
@@ -33,7 +45,6 @@ export function useHashConnect() {
 function reducer(state: object, action: { type: string; payload: unknown }) {
   switch (action.type) {
     default:
-      console.log(action);
       // store last action
       return { ...state, [action.type]: action.payload };
   }
@@ -42,7 +53,6 @@ function reducer(state: object, action: { type: string; payload: unknown }) {
 function Router({ children }: { children: React.ReactNode }) {
   const hc = useHashConnect();
   const pathname = usePathname();
-  console.log(hc);
 
   switch (hc?.connectionStatusChangeEvent) {
     // case HashConnectConnectionState.Paired:
@@ -50,6 +60,7 @@ function Router({ children }: { children: React.ReactNode }) {
       if (pathname === '/admin') redirect('/admin/dashboard');
 
     default:
+      //TODO: handle not paired on other routes
       console.log(hc?.connectionStatusChangeEvent);
     // if (pathname !== '/admin') redirect('/admin');
   }
@@ -70,19 +81,13 @@ export default function HashConnectProvider({ children }: { children: React.Reac
       /*
        * Register event listeners
        */
-      // console.log(HashconnectEvents);
 
       for (const event of Object.values(HashconnectEvents)) {
-        console.log(event);
         //@ts-ignore
         client[event].on((data) => {
           dispatch({ type: event, payload: data });
         });
       }
-
-      /*
-       * Get provider and signer
-       */
 
       /*
        * Initialize application
@@ -97,12 +102,30 @@ export default function HashConnectProvider({ children }: { children: React.Reac
 
       dispatch({ type: 'client', payload: client });
 
-      // for debugging
-      // @ts-ignore
-      window.hc = client;
+      /*
+       * Get provider and signer
+       */
+      const accountId = initData.savedPairings[0]?.accountIds[0];
+      // const accountId = '0.0.3579797'; // test with different account
+      if (accountId) {
+        const provider = client.getProvider(network!, initData.topic, accountId);
+        const signer = client.getSigner(provider);
+        dispatch({
+          type: 'provider',
+          payload: provider,
+        });
+        dispatch({
+          type: 'signer',
+          payload: signer,
+        });
+      }
     }
+
     if (!state.client) init();
-  }, [pathname, state.client]);
+    // for debugging
+    // @ts-ignore
+    window.hc = state;
+  }, [pathname, state]);
 
   return (
     <HashpackContext.Provider value={state}>

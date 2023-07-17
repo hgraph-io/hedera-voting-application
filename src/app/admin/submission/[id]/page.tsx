@@ -15,11 +15,12 @@ import {
   Grid,
   Chip,
   Link,
-  Rating,
   VoteCard,
   StarBorderIcon,
+  StarIcon,
 } from '@/components';
 import type { Database } from '@/types';
+import Rating from './Rating';
 import styles from './styles.module.scss';
 
 //`https://explore.lworks.io/mainnet/topics/0.0.1350036/messages/${userVoteData.sequence_number}`
@@ -67,6 +68,11 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
               <Typography variant="body2">Speaker Name</Typography>
               <Typography variant="h6">{name}</Typography>
             </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body2">Organization</Typography>
+              <Typography variant="h6">{organization}</Typography>
+            </Grid>
+
             <Grid item xs={12}>
               <Typography variant="body2">Relevant Topics:</Typography>
               <div className={styles.topicContainer}>
@@ -134,14 +140,13 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
               </div>
               <div className={styles.rating}>
                 <Rating
+                  submissionId={id}
                   className={styles.ratingContainer}
-                  name="user-rating"
-                  value={voteAverage}
-                  icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+                  //defaultValue={voteAverage}
+                  icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
                   emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
                 />
               </div>
-              <Typography variant="body2">{voteAverage} out of 5</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">

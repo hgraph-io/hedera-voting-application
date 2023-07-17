@@ -1,6 +1,6 @@
 {
   "name": "hedera-voting-application",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,9 +12,9 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@hgraph.io/sdk": "0.1.2-1",
+    "@hashgraph/sdk": "^2.29.0",
+    "@hgraph.io/sdk": "file:../../sdk",
     "@mui/icons-material": "^5.11.16",
-    "@mui/lab": "^5.0.0-alpha.133",
     "@mui/material": "^5.13.7",
     "@supabase/auth-helpers-nextjs": "^0.7.2",
     "@supabase/auth-helpers-react": "^0.4.0",
@@ -22,7 +22,6 @@
     "@supabase/auth-ui-shared": "^0.1.6",
     "@supabase/supabase-js": "^2.26.0",
     "@types/react-dom": "18.2.4",
-    "encoding": "^0.1.13",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
     "eslint-plugin-react": "^7.32.2",
@@ -35,6 +34,7 @@
   "devDependencies": {
     "@types/node": "^20.3.1",
     "@types/react": "^18.2.6",
+    "dotenv": "^16.3.1",
     "eslint-config-prettier": "^8.8.0",
     "sass": "^1.63.6",
     "supabase": "^1.75.3",
