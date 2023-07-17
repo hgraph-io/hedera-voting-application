@@ -15,8 +15,6 @@ export default async function DashboardPage() {
     .select('*')
     .eq('user_id', session!.user.id);
 
-  console.log(submissions);
-
   return (
     <Container maxWidth="md" className={styles.dashboardContainer}>
       <div className={styles.header}>
@@ -24,8 +22,8 @@ export default async function DashboardPage() {
           Dashboard
         </Typography>
         <Typography align="left" color="textSecondary" gutterBottom>
-          Welcome to the Hedera conference submission portal. Here, you can submit your papers
-          and track your submission status.
+          Welcome to the Hedera conference submission portal. Here, you can submit your
+          application to speak on a panel and track your submission status.
         </Typography>
         <div className={styles.buttonContainer}>
           <Button component="a" href="/submission" variant="contained">
@@ -35,7 +33,7 @@ export default async function DashboardPage() {
       </div>
       <div className={styles.cardContainer}>
         {submissions && !!submissions!.length && (
-          <Typography variant="h4">Previous Applications</Typography>
+          <Typography variant="h4">Previous Submissions</Typography>
         )}
         <div className={styles.cardContainer}>
           {/*// @ts-ignore */}

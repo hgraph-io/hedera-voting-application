@@ -13,6 +13,7 @@ export default async function AdminDashboardPage() {
   const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
 
   const { data: submissions } = await supabase.from('submission').select('*');
+	console.log(submissions)
 
   return (
     <Container maxWidth="md" className={styles.adminDashboardContainer}>

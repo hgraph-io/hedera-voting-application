@@ -28,7 +28,7 @@ export default async function SubmissionPage() {
       </div>
 
       <Typography variant="h4" gutterBottom>
-        Submit Application
+        Submit a new application
       </Typography>
       <form action={submit}>
         <Grid container spacing={4}>
