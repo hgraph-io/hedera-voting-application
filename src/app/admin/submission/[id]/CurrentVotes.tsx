@@ -30,7 +30,7 @@ export default function CurrentVotes() {
       <TableContainer component={Paper} className={styles.voteTable}>
         <Table>
           <TableBody>
-            {allRatings.map(([accountId, rating]: [string, number]) => (
+            {allRatings?.map(([accountId, rating]: [string, number]) => (
               <TableRow key={accountId}>
                 <TableCell>Account: {accountId}</TableCell>
                 <TableCell>Rating: {rating}</TableCell>
