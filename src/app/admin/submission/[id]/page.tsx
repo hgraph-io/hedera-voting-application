@@ -5,12 +5,6 @@ import {
   Typography,
   Button,
   Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Paper,
   Grid,
   Chip,
   Link,
@@ -29,7 +23,7 @@ const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 if (!NEXT_PUBLIC_SUPABASE_URL || !SUPABASE_SERVICE_KEY)
   throw new Error('Missing Supabase URL or Service Key');
 
-export default async function AdminDashboard({ params: { id } }: { params: { id: string } }) {
+export default async function SubmissionPage({ params: { id } }: { params: { id: string } }) {
   const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
   const { data: submission } = await supabase
     .from('submission')
@@ -104,33 +98,9 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
               </div>
             </Grid>
 
-            {/*!userVoted ? (
-                <Grid item xs={12}>
-                  <VoteCard
-                    id={data.id}
-                    speaker={data.name}
-                    tags={data.topics.join(', ')}
-                    type="vote"
-                    rating={{
-                      voteNum: votes.length,
-                      currentRating: votes.reduce((a, v) => a + v.vote, 0) / votes.length,
-                    }}
-                  />
-                </Grid>
-              ) : (
-                <Grid item xs={12}>
-                  <Typography variant="h4">Your Vote</Typography>
-                  <VoteCard
-                    id={data.id}
-                    type="view"
-                    hederaMainnetUrl={voteLink}
-                    rating={{
-                      voteNum: votes.length,
-                      currentRating: userVote,
-                    }}
-                  />
-                </Grid>
-								)*/}
+            <Grid item xs={12}>
+              <VoteCard />
+            </Grid>
             <Grid item xs={12}>
               <div className={styles.titleRow}>
                 {/*<Typography variant="h4">Total Votes</Typography> ({votes.length} votes) */}

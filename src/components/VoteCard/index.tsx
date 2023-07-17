@@ -1,62 +1,22 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button, Rating, StarBorderIcon } from '@/components';
-import axios from 'axios';
+import { useHashConnect } from '@/context';
+import { Button, Rating, StarIcon, StarBorderIcon } from '@/components';
 import styles from './styles.module.scss';
 
-interface VoteCardProps {
-  id: number;
-  // todo
-  // are these optional?
-  hederaMainnetUrl?: string;
-  speaker?: string;
-  tags?: string;
-  rating: {
-    voteNum: number;
-    currentRating: number;
-  };
-  type: 'vote' | 'view';
-  user: any; // hashpack user
-}
-
-export const VoteCard: React.FC<VoteCardProps> = ({
-  id,
-  rating,
-  type,
-  hederaMainnetUrl,
-  user,
-}) => {
-  const [userVote, setUserVote] = useState<number | null>(0);
-  const { accountId } = user || {};
-
-  const handleVoteChange = (event: React.ChangeEvent<{}>, newValue: number | null) => {
-    setUserVote(newValue);
-  };
-
-  const handleVoteSubmit = async () => {
-    user?.setLoading(true);
-    const voteData = {
-      accountId,
-      choice: userVote,
-      ballotId: 'application-' + id,
-    };
-
-    try {
-      const res = await axios.post('/api/voting-submission', voteData);
-      user?.setLoading(false);
-    } catch (error) {
-      console.error('Error submitting vote', error);
-      user?.setLoading(false);
-    }
-  };
-
+export default function VoteCard() {
+  const { accountId } = useHashConnect();
+  const type = 'vote';
   const RightComponent = () => {
     if (type === 'vote') {
       return (
         <div className={styles.buttonContainer}>
           <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
-          <Button className={styles.cardButton} variant="contained" onClick={handleVoteSubmit}>
+          <Button
+            className={styles.cardButton}
+            variant="contained"
+            onClick={() => alert('where should this go')}
+          >
             Submit Vote
           </Button>
         </div>
@@ -70,7 +30,8 @@ export const VoteCard: React.FC<VoteCardProps> = ({
           <Button
             className={styles.cardButton}
             variant="contained"
-            onClick={() => window.open(hederaMainnetUrl, '_blank')}
+            // NEXT_PUBLIC_HEDERA_TOPIC_ID='0.0.15412191'
+            onClick={() => window.open(`https://hashscan.io/`, '_blank')}
           >
             View
           </Button>
@@ -94,10 +55,7 @@ export const VoteCard: React.FC<VoteCardProps> = ({
           <div className={styles.ratingLabel}>Your Vote</div>
           <Rating
             className={styles.ratingContainer}
-            name="user-rating"
-            value={rating.currentRating}
-            onChange={handleVoteChange}
-            icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+            icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
             emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
           />
         </div>
@@ -108,6 +66,4 @@ export const VoteCard: React.FC<VoteCardProps> = ({
       </div>
     </div>
   );
-};
-
-export default VoteCard;
+}
