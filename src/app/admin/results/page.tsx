@@ -1,5 +1,4 @@
-import { Typography, Container, Button } from '@/components';
-import AdminCard from '@/components/AdminCard';
+import { AdminCard, Typography, Container, Button } from '@/components';
 import styles from './styles.module.scss';
 
 export default async function AdminResultsPage() {

@@ -1,0 +1,8 @@
+query Rating($topic_id: bigint) {
+  topic_message(where: { topic_id: { _eq: $topic_id } }, order_by: { sequence_number: asc }) {
+    message
+    sequence_number
+    consensus_timestamp
+    payer_account_id
+  }
+}

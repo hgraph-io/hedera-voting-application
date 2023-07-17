@@ -1,17 +1,10 @@
-import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { createClient } from '@supabase/supabase-js';
 
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
   Typography,
   Button,
   Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Paper,
   Grid,
   Chip,
   Link,
@@ -21,25 +14,23 @@ import {
 } from '@/components';
 import type { Database } from '@/types';
 import Rating from './Rating';
+import CurrentVotes from './CurrentVotes';
 import styles from './styles.module.scss';
 
-//`https://explore.lworks.io/mainnet/topics/0.0.1350036/messages/${userVoteData.sequence_number}`
-//
-// https://github.com/vercel/next.js/issues/49373
-// export const dynamic = 'force-dynamic';
-// export const revalidate = 0;
+const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
-export default async function AdminDashboard({ params: { id } }: { params: { id: string } }) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+if (!NEXT_PUBLIC_SUPABASE_URL || !SUPABASE_SERVICE_KEY)
+  throw new Error('Missing Supabase URL or Service Key');
+
+export default async function SubmissionPage({ params: { id } }: { params: { id: string } }) {
+  const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
   const { data: submission } = await supabase
     .from('submission')
     .select('*')
     .eq('id', id)
     .limit(1)
     .single();
-
-  console.log(submission);
-  const voteAverage = 0;
 
   if (!submission) notFound();
   const { name, organization, links, topics, moderator } = submission;
@@ -85,6 +76,7 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
                       backgroundColor: 'black',
                       color: 'white',
                       marginTop: '5px',
+                      maxWidth: 'unset',
                     }}
                   />
                 ))}
@@ -107,66 +99,20 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
               </div>
             </Grid>
 
-            {/*!userVoted ? (
-                <Grid item xs={12}>
-                  <VoteCard
-                    id={data.id}
-                    speaker={data.name}
-                    tags={data.topics.join(', ')}
-                    type="vote"
-                    rating={{
-                      voteNum: votes.length,
-                      currentRating: votes.reduce((a, v) => a + v.vote, 0) / votes.length,
-                    }}
-                  />
-                </Grid>
-              ) : (
-                <Grid item xs={12}>
-                  <Typography variant="h4">Your Vote</Typography>
-                  <VoteCard
-                    id={data.id}
-                    type="view"
-                    hederaMainnetUrl={voteLink}
-                    rating={{
-                      voteNum: votes.length,
-                      currentRating: userVote,
-                    }}
-                  />
-                </Grid>
-								)*/}
+            <Grid item xs={12}>
+              <VoteCard />
+            </Grid>
             <Grid item xs={12}>
               <div className={styles.titleRow}>
                 {/*<Typography variant="h4">Total Votes</Typography> ({votes.length} votes) */}
               </div>
-              <div className={styles.rating}>
-                <Rating
-                  submissionId={id}
-                  className={styles.ratingContainer}
-                  //defaultValue={voteAverage}
-                  icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-                  emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
-                />
-              </div>
+              <Rating
+                className={styles.ratingContainer}
+                icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+                emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
+              />
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="body1">
-                Below you can see all of the current votes on this application:
-              </Typography>
-              <TableContainer component={Paper} className={styles.voteTable}>
-                <Table>
-                  {/*
-                    <TableBody>
-                      {votes.map((vote) => (
-                        <TableRow key={vote.accountId}>
-                          <TableCell>Account: {vote.accountId}</TableCell>
-                          <TableCell>Vote: {vote.choice}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-										*/}
-                </Table>
-              </TableContainer>
-            </Grid>
+            <CurrentVotes />
           </Grid>
         </Container>
       </Grid>

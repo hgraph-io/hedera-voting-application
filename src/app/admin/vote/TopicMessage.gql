@@ -1,7 +1,0 @@
-query TopicMessage($topicId: bigint) {
-  topic_message(where: { topic_id: { _eq: $topicId } }, order_by: { sequence_number: desc }) {
-    message
-    sequence_number
-    consensus_timestamp
-  }
-}

@@ -1,24 +1,18 @@
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-// import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import type { Database } from '@/types';
 import { Typography, Container, Button, AdminCard } from '@/components';
 import styles from './styles.module.scss';
 
-export default async function AdminDashboardPage() {
-  // const supabase = createServerComponentClient<Database>({ cookies });
-  // const supabase = createClient<Database>(
-  //   // process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  //   'http://localhost:54321',
-  //   process.env.SUPABASE_SERVICE_KEY!
-  // );
-  // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
-  // const { data: submissions } = await supabase.from('submission').select('*');
-  // console.log(submissions);
-  const submissions = await (
-    await fetch('http://localhost:54321/rest/v1/submission?select=*')
-  ).json();
+if (!NEXT_PUBLIC_SUPABASE_URL || !SUPABASE_SERVICE_KEY)
+  throw new Error('Missing Supabase URL or Service Key');
+
+export default async function AdminDashboardPage() {
+  const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
+
+  const { data: submissions } = await supabase.from('submission').select('*');
 
   return (
     <Container maxWidth="md" className={styles.adminDashboardContainer}>
