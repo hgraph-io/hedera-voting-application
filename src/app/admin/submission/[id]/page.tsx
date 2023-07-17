@@ -9,12 +9,11 @@ import {
   Chip,
   Link,
   VoteCard,
-  StarBorderIcon,
-  StarIcon,
+  Rating,
 } from '@/components';
 import type { Database } from '@/types';
-import Rating from './Rating';
 import CurrentVotes from './CurrentVotes';
+import TotalVotes from './TotalVotes';
 import styles from './styles.module.scss';
 
 const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -33,7 +32,7 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
     .single();
 
   if (!submission) notFound();
-  const { name, organization, links, topics, moderator } = submission;
+  const { name, organization, links, topics } = submission;
 
   return (
     <Grid container spacing={3} className={styles.adminDashboard}>
@@ -100,17 +99,14 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
             </Grid>
 
             <Grid item xs={12}>
+              <Typography variant="h3">Your Vote</Typography>
               <VoteCard />
             </Grid>
             <Grid item xs={12}>
               <div className={styles.titleRow}>
-                {/*<Typography variant="h4">Total Votes</Typography> ({votes.length} votes) */}
+                <Typography variant="h4">Total Votes</Typography> <TotalVotes />
               </div>
-              <Rating
-                className={styles.ratingContainer}
-                icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-                emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
-              />
+              <Rating className={styles.ratingContainer} readOnly />
             </Grid>
             <CurrentVotes />
           </Grid>

@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 type Submission = Database['public']['Tables']['submission']['Row'];
 
-export default function AdminCard({ id, name, moderator }: Submission) {
+export default function Card({ id, name, moderator }: Submission) {
   return (
     <Link href={`/submission/${id}`} className={`${styles.cardContainer} {$styles.vote}`}>
       <div className={`${styles.card} ${styles.vote}`}>
@@ -22,8 +22,8 @@ export default function AdminCard({ id, name, moderator }: Submission) {
         <div className={styles.right}>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox defaultChecked color="success" />}
-              label="Approved"
+              control={<Checkbox color="default" readOnly />}
+              label="Pending review"
             />
           </FormGroup>
         </div>

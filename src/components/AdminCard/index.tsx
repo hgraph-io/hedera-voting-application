@@ -10,14 +10,19 @@ type Submission = Database['public']['Tables']['submission']['Row'];
 export default function AdminCard({ id, name, moderator }: Submission) {
   const { accountId } = useHashConnect();
   const { state } = useRating();
+  console.log(id);
 
-  const ratings = state?.[id];
-  const currentAdminVoted = accountId && ratings?.[accountId];
-  console.log(currentAdminVoted);
+  // console.log(state);
+  const submissionRatings = state?.[id];
+  // console.log(submissionRatings);
+  console.log('yyyyyyyyyyyyyyy');
+  // console.log(accountId);
+  const currentAdminRating = accountId && submissionRatings?.ratings?.[accountId]
+  console.log(currentAdminRating);
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={8}>
+      <Grid item xs={9}>
         <Link
           href={`/admin/submission/${id}`}
           className={`${styles.cardContainer} {$styles.vote}`}
@@ -37,12 +42,12 @@ export default function AdminCard({ id, name, moderator }: Submission) {
             <div className={styles.right}>
               <div>
                 <div className={styles.ratingLabel}>
-                  Current Rating with {ratings?.total || 0} votes
+                  Current Rating with {submissionRatings?.total || 0} votes
                 </div>
                 <Rating
                   className={styles.ratingContainer}
-                  name="rating"
-                  value={ratings?.average || 0}
+                  average={submissionRatings?.average || 0}
+                  value={submissionRatings?.average || 0}
                   readOnly
                 />
               </div>
@@ -50,13 +55,20 @@ export default function AdminCard({ id, name, moderator }: Submission) {
           </div>
         </Link>
       </Grid>
-      <Grid item xs={4}>
-        {!currentAdminVoted && (
+      <Grid
+        container
+        item
+        xs={3}
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {!currentAdminRating && (
           <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
         )}
-        <Link href={`/admin/submission/${id}`}>
-          <Button className={styles.cardButton} variant="contained">
-            {currentAdminVoted ? 'View' : 'Vote'}
+        <Link href={`/admin/submission/${id}`} sx={{ width: '100%' }}>
+          <Button className={styles.cardButton} variant="outlined">
+            {currentAdminRating ? 'View' : 'Vote'}
           </Button>
         </Link>
       </Grid>

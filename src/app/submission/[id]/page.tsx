@@ -45,7 +45,7 @@ export default async function EditPage({ params: { id } }: { params: { id: strin
       </Button>
 
       <Typography variant="h4" gutterBottom>
-        Submit Application
+        Edit Submission
       </Typography>
       <form action={submit}>
         <input type="hidden" name="id" value={id} />

@@ -68,18 +68,6 @@
     font-size: 0.9em;
     color: darkgray;
   }
-
-  .rating {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-    position: relative;
-
-    .star {
-      color: gold;
-      margin-right: 5px;
-    }
-  }
 }
 
 .voteTable {
