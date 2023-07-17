@@ -19,7 +19,7 @@ import styles from './styles.module.scss';
 export default function CurrentVotes() {
   const { id } = useParams();
   const { state } = useRating();
-  const allRatings = Object.entries(state[id]?.ratings || {});
+  const allRatings = state[id]?.ratings && Object.entries(state[id].ratings);
 
   return (
     <Grid item xs={12}>
@@ -30,7 +30,7 @@ export default function CurrentVotes() {
       <TableContainer component={Paper} className={styles.voteTable}>
         <Table>
           <TableBody>
-            {allRatings.map(([accountId, rating]) => (
+            {allRatings.map(([accountId, rating]: [string, number]) => (
               <TableRow key={accountId}>
                 <TableCell>Account: {accountId}</TableCell>
                 <TableCell>Rating: {rating}</TableCell>

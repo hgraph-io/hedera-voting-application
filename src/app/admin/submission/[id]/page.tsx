@@ -76,6 +76,7 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
                       backgroundColor: 'black',
                       color: 'white',
                       marginTop: '5px',
+                      maxWidth: 'unset',
                     }}
                   />
                 ))}

@@ -14,7 +14,11 @@ const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK;
 if (!topicId || !network)
   throw new Error('Error: Missing environment variables for submitting vote to Hedera.');
 
-const RatingContext = createContext({});
+type RatingContextType = {
+  state: { [key: string]: any };
+  submit: (string, number) => void;
+};
+const RatingContext = createContext<RatingContextType>({});
 
 export function useRating() {
   return useContext(RatingContext);
