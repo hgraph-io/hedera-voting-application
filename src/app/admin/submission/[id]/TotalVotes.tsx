@@ -2,9 +2,20 @@
 
 import { useParams } from 'next/navigation';
 import { useRating } from '@/context';
+import { Rating, Typography } from '@/components';
+import styles from './styles.module.scss';
 
 export default function TotalVotes() {
   const { id } = useParams();
   const { state } = useRating();
-  return <span>({state?.[id]?.total || 0} votes)</span>;
+  const ratings = state?.[id];
+  return (
+    <>
+      <div className={styles.titleRow}>
+        <Typography variant="h4">Total Votes</Typography>{' '}
+        <span>({ratings?.total || 0} votes)</span>
+      </div>
+      <Rating className={styles.ratingContainer} average={ratings?.average} readOnly={true} />
+    </>
+  );
 }

@@ -27,7 +27,12 @@ export default function StarRating(props: {
         onChange={(_: any, newRating: number | null) => submit(id, newRating)}
         {...rest}
       />
-      {average && <Typography variant="body2">{average} out of 5</Typography>}
+
+      {average && (
+        <Typography variant="body2" sx={{ marginLeft: '10px' }}>
+          {average} out of 5
+        </Typography>
+      )}
     </div>
   );
 }
