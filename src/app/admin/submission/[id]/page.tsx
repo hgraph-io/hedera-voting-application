@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 
 import {
   Typography,
-  Button,
+  BackButton,
   Container,
   Grid,
   Chip,
@@ -35,16 +35,9 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
   const { name, organization, links, topics } = submission;
 
   return (
-    <Grid container spacing={3} className={styles.adminDashboard}>
-      <Grid item xs={12}>
-        <Button
-          component="a"
-          href="/admin/dashboard"
-          variant="outlined"
-          className={styles.backButton}
-        >
-          Back
-        </Button>
+    <Grid maxWidth="md" container spacing={3} className={styles.adminDashboard}>
+      <Grid item xs={12} spacing={0}>
+        <BackButton href="/admin/dashboard" />
       </Grid>
       <Grid item xs={12}>
         <Typography className={styles.title} textAlign="left" variant="h3">

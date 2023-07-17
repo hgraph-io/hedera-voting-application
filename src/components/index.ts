@@ -8,6 +8,7 @@ export { default as MenuIcon } from '@mui/icons-material/Menu';
 export { default as CloseIcon } from '@mui/icons-material/Close';
 
 export { default as Header } from './Header';
+export { default as BackButton } from './BackButton';
 export { default as Card } from './Card';
 export { default as AdminCard } from './AdminCard';
 export { default as VoteCard } from './VoteCard';
