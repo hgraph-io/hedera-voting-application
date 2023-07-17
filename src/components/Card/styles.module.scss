@@ -4,7 +4,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: unset;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -40,6 +39,7 @@
   position: relative;
   width: 100%;
   font-size: 14px;
+  color: $grey-3;
 
   @media (max-width: 900px) {
     flex-direction: column;

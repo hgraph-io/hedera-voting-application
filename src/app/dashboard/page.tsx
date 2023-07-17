@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Typography, Container, Button } from '@/components';
-import Card from '@/components/Card';
+import { Card, Typography, Container, Button } from '@/components';
 import type { Database } from '@/types';
 import styles from './styles.module.scss';
 
