@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Client, TopicMessageSubmitTransaction } from '@hashgraph/sdk';
 import { useHashConnect } from '@/context';
-import { Rating } from '@/components';
+import { Rating, Typography } from '@/components';
 import type { Vote } from '@/types';
 import HgraphClient from '@hgraph.io/sdk';
 import TopicMessage from '@/app/admin/vote/TopicMessage.gql';
@@ -24,11 +24,13 @@ export default function StarRating(props: {
   submissionId: string; //submission id
 }) {
   const [rating, setRating] = useState(props.defaultValue ?? 0);
+  const unsubscribe = useRef(() => {});
   const { signer } = useHashConnect();
   const { submissionId, ...rest } = props;
 
+  //TODO: subscription closing right away
   useEffect(() => {
-    hgraph.subscribe(
+    unsubscribe.current = hgraph.subscribe(
       {
         query: TopicMessage,
         variables: {
@@ -36,11 +38,21 @@ export default function StarRating(props: {
         },
       },
       {
-        next: (data) => {
+        next: ({ data }) => {
           console.log(data);
+          console.log('xxxxxxxxxx');
+          // @ts-ignore
+          data?.topic_message?.find(({ message }) => {
+            const parsed = JSON.parse(Buffer.from(message.substring(2), 'hex').toString());
+            console.log(parsed);
+            if (parsed.id === submissionId) {
+              setRating(parsed.rating);
+              return true;
+            }
+          });
         },
-        error: (e) => {
-          console.error(e);
+        error: (error) => {
+          console.log(error);
         },
         complete: () => {
           console.log('complete');
@@ -70,5 +82,15 @@ export default function StarRating(props: {
     //https://github.com/Hashpack/hashconnect#providersigner
   }
 
-  return <Rating {...rest} onChange={(_, rating) => vote(rating)} />;
+  console.log(rating);
+  return (
+    <>
+      <Rating
+        {...rest}
+        value={rating}
+        onChange={(_: any, newRating: number | null) => vote(newRating)}
+      />
+      <Typography variant="body2">{rating} out of 5</Typography>
+    </>
+  );
 }

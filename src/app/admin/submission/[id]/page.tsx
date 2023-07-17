@@ -17,6 +17,7 @@ import {
   Link,
   VoteCard,
   StarBorderIcon,
+  StarIcon,
 } from '@/components';
 import type { Database } from '@/types';
 import Rating from './Rating';
@@ -142,11 +143,10 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
                   submissionId={id}
                   className={styles.ratingContainer}
                   //defaultValue={voteAverage}
-                  icon={<StarBorderIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+                  icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
                   emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
                 />
               </div>
-              <Typography variant="body2">{voteAverage} out of 5</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">
