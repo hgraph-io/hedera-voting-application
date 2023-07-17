@@ -22,7 +22,7 @@ export default function CurrentVotes() {
   const allRatings = state[id]?.ratings && Object.entries(state[id].ratings);
 
   return (
-    <Grid item xs={12}>
+    <>
       <Typography variant="body1">
         Below you can see all of the current votes on this application:
       </Typography>
@@ -39,6 +39,6 @@ export default function CurrentVotes() {
           </TableBody>
         </Table>
       </TableContainer>
-    </Grid>
+    </>
   );
 }

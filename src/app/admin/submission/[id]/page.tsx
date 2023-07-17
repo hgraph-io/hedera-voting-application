@@ -1,16 +1,7 @@
 import { notFound } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 
-import {
-  Typography,
-  Button,
-  Container,
-  Grid,
-  Chip,
-  Link,
-  VoteCard,
-  Rating,
-} from '@/components';
+import { Typography, BackButton, Container, Grid, Chip, Link, VoteCard } from '@/components';
 import type { Database } from '@/types';
 import CurrentVotes from './CurrentVotes';
 import TotalVotes from './TotalVotes';
@@ -35,16 +26,9 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
   const { name, organization, links, topics } = submission;
 
   return (
-    <Grid container spacing={3} className={styles.adminDashboard}>
+    <Grid maxWidth="md" container spacing={3} className={styles.adminDashboard}>
       <Grid item xs={12}>
-        <Button
-          component="a"
-          href="/admin/dashboard"
-          variant="outlined"
-          className={styles.backButton}
-        >
-          Back
-        </Button>
+        <BackButton href="/admin/dashboard" />
       </Grid>
       <Grid item xs={12}>
         <Typography className={styles.title} textAlign="left" variant="h3">
@@ -103,12 +87,11 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
               <VoteCard />
             </Grid>
             <Grid item xs={12}>
-              <div className={styles.titleRow}>
-                <Typography variant="h4">Total Votes</Typography> <TotalVotes />
-              </div>
-              <Rating className={styles.ratingContainer} readOnly />
+              <TotalVotes />
             </Grid>
-            <CurrentVotes />
+            <Grid item xs={12}>
+              <CurrentVotes />
+            </Grid>
           </Grid>
         </Container>
       </Grid>

@@ -38,6 +38,15 @@ export default createTheme({
   },
   typography: {
     fontFamily: 'Styrene A Web, Arial',
+    h1: {
+      fontWeight: 500,
+    },
+    h2: {
+      fontWeight: 500,
+    },
+    h3: {
+      fontWeight: 500,
+    },
   },
   components: {
     MuiTypography: {

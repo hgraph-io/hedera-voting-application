@@ -18,7 +18,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Providers>
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Header session={session} />
-            <main style={{ flex: 1 }}>{children}</main>
+            <main style={{ flex: 1, position: 'relative' }}>{children}</main>
             <Footer />
           </div>
         </Providers>

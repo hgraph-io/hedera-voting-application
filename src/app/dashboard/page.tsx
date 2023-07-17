@@ -16,7 +16,7 @@ export default async function DashboardPage() {
     .eq('user_id', session!.user.id);
 
   return (
-    <Container maxWidth="md" className={styles.dashboardContainer}>
+    <Container maxWidth="lg" className={styles.dashboardContainer}>
       <div className={styles.header}>
         <Typography component="h1" variant="h3" align="left" color="textPrimary" gutterBottom>
           Dashboard

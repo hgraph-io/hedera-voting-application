@@ -13,12 +13,13 @@ export default async function AdminDashboardPage() {
   const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
 
   const { data: submissions } = await supabase.from('submission').select('*');
-	console.log(submissions)
 
   return (
     <Container maxWidth="md" className={styles.adminDashboardContainer}>
       <div className={styles.header}>
-        <Typography variant="h3" gutterBottom>Admin Dashboard</Typography>
+        <Typography variant="h3" component="h1" gutterBottom>
+          Admin Dashboard
+        </Typography>
         <Typography component="p" gutterBottom>
           Welcome to the Admin Panel of the Hedera Voting Application!
         </Typography>
@@ -31,8 +32,10 @@ export default async function AdminDashboardPage() {
         </Button>
       </div>
 
-      <Typography variant="h4" gutterBottom>Submissions</Typography>
-      <Typography className={styles.descriptionParagraph} component="p">
+      <Typography variant="h4" component="h2" gutterBottom>
+        Submissions
+      </Typography>
+      <Typography className={styles.descriptionParagraph} component="p" gutterBottom>
         Below you can review, manage and select applications from individuals eager to share
         their insights at our upcoming conference.
       </Typography>
