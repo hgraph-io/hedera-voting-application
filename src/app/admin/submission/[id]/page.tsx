@@ -23,12 +23,6 @@ import type { Database } from '@/types';
 import Rating from './Rating';
 import styles from './styles.module.scss';
 
-//`https://explore.lworks.io/mainnet/topics/0.0.1350036/messages/${userVoteData.sequence_number}`
-//
-// https://github.com/vercel/next.js/issues/49373
-// export const dynamic = 'force-dynamic';
-// export const revalidate = 0;
-
 export default async function AdminDashboard({ params: { id } }: { params: { id: string } }) {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: submission } = await supabase

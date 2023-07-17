@@ -13,12 +13,7 @@ import styles from './styles.module.scss';
 export default function DesktopMenu({ session }: { session: Session | null }) {
   const pathname = usePathname();
   console.log(pathname);
-  const hc = useHashConnect();
-  //@ts-ignore
-  const pairedWalletId =
-    hc?.connectionStatusChangeEvent == 'Paired' &&
-    // @ts-ignore
-    hc?.client?.hcData.pairingData.find(Boolean).accountIds.find(Boolean);
+  const { accountId } = useHashConnect();
 
   return (
     <div className={styles.links}>
@@ -36,7 +31,7 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
         </div>
       </Link>
       <div className={styles.desktopButtonContainer}>
-        {pathname.startsWith('/admin') && pairedWalletId && (
+        {pathname.startsWith('/admin') && accountId && (
           <Button
             variant="contained"
             color="primary"
@@ -44,10 +39,10 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
             // @ts-ignore
             onClick={() => hc.client.disconnect(hc.client.hcData.topic)}
           >
-            Disconnect wallet {pairedWalletId}
+            Disconnect wallet {accountId}
           </Button>
         )}
-        {pathname.startsWith('/admin') && !pairedWalletId && !session?.user && (
+        {pathname.startsWith('/admin') && !accountId && !session?.user && (
           <>
             <Button
               component="a"
@@ -67,7 +62,7 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
             </Button>
           </>
         )}
-        {pathname.startsWith('/admin') && !pairedWalletId && session?.user && (
+        {pathname.startsWith('/admin') && !accountId && session?.user && (
           <form action="/auth/signout" method="post">
             <Button variant="contained" type="submit">
               Sign Out
