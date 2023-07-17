@@ -20,6 +20,7 @@ import {
 } from '@/components';
 import type { Database } from '@/types';
 import Rating from './Rating';
+import CurrentVotes from './CurrentVotes';
 import styles from './styles.module.scss';
 
 const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -36,9 +37,6 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
     .eq('id', id)
     .limit(1)
     .single();
-
-  console.log(submission);
-  const voteAverage = 0;
 
   if (!submission) notFound();
   const { name, organization, links, topics, moderator } = submission;
@@ -137,35 +135,13 @@ export default async function AdminDashboard({ params: { id } }: { params: { id:
               <div className={styles.titleRow}>
                 {/*<Typography variant="h4">Total Votes</Typography> ({votes.length} votes) */}
               </div>
-              <div className={styles.rating}>
-                <Rating
-                  submissionId={id}
-                  className={styles.ratingContainer}
-                  //defaultValue={voteAverage}
-                  icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
-                  emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
-                />
-              </div>
+              <Rating
+                className={styles.ratingContainer}
+                icon={<StarIcon style={{ color: '#07E78E', fontSize: 40 }} />}
+                emptyIcon={<StarBorderIcon style={{ color: '#ebebeb', fontSize: 40 }} />}
+              />
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="body1">
-                Below you can see all of the current votes on this application:
-              </Typography>
-              <TableContainer component={Paper} className={styles.voteTable}>
-                <Table>
-                  {/*
-                    <TableBody>
-                      {votes.map((vote) => (
-                        <TableRow key={vote.accountId}>
-                          <TableCell>Account: {vote.accountId}</TableCell>
-                          <TableCell>Vote: {vote.choice}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-										*/}
-                </Table>
-              </TableContainer>
-            </Grid>
+            <CurrentVotes />
           </Grid>
         </Container>
       </Grid>

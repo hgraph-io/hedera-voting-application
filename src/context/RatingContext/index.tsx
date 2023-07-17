@@ -1,4 +1,6 @@
 // @ts-nocheck
+'use client';
+
 import { useState, useEffect, useRef, useContext, createContext } from 'react';
 import { TopicMessageSubmitTransaction } from '@hashgraph/sdk';
 import HgraphClient from '@hgraph.io/sdk';
