@@ -20,7 +20,6 @@ export default async function submit(data: FormData) {
     topics: data.getAll('topics') as string[],
     moderator: Boolean(data.get('moderator')),
   };
-  console.log(fields);
   const result = await supabase.from('submission').upsert(fields);
   if (result.status === 201) redirect('/dashboard');
   //todo: handle error

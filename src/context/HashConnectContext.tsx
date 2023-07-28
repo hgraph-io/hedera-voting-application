@@ -44,7 +44,6 @@ export function useHashConnect() {
 }
 
 function reducer(state: object, action: { type: string; payload: unknown }) {
-	console.log(action.type, action.payload);
   switch (action.type) {
     default:
       // store last action
@@ -63,7 +62,6 @@ function Router({ children }: { children: React.ReactNode }) {
 
     default:
       //TODO: handle not paired on other routes
-      console.log(hc?.connectionStatusChangeEvent);
     // if (pathname !== '/admin') redirect('/admin');
   }
   return <>{children}</>;

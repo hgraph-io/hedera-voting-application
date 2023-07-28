@@ -70,16 +70,13 @@ export default function RatingProvider({ children }: { children: React.ReactNode
       .setMessage(JSON.stringify(payload))
       .freezeWithSigner(signer);
 
-    const blah = await topicMessageTransaction.executeWithSigner(signer);
-    console.log('zzzzzzzzzz');
-		console.log(blah);
+    const response = await topicMessageTransaction.executeWithSigner(signer);
     openSnackbar(`submission result: ${blah}`, SnackbarMessageSeverity.Error);
   }
 
   // https://stackoverflow.com/questions/59442329/graphql-subscriptions-inside-a-useeffect-hook-doesnt-access-latest-state
   useEffect(() => {
     if (hgraph) {
-      console.log(hgraph);
       // TODO: this closes the subscription after 1 message is received
       const unsubscribe = hgraph.subscribe(
         {

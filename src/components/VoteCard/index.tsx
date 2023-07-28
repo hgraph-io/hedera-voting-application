@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useHashConnect, useRating } from '@/context';
-import { Button, Rating } from '@/components';
+import { Button, Rating, CircularProgress } from '@/components';
 import styles from './styles.module.scss';
 
 const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK;
@@ -17,42 +17,10 @@ export default function VoteCard() {
   const { accountId } = useHashConnect();
   const [rating, setRating] = useState(0);
 
-  useEffect(() => {
-    const recordedRating = accountId && state[id]?.ratings?.[accountId];
-    if (recordedRating) setRating(recordedRating);
-  }, [state, accountId, id]);
+  // Loading
+  if (!state || !accountId) return <CircularProgress />;
 
-  const RightComponent = () => {
-    if (rating)
-      return (
-        <div className={styles.buttonContainer}>
-          <div className={styles.buttonLabel}>View your vote on the Hedera mainnet</div>
-          <Button
-            component="a"
-            className={styles.cardButton}
-            variant="contained"
-            // TODO: link to actual transaction
-            href={`https://hashscan.io/${network}/topic/${topicId}`}
-            target="_blank"
-          >
-            View
-          </Button>
-        </div>
-      );
-    else
-      return (
-        <div className={styles.buttonContainer}>
-          <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
-          <Button
-            className={styles.cardButton}
-            variant="contained"
-            onClick={() => submit(id, rating)}
-          >
-            Submit Vote
-          </Button>
-        </div>
-      );
-  };
+  const recordedRating = state[id]?.ratings?.[accountId];
 
   return (
     <div className={styles.cardContainer}>
@@ -65,15 +33,36 @@ export default function VoteCard() {
 
         <div className={styles.middle}>
           <Rating
-            onChange={(_, value) => setRating(value)}
+            onChange={(_, value) => value && setRating(value)}
             className={styles.ratingContainer}
-            readOnly={!!rating}
-            value={rating}
+            readOnly={!!recordedRating}
+            value={recordedRating || rating}
           />
         </div>
       </div>
       <div className={styles.right}>
-        <RightComponent />
+        <div className={styles.buttonContainer}>
+          <div className={styles.buttonLabel}>
+            {recordedRating
+              ? 'View your vote on the Hedera mainnet'
+              : 'You didn’t vote on this application yet'}
+          </div>
+          <Button
+            className={styles.cardButton}
+            variant="contained"
+            {...(recordedRating
+              ? {
+                  component: 'a',
+                  href: `https://hashscan.io/${network}/topic/${topicId}`,
+                  target: '_blank',
+                  children: 'View',
+                }
+              : {
+                  onClick: () => submit(id, rating),
+                  children: 'Submit Vote',
+                })}
+          />
+        </div>
       </div>
     </div>
   );

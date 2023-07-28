@@ -12,7 +12,6 @@ import styles from './styles.module.scss';
 //https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs
 export default function DesktopMenu({ session }: { session: Session | null }) {
   const pathname = usePathname();
-  console.log(pathname);
   const { accountId } = useHashConnect();
 
   return (
