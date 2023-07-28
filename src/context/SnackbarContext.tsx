@@ -31,7 +31,7 @@ export default function SnackbarProvider({ children }: { children: React.ReactNo
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={10000}
         onClose={handleClose}
       >
         <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>

@@ -71,7 +71,13 @@ export default function RatingProvider({ children }: { children: React.ReactNode
       .freezeWithSigner(signer);
 
     const response = await topicMessageTransaction.executeWithSigner(signer);
-    openSnackbar(`submission result: ${blah}`, SnackbarMessageSeverity.Error);
+    console.log(response);
+    openSnackbar(
+      response?.transactionId
+        ? `Success! Your vote has been submitted.`
+        : 'There’s been an error submitting your vote. Please try again.',
+      response ? SnackbarMessageSeverity.Success : SnackbarMessageSeverity.Error
+    );
   }
 
   // https://stackoverflow.com/questions/59442329/graphql-subscriptions-inside-a-useeffect-hook-doesnt-access-latest-state
