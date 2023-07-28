@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useHashConnect, useRating } from '@/context';
 import { Button, Rating } from '@/components';
@@ -12,15 +13,17 @@ if (!network || !topicId) throw new Error('Missing network or topic id env vars'
 
 export default function VoteCard() {
   const { id } = useParams();
+  const { state, submit } = useRating();
   const { accountId } = useHashConnect();
-  const { state } = useRating();
+  const [rating, setRating] = useState(0);
 
-  const currentAccountRating = accountId && state?.[id]?.ratings?.[accountId];
-  console.log('xxxxxx');
-  console.log(currentAccountRating);
+  useEffect(() => {
+    const recordedRating = accountId && state[id]?.ratings?.[accountId];
+    if (recordedRating) setRating(recordedRating);
+  }, [state, accountId, id]);
 
   const RightComponent = () => {
-    if (currentAccountRating)
+    if (rating)
       return (
         <div className={styles.buttonContainer}>
           <div className={styles.buttonLabel}>View your vote on the Hedera mainnet</div>
@@ -43,7 +46,7 @@ export default function VoteCard() {
           <Button
             className={styles.cardButton}
             variant="contained"
-            onClick={() => alert('where should this go')}
+            onClick={() => submit(id, rating)}
           >
             Submit Vote
           </Button>
@@ -61,7 +64,12 @@ export default function VoteCard() {
         </div>
 
         <div className={styles.middle}>
-          <Rating className={styles.ratingContainer} readOnly={currentAccountRating} />
+          <Rating
+            onChange={(_, value) => setRating(value)}
+            className={styles.ratingContainer}
+            readOnly={!!rating}
+            value={rating}
+          />
         </div>
       </div>
       <div className={styles.right}>

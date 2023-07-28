@@ -44,6 +44,7 @@ export function useHashConnect() {
 }
 
 function reducer(state: object, action: { type: string; payload: unknown }) {
+	console.log(action.type, action.payload);
   switch (action.type) {
     default:
       // store last action

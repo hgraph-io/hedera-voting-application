@@ -15,7 +15,12 @@ export default function TotalVotes() {
         <Typography variant="h4">Total Votes</Typography>{' '}
         <span>({ratings?.total || 0} votes)</span>
       </div>
-      <Rating className={styles.ratingContainer} average={ratings?.average} readOnly={true} />
+      <Rating
+        className={styles.ratingContainer}
+        average={ratings?.average || 0}
+        value={ratings?.average || 0}
+        readOnly={true}
+      />
     </>
   );
 }
