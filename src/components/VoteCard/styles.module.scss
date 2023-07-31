@@ -4,6 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -11,6 +12,9 @@
     margin: 15px 0px;
   }
 }
+.right{
+  flex:1
+}; 
 
 .buttonContainer {
   display: flex;
@@ -45,6 +49,7 @@
 
 .card {
   display: flex;
+  flex: 2;
   justify-content: space-between;
   padding: 20px;
   padding-left: 30px;
@@ -56,6 +61,7 @@
   position: relative;
   width: 100%;
   font-size: 14px;
+  flex-direction: row;
 
   @media (max-width: 900px) {
     flex-direction: column;
