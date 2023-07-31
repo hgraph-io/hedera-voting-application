@@ -1,16 +1,17 @@
 'use client';
 
 import { Button, Container, Typography } from '@/components';
-import { useHashConnect } from '@/context';
+import { useHashConnect, useSnackbar } from '@/context';
 import styles from './styles.module.scss';
 
 export default function AdminLoginPage() {
   const hc = useHashConnect();
+  const sb = useSnackbar();
   return (
     <>
       <div className={styles.background} />
       <Container className={styles.adminLoginPageContainer} maxWidth="xs">
-        <Typography component="h1" variant="h2" gutterBottom>
+        <Typography component="h1" variant="h3" gutterBottom>
           Admin Login
         </Typography>
         <Typography>
@@ -25,6 +26,17 @@ export default function AdminLoginPage() {
             onClick={() => hc?.client?.connectToLocalWallet()}
           >
             Connect to Hashpack
+          </Button>
+          <Button
+            variant="text"
+            color="primary"
+            fullWidth
+            onClick={() => {
+              navigator.clipboard.writeText(hc.initData.pairingString);
+              sb.openSnackbar("Pairing String Copied", "success")
+            }}
+          >
+            Copy Pairing String
           </Button>
           {hc?.initData?.savedPairings?.map((pairingData, index) => {
             return (
