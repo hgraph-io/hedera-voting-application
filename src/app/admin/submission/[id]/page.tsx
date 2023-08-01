@@ -83,7 +83,7 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
             </Grid>
 
             <Grid item xs={12}>
-              <Typography variant="h3">Your Vote</Typography>
+              <Typography variant="h4">Your Vote</Typography>
               <VoteCard />
             </Grid>
             <Grid item xs={12}>

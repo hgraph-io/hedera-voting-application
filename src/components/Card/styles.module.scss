@@ -4,9 +4,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  
   @media (max-width: 900px) {
-    flex-direction: column;
+    flex-direction: column!important;
     padding: 10px;
     margin: 15px 0px;
   }
@@ -42,7 +42,7 @@
   color: $grey-3;
 
   @media (max-width: 900px) {
-    flex-direction: column;
+    flex-direction: column!important;
     padding: 15px;
     margin: 15px 0px;
     width: 300px;
