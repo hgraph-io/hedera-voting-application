@@ -55,15 +55,23 @@ function Router({ children }: { children: React.ReactNode }) {
   const hc = useHashConnect();
   const pathname = usePathname();
 
-  switch (hc?.connectionStatusChangeEvent) {
-    // case HashConnectConnectionState.Paired:
-    case 'Paired':
-      if (pathname === '/admin') redirect('/admin/dashboard');
+  if (pathname.startsWith('/admin')) {
+    console.log(hc?.connectionStatusChangeEvent);
+    switch (hc?.connectionStatusChangeEvent) {
+      // Don't do anything while hashpack is loading
+      case undefined:
+        break;
+      case 'Paired':
+        if (pathname === '/admin') redirect('/admin/dashboard');
+        break;
+      case 'Connected':
+        if (pathname !== '/admin') redirect('/admin');
+        break;
 
-    default:
-      //TODO: handle not paired on other routes
-      console.log(hc?.connectionStatusChangeEvent);
-    // if (pathname !== '/admin') redirect('/admin');
+      default:
+        console.error('unhandled hashconnect event');
+      // if (pathname !== '/admin') redirect('/admin');
+    }
   }
   return <>{children}</>;
 }

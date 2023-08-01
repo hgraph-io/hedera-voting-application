@@ -4,8 +4,9 @@
 import { useState, useEffect, useRef, useContext, createContext } from 'react';
 import { TopicMessageSubmitTransaction } from '@hashgraph/sdk';
 import HgraphClient from '@hgraph.io/sdk';
-import { useHashConnect } from '@/context';
+import { useHashConnect, useSnackbar } from '@/context';
 import TopicMessage from './TopicMessage.gql';
+import { SnackbarMessageSeverity } from '@/types';
 import type { Vote } from '@/types';
 
 const topicId = process.env.NEXT_PUBLIC_HEDERA_TOPIC_ID;
@@ -29,9 +30,10 @@ export default function RatingProvider({ children }: { children: React.ReactNode
   const { signer } = useHashConnect();
   const [state, setState] = useState({});
   const handleData = useRef(null);
+  const { openSnackbar } = useSnackbar();
 
   const handleNewData = (topic_message) => {
-    console.log('new data from hgraph');
+    openSnackbar('new data from hgraph');
     const test = {};
 
     topic_message.forEach(({ message, payer_account_id }) => {
@@ -68,13 +70,20 @@ export default function RatingProvider({ children }: { children: React.ReactNode
       .setMessage(JSON.stringify(payload))
       .freezeWithSigner(signer);
 
-    topicMessageTransaction.executeWithSigner(signer);
+    const response = await topicMessageTransaction.executeWithSigner(signer);
+    console.log(response);
+    openSnackbar(
+      response?.transactionId
+        ? `Success! Your vote has been submitted.`
+        : 'There’s been an error submitting your vote. Please try again.',
+      response ? SnackbarMessageSeverity.Success : SnackbarMessageSeverity.Error
+    );
   }
 
   // https://stackoverflow.com/questions/59442329/graphql-subscriptions-inside-a-useeffect-hook-doesnt-access-latest-state
   useEffect(() => {
     if (hgraph) {
-      console.log(hgraph);
+      // TODO: this closes the subscription after 1 message is received
       const unsubscribe = hgraph.subscribe(
         {
           query: TopicMessage,

@@ -52,7 +52,7 @@ export default function SupabaseAuthUI() {
         // theme="dark"
         providers={[]}
         view={view}
-        redirectTo="http://localhost:3000/auth/callback"
+        redirectTo="http://localhost:3000/dashboard"
       />
     </Container>
   );

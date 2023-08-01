@@ -24,6 +24,7 @@ export default function Card({ id, name, moderator }: Submission) {
             <FormControlLabel
               control={<Checkbox color="default" readOnly />}
               label="Pending review"
+              disabled
             />
           </FormGroup>
         </div>

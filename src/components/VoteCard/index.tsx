@@ -1,8 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useHashConnect, useRating } from '@/context';
-import { Button, Rating } from '@/components';
+import { Button, Rating, CircularProgress } from '@/components';
 import styles from './styles.module.scss';
 
 const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK;
@@ -12,44 +13,14 @@ if (!network || !topicId) throw new Error('Missing network or topic id env vars'
 
 export default function VoteCard() {
   const { id } = useParams();
+  const { state, submit } = useRating();
   const { accountId } = useHashConnect();
-  const { state } = useRating();
+  const [rating, setRating] = useState(0);
 
-  const currentAccountRating = accountId && state?.[id]?.ratings?.[accountId];
-  console.log('xxxxxx');
-  console.log(currentAccountRating);
+  // Loading
+  if (!state || !accountId) return <CircularProgress />;
 
-  const RightComponent = () => {
-    if (currentAccountRating)
-      return (
-        <div className={styles.buttonContainer}>
-          <div className={styles.buttonLabel}>View your vote on the Hedera mainnet</div>
-          <Button
-            component="a"
-            className={styles.cardButton}
-            variant="contained"
-            // TODO: link to actual transaction
-            href={`https://hashscan.io/${network}/topic/${topicId}`}
-            target="_blank"
-          >
-            View
-          </Button>
-        </div>
-      );
-    else
-      return (
-        <div className={styles.buttonContainer}>
-          <div className={styles.buttonLabel}>You didn’t vote on this application yet</div>
-          <Button
-            className={styles.cardButton}
-            variant="contained"
-            onClick={() => alert('where should this go')}
-          >
-            Submit Vote
-          </Button>
-        </div>
-      );
-  };
+  const recordedRating = state[id]?.ratings?.[accountId];
 
   return (
     <div className={styles.cardContainer}>
@@ -61,11 +32,37 @@ export default function VoteCard() {
         </div>
 
         <div className={styles.middle}>
-          <Rating className={styles.ratingContainer} readOnly={currentAccountRating} />
+          <Rating
+            onChange={(_, value) => value && setRating(value)}
+            className={styles.ratingContainer}
+            readOnly={!!recordedRating}
+            value={recordedRating || rating}
+          />
         </div>
       </div>
       <div className={styles.right}>
-        <RightComponent />
+        <div className={styles.buttonContainer}>
+          <div className={styles.buttonLabel}>
+            {recordedRating
+              ? 'View your vote on the Hedera mainnet'
+              : 'You didn’t vote on this application yet'}
+          </div>
+          <Button
+            className={styles.cardButton}
+            variant="contained"
+            {...(recordedRating
+              ? {
+                  component: 'a',
+                  href: `https://hashscan.io/${network}/topic/${topicId}`,
+                  target: '_blank',
+                  children: 'View',
+                }
+              : {
+                  onClick: () => submit(id, rating),
+                  children: 'Submit Vote',
+                })}
+          />
+        </div>
       </div>
     </div>
   );

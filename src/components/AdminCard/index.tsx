@@ -14,13 +14,12 @@ export default function AdminCard({ id, name, moderator }: Submission) {
   const currentAdminRating = accountId && submissionRatings?.ratings?.[accountId];
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} className={`${styles.cardContainer} ${
+      currentAdminRating ? styles.view : styles.vote
+    }`}>
       <Grid item xs={9}>
         <Link
           href={`/admin/submission/${id}`}
-          className={`${styles.cardContainer} ${
-            currentAdminRating ? styles.view : styles.vote
-          }`}
         >
           <div className={`${styles.card}`}>
             <div className={styles.left}>

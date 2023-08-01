@@ -5,7 +5,6 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
   Button,
   TextField,
-  Container,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -27,8 +26,6 @@ export default async function EditPage({ params: { id } }: { params: { id: strin
     .eq('id', id)
     .limit(1)
     .single();
-
-  console.log(submission);
 
   if (!submission) notFound();
   const { name, organization, links, topics, moderator } = submission;

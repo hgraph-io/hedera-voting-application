@@ -12,7 +12,6 @@ import styles from './styles.module.scss';
 //https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs
 export default function DesktopMenu({ session }: { session: Session | null }) {
   const pathname = usePathname();
-  console.log(pathname);
   const { accountId } = useHashConnect();
 
   return (
@@ -64,7 +63,7 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
         )}
         {pathname.startsWith('/admin') && !accountId && session?.user && (
           <form action="/auth/signout" method="post">
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" className={styles.signoutButton}>
               Sign Out
             </Button>
           </form>
@@ -72,7 +71,7 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
 
         {!pathname.startsWith('/admin') && session?.user && (
           <form action="/auth/signout" method="post">
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" className={styles.signoutButton}>
               Sign Out
             </Button>
           </form>
