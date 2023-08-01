@@ -57,6 +57,7 @@ export interface Database {
           moderator: boolean | null;
           name: string;
           organization: string | null;
+          status: string;
           topics: string[] | null;
           user_id: string;
         };
@@ -67,6 +68,7 @@ export interface Database {
           moderator?: boolean | null;
           name: string;
           organization?: string | null;
+          status?: string;
           topics?: string[] | null;
           user_id: string;
         };
@@ -77,6 +79,7 @@ export interface Database {
           moderator?: boolean | null;
           name?: string;
           organization?: string | null;
+          status?: string;
           topics?: string[] | null;
           user_id?: string;
         };
