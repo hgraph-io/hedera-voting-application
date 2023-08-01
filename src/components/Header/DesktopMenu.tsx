@@ -63,7 +63,7 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
         )}
         {pathname.startsWith('/admin') && !accountId && session?.user && (
           <form action="/auth/signout" method="post">
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" className={styles.signoutButton}>
               Sign Out
             </Button>
           </form>
@@ -71,7 +71,7 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
 
         {!pathname.startsWith('/admin') && session?.user && (
           <form action="/auth/signout" method="post">
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" className={styles.signoutButton}>
               Sign Out
             </Button>
           </form>

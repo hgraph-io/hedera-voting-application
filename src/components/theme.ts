@@ -98,6 +98,7 @@ export default createTheme({
           textTransform: 'capitalize',
           '&:hover': {
             backgroundColor: colors.purple,
+            color: colors.white,
           },
         },
         contained: {
