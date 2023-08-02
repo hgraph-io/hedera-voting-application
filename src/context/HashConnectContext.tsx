@@ -46,7 +46,6 @@ export function useHashConnect() {
 }
 
 function reducer(state: HashConnectContext | {}, action: { type: string; payload: unknown }) {
-  console.log(action);
   switch (action.type) {
     case HashConnectEvents.PairingEvent: {
       //@ts-ignore
@@ -106,8 +105,6 @@ export default function HashConnectProvider({ children }: { children: React.Reac
    */
   useEffect(() => {
     if (!pathname.startsWith('/admin') || state.client) return;
-    console.log('state.client');
-    console.log(state.client);
 
     const client = new HashConnect();
     // need initial client in some events before dispatching client after client.init()
@@ -149,13 +146,12 @@ export default function HashConnectProvider({ children }: { children: React.Reac
     redirect('/admin/dashboard');
   // redirect to admin login if an account is not paired
   else if (
+    pathname.startsWith('/admin') &&
     pathname !== '/admin' &&
     state?.connectionStatusChangeEvent &&
     state.connectionStatusChangeEvent !== 'Paired'
   )
     redirect('/admin');
-
-  console.log(state?.connectionStatusChangeEvent);
 
   return <HashpackContext.Provider value={state}>{children}</HashpackContext.Provider>;
 }
