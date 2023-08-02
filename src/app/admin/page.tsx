@@ -6,6 +6,7 @@ import styles from './styles.module.scss';
 
 export default function AdminLoginPage() {
   const hc = useHashConnect();
+
   const { openSnackbar } = useSnackbar();
   return (
     <>
@@ -33,7 +34,7 @@ export default function AdminLoginPage() {
             fullWidth
             onClick={() => {
               navigator.clipboard.writeText(hc.initData.pairingString);
-              openSnackbar("Pairing String Copied", "success")
+              openSnackbar('Pairing String Copied', 'success');
             }}
           >
             Copy Pairing String

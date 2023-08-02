@@ -7,8 +7,8 @@ import styles from './styles.module.scss';
 
 export default function TotalVotes() {
   const { id } = useParams();
-  const { state } = useRating();
-  const ratings = state?.[id];
+  const { ratingState } = useRating();
+  const ratings = ratingState?.[id];
   return (
     <>
       <div className={styles.titleRow}>
