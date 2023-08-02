@@ -18,8 +18,8 @@ import styles from './styles.module.scss';
 
 export default function CurrentVotes() {
   const { id } = useParams();
-  const { state } = useRating();
-  const allRatings = state[id]?.ratings && Object.entries(state[id].ratings);
+  const { ratingState } = useRating();
+  const allRatings = ratingState[id]?.ratings && Object.entries(ratingState[id].ratings);
 
   return (
     <>

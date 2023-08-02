@@ -1,22 +1,28 @@
 // @ts-nocheck
 'use client';
 
-import { useState, useEffect, useRef, useContext, createContext } from 'react';
+import { useState, useEffect, useContext, createContext } from 'react';
+import { usePathname } from 'next/navigation';
 import { TopicMessageSubmitTransaction } from '@hashgraph/sdk';
 import HgraphClient from '@hgraph.io/sdk';
 import { useHashConnect, useSnackbar } from '@/context';
+import { CircularProgress } from '@/components';
 import TopicMessage from './TopicMessage.gql';
 import { SnackbarMessageSeverity } from '@/types';
 import type { Vote } from '@/types';
 
 const topicId = process.env.NEXT_PUBLIC_HEDERA_TOPIC_ID;
 const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK;
+const superAdmins = JSON.parse(process.env.NEXT_PUBLIC_HEDERA_SUPER_ADMINS);
+const votingAdmins = JSON.parse(process.env.NEXT_PUBLIC_HEDERA_VOTING_ADMINS);
 
-if (!topicId || !network)
+if (!topicId || !network || !superAdmins || !votingAdmins)
   throw new Error('Error: Missing environment variables for submitting vote to Hedera.');
 
 type RatingContextType = {
-  state: { [key: string]: any };
+  ratingState: { [key: string]: any };
+  votingAdmins: [string];
+  superAdmins: [string];
   submit: (string, number) => void;
 };
 const RatingContext = createContext<RatingContextType>({});
@@ -26,42 +32,15 @@ export function useRating() {
 }
 
 export default function RatingProvider({ children }: { children: React.ReactNode }) {
-  const hgraph = new HgraphClient();
-  const { signer } = useHashConnect();
-  const [state, setState] = useState({});
-  const handleData = useRef(null);
+  const { signer, accountId } = useHashConnect();
+  const [ratingState, setRatingState] = useState({});
   const { openSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
 
-  const handleNewData = (topic_message) => {
-    openSnackbar('new data from hgraph');
-    const test = {};
-
-    topic_message.forEach(({ message, payer_account_id }) => {
-      const { id, rating } = JSON.parse(Buffer.from(message.substring(2), 'hex').toString());
-      if (!test[id]) {
-        test[id] = {
-          total: 1,
-          average: rating,
-          ratings: {
-            ['0.0.' + payer_account_id]: rating,
-          },
-        };
-      } else {
-        // overwrite rating if already exists to take into account most recent rating by admin
-        test[id].ratings['0.0.' + payer_account_id] = rating;
-        // calculate total
-        test[id].total = Object.keys(test[id].ratings).length;
-        // calculate average
-        test[id].average =
-          Object.values(test[id].ratings).reduce((a, b) => a + b) / test[id].total;
-      }
-    });
-
-    setState(test);
-  };
-
-  handleData.current = handleNewData;
-
+  /*
+   * Submit a vote to Hedera
+   */
   async function submit(id: string, rating: number) {
     const payload: Vote = { id, rating }; // id is submissionId
 
@@ -71,7 +50,7 @@ export default function RatingProvider({ children }: { children: React.ReactNode
       .freezeWithSigner(signer);
 
     const response = await topicMessageTransaction.executeWithSigner(signer);
-    console.log(response);
+
     openSnackbar(
       response?.transactionId
         ? `Success! Your vote has been submitted.`
@@ -80,9 +59,10 @@ export default function RatingProvider({ children }: { children: React.ReactNode
     );
   }
 
-  // https://stackoverflow.com/questions/59442329/graphql-subscriptions-inside-a-useeffect-hook-doesnt-access-latest-state
   useEffect(() => {
-    if (hgraph) {
+    if (pathname === '/admin') setLoading(false);
+    if (accountId && votingAdmins.includes(accountId)) {
+      const hgraph = new HgraphClient();
       // TODO: this closes the subscription after 1 message is received
       const unsubscribe = hgraph.subscribe(
         {
@@ -94,7 +74,33 @@ export default function RatingProvider({ children }: { children: React.ReactNode
         {
           //@ts-ignore
           next: ({ data: { topic_message } }) => {
-            handleData.current(topic_message);
+            const newRatingState = {};
+            topic_message.forEach(({ message, payer_account_id }) => {
+              const { id, rating } = JSON.parse(
+                Buffer.from(message.substring(2), 'hex').toString()
+              );
+              if (!newRatingState[id]) {
+                newRatingState[id] = {
+                  total: 1,
+                  average: rating,
+                  ratings: {
+                    ['0.0.' + payer_account_id]: rating,
+                  },
+                };
+              } else {
+                // overwrite rating if already exists to take into account most recent rating by admin
+                newRatingState[id].ratings['0.0.' + payer_account_id] = rating;
+                // calculate total
+                newRatingState[id].total = Object.keys(newRatingState[id].ratings).length;
+                // calculate average
+                newRatingState[id].average =
+                  Object.values(newRatingState[id].ratings).reduce((a, b) => a + b) /
+                  newRatingState[id].total;
+              }
+            });
+
+            setRatingState(newRatingState);
+            setLoading(false);
           },
           error: (error) => {
             console.log(error);
@@ -106,7 +112,13 @@ export default function RatingProvider({ children }: { children: React.ReactNode
       );
       return unsubscribe;
     }
-  }, []);
+  }, [accountId, pathname]);
 
-  return <RatingContext.Provider value={{ state, submit }}>{children}</RatingContext.Provider>;
+  if (loading) return <CircularProgress />;
+
+  return (
+    <RatingContext.Provider value={{ ratingState, votingAdmins, superAdmins, submit }}>
+      {children}
+    </RatingContext.Provider>
+  );
 }

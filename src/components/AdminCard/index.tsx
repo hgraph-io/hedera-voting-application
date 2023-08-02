@@ -9,8 +9,8 @@ type Submission = Database['public']['Tables']['submission']['Row'];
 
 export default function AdminCard({ id, name, moderator }: Submission) {
   const { accountId } = useHashConnect();
-  const { state } = useRating();
-  const submissionRatings = state?.[id];
+  const { ratingState } = useRating();
+  const submissionRatings = ratingState?.[id];
   const currentAdminRating = accountId && submissionRatings?.ratings?.[accountId];
 
   return (

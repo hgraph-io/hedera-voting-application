@@ -13,14 +13,14 @@ if (!network || !topicId) throw new Error('Missing network or topic id env vars'
 
 export default function VoteCard() {
   const { id } = useParams();
-  const { state, submit } = useRating();
+  const { ratingState, submit } = useRating();
   const { accountId } = useHashConnect();
   const [rating, setRating] = useState(0);
 
   // Loading
-  if (!state || !accountId) return <CircularProgress />;
+  if (!ratingState || !accountId) return <CircularProgress />;
 
-  const recordedRating = state[id]?.ratings?.[accountId];
+  const recordedRating = ratingState[id]?.ratings?.[accountId];
 
   return (
     <div className={styles.cardContainer}>

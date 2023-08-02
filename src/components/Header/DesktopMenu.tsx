@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 //https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs
 export default function DesktopMenu({ session }: { session: Session | null }) {
   const pathname = usePathname();
-  const { accountId } = useHashConnect();
+  const { accountId, client } = useHashConnect();
 
   return (
     <div className={styles.links}>
@@ -35,8 +35,8 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
             variant="contained"
             color="primary"
             fullWidth
-            // @ts-ignore
-            onClick={() => hc.client.disconnect(hc.client.hcData.topic)}
+            //@ts-ignore
+            onClick={() => client?.disconnect()}
           >
             Disconnect wallet {accountId}
           </Button>
