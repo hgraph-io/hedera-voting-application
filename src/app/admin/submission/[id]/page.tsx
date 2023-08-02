@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 
-import { Typography, BackButton, Container, Grid, Chip, Link, VoteCard } from '@/components';
+import { Typography, BackButton, Container, Grid, Chip, Link, VoteCard, SuperAdminCard } from '@/components';
 import type { Database } from '@/types';
 import CurrentVotes from './CurrentVotes';
 import TotalVotes from './TotalVotes';
@@ -81,7 +81,19 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
                 ))}
               </div>
             </Grid>
-
+            <Grid item xs={12}>
+            {true && 
+              <>
+                <Typography variant="h4" component="h3" gutterBottom>
+                    Super Admin Approval
+                </Typography>
+                <div>
+                  <SuperAdminCard {...submission} />
+                </div>
+              </>
+            }
+            </Grid>
+           
             <Grid item xs={12}>
               <Typography variant="h4">Your Vote</Typography>
               <VoteCard />
