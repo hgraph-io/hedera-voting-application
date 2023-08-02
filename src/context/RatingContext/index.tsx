@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { TopicMessageSubmitTransaction } from '@hashgraph/sdk';
 import HgraphClient from '@hgraph.io/sdk';
 import { useHashConnect, useSnackbar } from '@/context';
-import { CircularProgress } from '@/components';
+import { Container, CircularProgress } from '@/components';
 import TopicMessage from './TopicMessage.gql';
 import { SnackbarMessageSeverity } from '@/types';
 import type { Vote } from '@/types';
@@ -114,7 +114,19 @@ export default function RatingProvider({ children }: { children: React.ReactNode
     }
   }, [accountId, pathname]);
 
-  if (loading) return <CircularProgress />;
+  if (loading)
+    return (
+      <Container
+        sx={{
+          display: 'flex',
+          height: 'calc(100vh - 64px)', // quick estimate of appbar heigh
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
 
   return (
     <RatingContext.Provider value={{ ratingState, votingAdmins, superAdmins, submit }}>
