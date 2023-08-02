@@ -13,12 +13,12 @@ export default function TotalVotes() {
     <>
       <div className={styles.titleRow}>
         <Typography variant="h4">Total Votes</Typography>{' '}
-        <span>({ratings?.total || 0} votes)</span>
+        <span>{ratings?.total ? '('+ratings?.total + ' votes)' : ''}</span>
       </div>
       <Rating
         className={styles.ratingContainer}
-        average={ratings?.average || 0}
-        value={ratings?.average || 0}
+        average={ratings?.average || ''}
+        value={ratings?.average || ''}
         readOnly={true}
       />
     </>
