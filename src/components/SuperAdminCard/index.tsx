@@ -34,10 +34,10 @@ export default function SuperAdminCard(submission: Submission) {
   }
 
   return (
-    <Grid container spacing={3} className={`${styles.cardContainer}`}>
+    <Grid container spacing={3} className={styles.cardContainer}>
       <Grid item xs={12}>
-        Current Application Status: <div className={`${styles.statusLabel}`}>{currentStats}</div>
-        <div className={`${styles.card}`}>
+        Current Application Status: <div className={styles.statusLabel}>{currentStats}</div>
+        <div className={styles.card}>
           <div className={styles.left}>
             <Button className={styles.cardButton} onClick={() => updateApplicationStatus(submission.id, 'approved')} variant="outlined">
               Approve
