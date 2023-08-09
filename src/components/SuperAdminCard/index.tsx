@@ -19,7 +19,7 @@ export default function SuperAdminCard(submission: Submission) {
   console.log(submission);
   // TODO: Move this function to be secure usage
   // API route or server side rendering
-  const updateApplicationStatus = async (id, newStatus) => {
+  const updateApplicationStatus = async (id: string, newStatus: string) => {
     const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
 
     const { data, error } = await supabase

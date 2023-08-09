@@ -2,6 +2,7 @@
 
 import { Button, Container, Typography } from '@/components';
 import { useHashConnect, useSnackbar } from '@/context';
+import { SnackbarMessageSeverity } from '@/types';
 import styles from './styles.module.scss';
 
 export default function AdminLoginPage() {
@@ -24,7 +25,14 @@ export default function AdminLoginPage() {
             variant="outlined"
             color="primary"
             fullWidth
-            onClick={() => hc?.client?.connectToLocalWallet()}
+            onClick={() => {
+              if (hc?.initData?.pairingString) hc?.client?.connectToLocalWallet();
+              else
+                openSnackbar(
+                  'Hashpack is not initialized, please try reloading the current page.',
+                  SnackbarMessageSeverity.Error
+                );
+            }}
           >
             Connect to Hashpack
           </Button>
@@ -33,8 +41,14 @@ export default function AdminLoginPage() {
             color="primary"
             fullWidth
             onClick={() => {
-              navigator.clipboard.writeText(hc.initData.pairingString);
-              openSnackbar('Pairing String Copied', 'success');
+              if (hc?.initData?.pairingString) {
+                navigator.clipboard.writeText(hc.initData.pairingString);
+                openSnackbar('Pairing String Copied', SnackbarMessageSeverity.Success);
+              } else
+                openSnackbar(
+                  'Hashpack is not initialized, please try reloading the current page.',
+                  SnackbarMessageSeverity.Error
+                );
             }}
           >
             Copy Pairing String
