@@ -83,6 +83,8 @@
   border-radius: 10px 0 0 10px;
   left: 0;
 
+  background: $grey-1;
+
   @media (max-width: 900px) {
     height: 10px;
     width: 100%;
@@ -144,8 +146,8 @@
 .ratingLabel,
 .buttonLabel {
   color: #8c8c8c;
-  font-size: 12px;
-  padding-bottom: 5px;
+  font-size: 11px;
+  padding-bottom: 15px;
 }
 
 .buttonLabel {
