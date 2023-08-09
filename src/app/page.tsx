@@ -8,7 +8,7 @@ export default function HomePage() {
       <Container>
         <div className={styles.homePageHero}>
           <Typography variant="h1" align="left" color="contrastText">
-            Call For Papers
+            Call For Panelists
           </Typography>
           <Typography
             variant="h5"
@@ -16,11 +16,11 @@ export default function HomePage() {
             color="contrastText"
             className={styles.homePageDescription}
           >
-            Submit your application to the upcoming Hedera conference
+            Apply to become a panelist or moderator
           </Typography>
           <Link href="/login">
             <Button variant="gradient" className={styles.heroButton}>
-              Submit an Application
+              Get started
             </Button>
           </Link>
         </div>
