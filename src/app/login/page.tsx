@@ -9,7 +9,9 @@ import styles from './styles.module.scss';
 export default function SupabaseAuthUI() {
   const supabase = createClientComponentClient();
   const searchParams = useSearchParams();
-  const view = VIEWS[searchParams.get('v')?.toUpperCase() || 'SIGN_IN'] || VIEWS.SIGN_IN;
+  const view = VIEWS[searchParams.get('v')?.toUpperCase() || VIEWS.SIGN_IN] || VIEWS.SIGN_IN;
+  console.log(view);
+  console.log(VIEWS);
 
   return (
     <Container className={styles.loginPageContainer}>

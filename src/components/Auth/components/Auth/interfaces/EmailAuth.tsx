@@ -57,6 +57,8 @@ export function EmailAuth({
     setLoading(false);
   };
 
+  const inOrUp = authView === 'sign_in' ? 'in' : 'up';
+
   return (
     <form
       id={authView === 'sign_in' ? `auth-sign-in` : `auth-sign-up`}
@@ -100,7 +102,7 @@ export function EmailAuth({
         </Container>
 
         <Button type="submit" color="primary" loading={loading} appearance={appearance}>
-          {loading ? 'Signing in...' : 'Sign in'}
+          {loading ? `Signing ${inOrUp}...` : `Sign ${inOrUp}`}
         </Button>
 
         <Container direction="vertical" gap="small" appearance={appearance}>

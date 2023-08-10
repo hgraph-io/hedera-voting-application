@@ -79,7 +79,7 @@ function Auth({
     case VIEWS.SIGN_IN:
       return (
         <Container>
-          <EmailAuth {...emailProp} authView={'sign_in'} />
+          <EmailAuth {...emailProp} authView={authView || VIEWS.SIGN_UP} />
         </Container>
       );
 
