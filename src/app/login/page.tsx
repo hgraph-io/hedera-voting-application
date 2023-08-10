@@ -1,10 +1,9 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Auth } from '@supabase/auth-ui-react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { ThemeSupa, VIEWS } from '@supabase/auth-ui-shared';
-import { Container } from '@/components';
+import { Container, Auth } from '@/components';
 import styles from './styles.module.scss';
 
 export default function SupabaseAuthUI() {
@@ -52,7 +51,6 @@ export default function SupabaseAuthUI() {
         // theme="dark"
         providers={[]}
         view={view}
-        redirectTo="http://localhost:3000/dashboard"
       />
     </Container>
   );
