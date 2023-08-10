@@ -7,6 +7,7 @@ export { default as StarIcon } from '@mui/icons-material/Star';
 export { default as MenuIcon } from '@mui/icons-material/Menu';
 export { default as CloseIcon } from '@mui/icons-material/Close';
 
+export { default as Auth } from './Auth';
 export { default as Header } from './Header';
 export { default as BackButton } from './BackButton';
 export { default as Card } from './Card';

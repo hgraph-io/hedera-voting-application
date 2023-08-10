@@ -10,7 +10,8 @@ import { useState } from 'react';
 type Submission = Database['public']['Tables']['submission']['Row'];
 
 const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+// !TODO:!!!!!
+const SUPABASE_SERVICE_KEY = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_KEY;
 
 export default function SuperAdminCard(submission: Submission) {
   const { accountId } = useHashConnect();
