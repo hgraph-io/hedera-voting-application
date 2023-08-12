@@ -7,14 +7,14 @@ const { NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_KEY, NEXT_PUBLIC_HEDERA_SUPER
   process.env;
 
 export default async function submit({
-  superAdminAccountId,
-  id,
-  status,
+  signature,
+  message,
 }: {
-  superAdminAccountId: string;
-  id: string;
-  status: string;
+  signature: string;
+  message: string;
 }) {
+  const;
+  return { signature };
   //TODO: verify by signed message
   if (!NEXT_PUBLIC_HEDERA_SUPER_ADMINS!.includes(superAdminAccountId))
     return { error: 'not authorized' };

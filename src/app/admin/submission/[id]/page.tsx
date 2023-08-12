@@ -97,9 +97,13 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
             <Grid item xs={12}>
               <CurrentVotes />
             </Grid>
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <Grid item xs={12}>
+              <SuperAdminCard {...submission} />
+            </Grid>
           </Grid>
-          <Divider />
-          <SuperAdminCard {...submission} />
         </Container>
       </Grid>
     </Grid>
