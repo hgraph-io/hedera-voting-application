@@ -19,11 +19,9 @@ export default async function submit(data: FormData) {
     links: String(data.get('links')).split(','),
     topics: data.getAll('topics') as string[],
     moderator: Boolean(data.get('moderator')),
+    panelist: Boolean(data.get('panelist')),
   };
-  console.log(fields);
   const result = await supabase.from('submission').upsert(fields);
-  console.log(result);
   if (result.status === 201) redirect('/dashboard');
-  //todo: handle error
   else throw new Error(result?.error?.message || 'Unknown error');
 }

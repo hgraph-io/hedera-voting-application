@@ -1,17 +1,22 @@
 import { notFound } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
-
-import { Typography, BackButton, Container, Grid, Chip, Link, VoteCard, SuperAdminCard } from '@/components';
+import {
+  Typography,
+  BackButton,
+  Container,
+  Grid,
+  Chip,
+  Link,
+  VoteCard,
+  SuperAdminCard,
+  Divider,
+} from '@/components';
 import type { Database } from '@/types';
 import CurrentVotes from './CurrentVotes';
 import TotalVotes from './TotalVotes';
 import styles from './styles.module.scss';
 
-const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
-
-if (!NEXT_PUBLIC_SUPABASE_URL || !SUPABASE_SERVICE_KEY)
-  throw new Error('Missing Supabase URL or Service Key');
+const { NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_KEY } = process.env;
 
 export default async function SubmissionPage({ params: { id } }: { params: { id: string } }) {
   const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
@@ -81,19 +86,7 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
                 ))}
               </div>
             </Grid>
-            <Grid item xs={12}>
-            {true && 
-              <>
-                <Typography variant="h4" component="h3" gutterBottom>
-                    Super Admin Approval
-                </Typography>
-                <div>
-                  <SuperAdminCard {...submission} />
-                </div>
-              </>
-            }
-            </Grid>
-           
+
             <Grid item xs={12}>
               <Typography variant="h4">Your Vote</Typography>
               <VoteCard />
@@ -105,6 +98,8 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
               <CurrentVotes />
             </Grid>
           </Grid>
+          <Divider />
+          <SuperAdminCard {...submission} />
         </Container>
       </Grid>
     </Grid>
