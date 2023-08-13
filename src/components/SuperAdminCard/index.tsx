@@ -5,7 +5,6 @@ import { Typography, Button, Grid } from '@/components';
 import styles from './styles.module.scss';
 import type { Database } from '@/types';
 import setSubmissionStatus from './setSubmissionStatus';
-import nacl from 'tweetnacl';
 
 type Submission = Database['public']['Tables']['submission']['Row'];
 
@@ -16,23 +15,25 @@ const NEXT_PUBLIC_HEDERA_SUPER_ADMINS = JSON.parse(
 export default function SuperAdminCard(submission: Submission) {
   const { accountId, client, initData } = useHashConnect();
 
-  if (
-    !accountId ||
-    !client ||
-    !initData ||
-    !NEXT_PUBLIC_HEDERA_SUPER_ADMINS?.includes(accountId)
-  )
-    return null;
+  // if (
+  //   !accountId ||
+  //   !client ||
+  //   !initData ||
+  //   !NEXT_PUBLIC_HEDERA_SUPER_ADMINS?.includes(accountId)
+  // )
+  //   return null;
 
   async function updateStatus(status: string) {
-    const message = JSON.stringify({ id: submission.id, accountId, status });
-		// sign message
-		//const signedMessageResponse = await client!.sign(initData!.topic, accountId!, message);
+    const message = btoa(JSON.stringify({ id: submission.id, accountId, status }));
+    // sign message
+    //const signedMessageResponse = await client!.sign(initData!.topic, accountId!, message);
 
+    console.log(message);
     const response = await setSubmissionStatus({
-      signature: null,
+      // signature: null,
       message,
     });
+    console.log(response);
   }
 
   return (
@@ -69,7 +70,7 @@ export default function SuperAdminCard(submission: Submission) {
               <div>
                 <Button
                   className={styles.cardButton}
-                  onClick={() => updateStatus('Pending')}
+                  onClick={() => updateStatus('Not selected')}
                   variant={submission.status === 'Not selected' ? 'contained' : 'outlined'}
                 >
                   Not Selected
