@@ -5,6 +5,7 @@ import { Typography, Button, Grid } from '@/components';
 import styles from './styles.module.scss';
 import type { Database } from '@/types';
 import setSubmissionStatus from './setSubmissionStatus';
+import nacl from 'tweetnacl';
 
 type Submission = Database['public']['Tables']['submission']['Row'];
 
@@ -15,33 +16,23 @@ const NEXT_PUBLIC_HEDERA_SUPER_ADMINS = JSON.parse(
 export default function SuperAdminCard(submission: Submission) {
   const { accountId, client, initData } = useHashConnect();
 
-  console.log(NEXT_PUBLIC_HEDERA_SUPER_ADMINS);
-  console.log('xxxxxxxxxxxx');
-
-  // if (
-  //   !accountId ||
-  //   !client ||
-  //   !initData ||
-  //   !NEXT_PUBLIC_HEDERA_SUPER_ADMINS?.includes(accountId)
-  // )
-  //   return null;
+  if (
+    !accountId ||
+    !client ||
+    !initData ||
+    !NEXT_PUBLIC_HEDERA_SUPER_ADMINS?.includes(accountId)
+  )
+    return null;
 
   async function updateStatus(status: string) {
-    const signedMessageResponse = await client!.sign(
-      initData!.topic,
-      accountId!,
-      JSON.stringify({ id: submission.id, accountId, status })
-    );
-
-    console.log(signedMessageResponse);
-
+    const message = JSON.stringify({ id: submission.id, accountId, status });
+		// sign message
+		//const signedMessageResponse = await client!.sign(initData!.topic, accountId!, message);
 
     const response = await setSubmissionStatus({
-      signature: Buffer.from(signedMessageResponse.userSignature!).toString('hex'),
-      message: signedMessageResponse.signedPayload as string,
+      signature: null,
+      message,
     });
-
-    console.log(response);
   }
 
   return (

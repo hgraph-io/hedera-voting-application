@@ -1,5 +1,7 @@
 'use server';
 import { createClient } from '@supabase/supabase-js';
+import nacl from 'tweetnacl';
+import { PublicKey } from '@hashgraph/sdk';
 import HgraphClient, { stripShardRealm } from '@hgraph.io/sdk';
 import AccountPublicKey from './AccountPublicKey.gql';
 import type { Database } from '@/types';
@@ -15,34 +17,33 @@ export default async function setSubmissionStatus({
   signature: string;
   message: string;
 }) {
-  let response = { error: 'not authorized' };
-
-  const { id, status, accountId } = JSON.parse(message);
-  console.log(id, status, accountId);
-
   try {
-    // check if the user is a super admin
+    const { id, status, accountId } = JSON.parse(atob(message));
     if (!NEXT_PUBLIC_HEDERA_SUPER_ADMINS!.includes(accountId))
       throw new Error('not authorized');
-    // get public key for the account
-    console.log('xxxxxxxxxxxx');
-    console.log(stripShardRealm(accountId));
-    const hgraph = new HgraphClient();
-    // TODO: unauthenticated
-    console.log(AccountPublicKey);
-    const hgraphResponse = await hgraph.query({
-      query: AccountPublicKey,
-      variables: { accountId: stripShardRealm(accountId) },
-    });
+		// if signature doesn't match public key of account id
 
-    console.log('xxxxxxxxxxxx');
-    console.log(hgraphResponse);
+    // const hgraph = new HgraphClient();
+    // const hgraphResponse = await hgraph.query({
+    //   query: AccountPublicKey,
+    //   variables: { accountId: stripShardRealm(accountId) },
+    // });
 
-    throw new Error('testing');
+    // const hi = nacl.sign.open(sig, pub);
+
+    //     const blah = nacl.sign.detached.verify(
+    //       Buffer.from(message, 'hex'),
+    //       Buffer.from(signature, 'hex'),
+    //       Buffer.from(publicKey, 'hex')
+    //     );
+
     const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
     const { data, error } = await supabase.from('submission').update({ status }).eq('id', id);
-    return response;
-  } catch (e) {
-    console.error(e);
+
+    if (error) throw new Error(error.message);
+    else return data;
+  } catch (error) {
+    console.error(error);
+    return { error };
   }
 }
