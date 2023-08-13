@@ -18,13 +18,13 @@ export default function SuperAdminCard(submission: Submission) {
   console.log(NEXT_PUBLIC_HEDERA_SUPER_ADMINS);
   console.log('xxxxxxxxxxxx');
 
-  if (
-    !accountId ||
-    !client ||
-    !initData ||
-    !NEXT_PUBLIC_HEDERA_SUPER_ADMINS?.includes(accountId)
-  )
-    return null;
+  // if (
+  //   !accountId ||
+  //   !client ||
+  //   !initData ||
+  //   !NEXT_PUBLIC_HEDERA_SUPER_ADMINS?.includes(accountId)
+  // )
+  //   return null;
 
   async function updateStatus(status: string) {
     const signedMessageResponse = await client!.sign(
