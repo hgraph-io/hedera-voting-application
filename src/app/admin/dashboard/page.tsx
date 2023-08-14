@@ -21,14 +21,17 @@ export default async function AdminDashboardPage() {
           Admin Dashboard
         </Typography>
         <Typography component="p" gutterBottom>
-          Welcome to the Admin Panel of the Hedera Voting Application!
+          Welcome to the Admin Panel of the Hedera conference Call for Panelists application!
         </Typography>
         <Typography component="p" gutterBottom>
-          This is your command center for managing all aspects of the voting process. Monitor
-          voter registrations, oversee ballot details, and analyze real-time voting data.
+          From here, you can view all submissions and rate them on a scale of 1-5 stars based on
+          how well they fit the theme of the conference. All ratings will be stored on the
+          Hedera Consensus Service to be tallied and displayed on the website. A selection
+          committee will consider all ratings and information to select the final panelists and
+          moderators.
         </Typography>
         <Button component="a" variant="contained" href="/admin/results">
-          View All
+          View submission results
         </Button>
       </div>
 
@@ -43,8 +46,10 @@ export default async function AdminDashboardPage() {
       <div>
         {submissions?.map(
           (
-            submission: any, // TODO:
-          ) => <AdminCard key={submission.id} {...submission} />,
+            submission: any // TODO:
+          ) => (
+            <AdminCard key={submission.id} {...submission} />
+          )
         )}
       </div>
     </Container>
