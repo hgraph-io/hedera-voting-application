@@ -3,7 +3,7 @@ import { Typography, StarBorderRoundedIcon } from '@/components'
 import styles from './styles.module.scss'
 
 export default function StarRating(props: {
-  className: string
+  className?: string
   onChange?: (event: React.ChangeEvent<{}>, value: number | null) => void
   readOnly?: boolean
   average?: number

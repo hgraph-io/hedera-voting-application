@@ -1,3 +1,6 @@
+.root {
+  z-index: 1;
+}
 @mixin flex($direction: row, $justify: flex-start, $align: flex-start, $wrap: nowrap) {
   display: flex;
   flex-direction: $direction;
