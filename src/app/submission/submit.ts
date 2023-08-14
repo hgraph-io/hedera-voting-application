@@ -16,6 +16,7 @@ export default async function submit(data: FormData) {
     user_id: user!.id,
     name: String(data.get('name')),
     organization: String(data.get('organization')),
+    profile: String(data.get('profile')),
     links: String(data.get('links')).split(','),
     topics: data.getAll('topics') as string[],
     moderator: Boolean(data.get('moderator')),
