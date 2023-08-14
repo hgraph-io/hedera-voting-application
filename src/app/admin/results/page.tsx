@@ -29,9 +29,7 @@ export default async function AdminResultsPage() {
           </Typography>
           {submissions
             ?.filter((submission) => submission.status === 'Approved')
-            .map((submission: any, index: number) => (
-              <AdminCard key={index} {...submission} />
-            ))}
+            .map((submission: any, index: number) => <AdminCard key={index} {...submission} />)}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4" mb={2}>
@@ -39,9 +37,7 @@ export default async function AdminResultsPage() {
           </Typography>
           {submissions
             ?.filter((submission) => submission.status === 'Pending')
-            .map((submission: any, index: number) => (
-              <AdminCard key={index} {...submission} />
-            ))}
+            .map((submission: any, index: number) => <AdminCard key={index} {...submission} />)}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4" mb={2}>
@@ -49,9 +45,7 @@ export default async function AdminResultsPage() {
           </Typography>
           {submissions
             ?.filter((submission) => submission.status === 'Not selected')
-            .map((submission: any, index: number) => (
-              <AdminCard key={index} {...submission} />
-            ))}
+            .map((submission: any, index: number) => <AdminCard key={index} {...submission} />)}
         </Grid>
       </Grid>
     </Container>
