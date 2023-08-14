@@ -43,7 +43,7 @@ export interface Database {
           name: string
           organization: string | null
           panelist: boolean
-          profile: string | null
+          profile: string
           status: string
           topics: string[] | null
           user_id: string
@@ -56,7 +56,7 @@ export interface Database {
           name: string
           organization?: string | null
           panelist?: boolean
-          profile?: string | null
+          profile: string
           status?: string
           topics?: string[] | null
           user_id: string
@@ -69,7 +69,7 @@ export interface Database {
           name?: string
           organization?: string | null
           panelist?: boolean
-          profile?: string | null
+          profile?: string
           status?: string
           topics?: string[] | null
           user_id?: string

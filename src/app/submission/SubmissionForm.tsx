@@ -63,6 +63,7 @@ export default function SubmissionForm({ submission }: { submission?: Submission
               defaultValue={profile}
               label="Public Profile (Linkedin, etc)"
               fullWidth
+              required
             />
           </Grid>
 
@@ -98,7 +99,10 @@ export default function SubmissionForm({ submission }: { submission?: Submission
             />
           </Grid>
           <Grid item xs={12}>
-            <FormLabel component="legend">Please list links to previous presentations or articles you’ve done on these topic(s)</FormLabel>
+            <FormLabel component="legend">
+              Please list links to previous presentations or articles you’ve done on these
+              topic(s)
+            </FormLabel>
             <TextField
               name="links"
               label="Links"
