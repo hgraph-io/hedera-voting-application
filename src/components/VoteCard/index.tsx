@@ -20,7 +20,7 @@ export default function VoteCard() {
   // Loading
   if (!ratingState || !accountId) return <CircularProgress />;
 
-  const recordedRating = ratingState[id]?.ratings?.[accountId];
+  const recordedRating = ratingState[id as string]?.ratings?.[accountId];
 
   return (
     <div className={styles.cardContainer}>
