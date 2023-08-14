@@ -8,7 +8,7 @@ export default function HomePage() {
       <Container>
         <div className={styles.homePageHero}>
           <Typography variant="h1" align="left" color="contrastText">
-            Call For Panelists
+            Call For Speakers
           </Typography>
           <Typography
             variant="h5"
