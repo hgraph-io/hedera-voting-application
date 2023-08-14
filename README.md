@@ -21,7 +21,7 @@
 
 https://supabase.com/docs/guides/cli/managing-environments
 
-- `npx supabase gen types typescript --local > src/types/supabase.ts`
+- `npx supabase gen types typescript --linked > src/types/supabase.ts`
 - `https://supabase.com/docs/guides/cli`
 - `npx supabase db remote commit` : commit changes from supabase cloud
 - `npx supabase status`

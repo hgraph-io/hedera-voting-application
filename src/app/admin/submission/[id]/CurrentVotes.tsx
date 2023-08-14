@@ -11,7 +11,6 @@ import {
   TableContainer,
   TableRow,
   Paper,
-  Grid,
 } from '@/components';
 
 import styles from './styles.module.scss';
@@ -19,7 +18,8 @@ import styles from './styles.module.scss';
 export default function CurrentVotes() {
   const { id } = useParams();
   const { ratingState } = useRating();
-  const allRatings = ratingState[id]?.ratings && Object.entries(ratingState[id].ratings);
+  const allRatings =
+    ratingState[id as string]?.ratings && Object.entries(ratingState[id as string].ratings);
 
   return (
     <>

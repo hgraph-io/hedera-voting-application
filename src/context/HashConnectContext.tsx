@@ -36,7 +36,7 @@ type HashConnectContext = {
   // todo:
   provider?: any;
   signer?: any;
-  accountId?: number;
+  accountId?: string;
 };
 
 const HashpackContext = createContext<HashConnectContext>({});
