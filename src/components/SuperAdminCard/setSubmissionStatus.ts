@@ -1,7 +1,6 @@
 'use server';
 import { createClient } from '@supabase/supabase-js';
 import nacl from 'tweetnacl';
-import { PublicKey } from '@hashgraph/sdk';
 import HgraphClient, { stripShardRealm } from '@hgraph.io/sdk';
 import AccountPublicKey from './AccountPublicKey.gql';
 import type { Database } from '@/types';
@@ -11,37 +10,44 @@ const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 const NEXT_PUBLIC_HEDERA_SUPER_ADMINS = process.env.NEXT_PUBLIC_HEDERA_SUPER_ADMINS;
 
 export default async function setSubmissionStatus({
-  // signature,
+  signature,
   message,
 }: {
-  signature?: string;
+  signature: string;
   message: string;
 }) {
   try {
+    // console.log(atob(message));
     const { id, status, accountId } = JSON.parse(atob(message));
     if (!NEXT_PUBLIC_HEDERA_SUPER_ADMINS!.includes(accountId))
-      throw new Error('not authorized');
-    // if signature doesn't match public key of account id
+      throw new Error('Not authorized to set submission status');
 
-    // const hgraph = new HgraphClient();
-    // const hgraphResponse = await hgraph.query({
-    //   query: AccountPublicKey,
-    //   variables: { accountId: stripShardRealm(accountId) },
-    // });
+    //check signature is valid for the message
+    const hgraph = new HgraphClient();
+    const hgraphResponse: any = await hgraph.query({
+      query: AccountPublicKey,
+      variables: { accountId: stripShardRealm(accountId) },
+    });
 
-    // const hi = nacl.sign.open(sig, pub);
+    const publicKey = hgraphResponse?.data?.account?.public_key;
+    //@ts-ignore
+    if (!publicKey) throw new Error('Error retrieving public key for account');
 
-    //     const blah = nacl.sign.detached.verify(
-    //       Buffer.from(message, 'hex'),
-    //       Buffer.from(signature, 'hex'),
-    //       Buffer.from(publicKey, 'hex')
-    //     );
+    if (
+      !nacl.sign.detached.verify(
+        //https://github.com/Hashpack/hashconnect/issues/140 - add quotes because JSON.stringify in Hashpack adds them
+        Buffer.from(`"${message}"`),
+        Uint8Array.from(Buffer.from(signature, 'base64')),
+        Buffer.from(publicKey, 'hex')
+      )
+    )
+      throw new Error('Error verifying signature');
 
     const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
-    const { data, error } = await supabase.from('submission').update({ status }).eq('ids', id);
+    const { error } = await supabase.from('submission').update({ status }).eq('id', id);
 
     if (error) throw error;
-    else return data;
+    else return { success: true };
   } catch (error) {
     //@ts-ignore
     return { error: error?.message || 'Unknown error' };

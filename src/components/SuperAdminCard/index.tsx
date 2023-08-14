@@ -2,9 +2,13 @@
 
 import { useHashConnect } from '@/context';
 import { Typography, Button, Grid } from '@/components';
-import styles from './styles.module.scss';
+import { SnackbarMessageSeverity } from '@/types';
 import type { Database } from '@/types';
+import { useSnackbar } from '@/context';
 import setSubmissionStatus from './setSubmissionStatus';
+import styles from './styles.module.scss';
+
+import nacl from 'tweetnacl';
 
 type Submission = Database['public']['Tables']['submission']['Row'];
 
@@ -14,6 +18,7 @@ const NEXT_PUBLIC_HEDERA_SUPER_ADMINS = JSON.parse(
 
 export default function SuperAdminCard(submission: Submission) {
   const { accountId, client, initData } = useHashConnect();
+  const { openSnackbar } = useSnackbar();
 
   // if (
   //   !accountId ||
@@ -24,16 +29,37 @@ export default function SuperAdminCard(submission: Submission) {
   //   return null;
 
   async function updateStatus(status: string) {
+    // avoid JSON.stringify by hashpack
     const message = btoa(JSON.stringify({ id: submission.id, accountId, status }));
-    // sign message
-    // TODO: handle signature
-    //const signedMessageResponse = await client!.sign(initData!.topic, accountId!, message);
 
-    const response = await setSubmissionStatus({
-      // signature: null,
-      message,
+    // sign message
+    const signedMessageResponse = await client!.sign(initData!.topic, accountId!, message);
+    if (!signedMessageResponse.success) {
+      openSnackbar('There’s been an error signing the request', SnackbarMessageSeverity.Error);
+      return;
+    }
+
+    //const verified = nacl.sign.detached.verify(
+    //  //https://github.com/Hashpack/hashconnect/issues/140
+    //  Buffer.from(`"${signedMessageResponse.signedPayload}"`),
+    //  signedMessageResponse.userSignature as Uint8Array,
+    //  Buffer.from('9d9d8bc9cb905eb7d9fe3414da8bb789802bf30f9d1d989505e1c66e353e10af', 'hex')
+    //);
+
+    //console.log(signedMessageResponse);
+    //console.log(verified);
+
+    const { success, error } = await setSubmissionStatus({
+      signature: Buffer.from(signedMessageResponse.userSignature as Uint8Array).toString(
+        'base64'
+      ),
+      message: signedMessageResponse.signedPayload as string,
     });
-    console.log(response);
+
+    openSnackbar(
+      success ? 'Success!' : error,
+      SnackbarMessageSeverity[success ? 'Success' : 'Error']
+    );
   }
 
   return (
