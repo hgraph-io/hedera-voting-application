@@ -53,10 +53,8 @@ export default async function AdminDashboardPage() {
       <div>
         {submissions?.map(
           (
-            submission: any // TODO:
-          ) => (
-            <AdminCard key={submission.id} {...submission} />
-          )
+            submission: any, // TODO:
+          ) => <AdminCard key={submission.id} {...submission} />,
         )}
       </div>
     </Container>

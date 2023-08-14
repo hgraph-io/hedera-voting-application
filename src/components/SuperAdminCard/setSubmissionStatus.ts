@@ -2,8 +2,9 @@
 import { createClient } from '@supabase/supabase-js'
 import nacl from 'tweetnacl'
 import HgraphClient, { stripShardRealm } from '@hgraph.io/sdk'
-import AccountPublicKey from './AccountPublicKey.gql'
 import type { Database } from '@/types'
+import AccountPublicKey from './AccountPublicKey.gql'
+import { revalidatePath } from 'next/cache'
 
 const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY
@@ -37,7 +38,7 @@ export default async function setSubmissionStatus({
         //https://github.com/Hashpack/hashconnect/issues/140 - add quotes because JSON.stringify in Hashpack adds them
         Buffer.from(`"${message}"`),
         Uint8Array.from(Buffer.from(signature, 'base64')),
-        Buffer.from(publicKey, 'hex'),
+        Buffer.from(publicKey, 'hex')
       )
     )
       throw new Error('Error verifying signature')
@@ -45,6 +46,7 @@ export default async function setSubmissionStatus({
     const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!)
     const { error } = await supabase.from('submission').update({ status }).eq('id', id)
 
+    revalidatePath('/admin/submission/[id]')
     if (error) throw error
     else return { success: true }
   } catch (error) {
