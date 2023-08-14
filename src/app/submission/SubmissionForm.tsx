@@ -21,6 +21,7 @@ export default function SubmissionForm({ submission }: { submission?: Submission
     id,
     name,
     organization,
+    profile,
     links,
     topics: selectedTopics,
     moderator,
@@ -53,6 +54,14 @@ export default function SubmissionForm({ submission }: { submission?: Submission
               name="organization"
               defaultValue={organization}
               label="Organization"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="profile"
+              defaultValue={profile}
+              label="Public Profile (Linkedin, etc)"
               fullWidth
             />
           </Grid>
@@ -89,12 +98,13 @@ export default function SubmissionForm({ submission }: { submission?: Submission
             />
           </Grid>
           <Grid item xs={12}>
+            <FormLabel component="legend">Please list links to previous presentations or articles you’ve done on these topic(s)</FormLabel>
             <TextField
               name="links"
               label="Links"
               fullWidth
               required
-              helperText="Please list links to previous presentations or articles you’ve done on these topic(s)"
+              // helperText="Please list links to previous presentations or articles you’ve done on these topic(s)"
               defaultValue={links}
             />
           </Grid>

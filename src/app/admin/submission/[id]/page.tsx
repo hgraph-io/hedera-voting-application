@@ -27,7 +27,7 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
     .single()
 
   if (!submission) notFound()
-  const { name, organization, links, topics } = submission
+  const { name, organization, profile, links, topics } = submission
 
   return (
     <Container maxWidth="md">
@@ -46,7 +46,14 @@ export default async function SubmissionPage({ params: { id } }: { params: { id:
               <Typography variant="body2">Organization</Typography>
               <Typography variant="h6">{organization}</Typography>
             </Grid>
-
+            <Grid item xs={12}>
+              <Typography variant="body2">Public Profile</Typography>
+              {profile && (
+                <Link href={profile} variant="body2" target="_blank" rel="noopener noreferrer">
+                  {profile}
+                </Link>
+              )}
+            </Grid>
             <Grid item xs={12}>
               <Typography variant="body2">Relevant Topics:</Typography>
               {topics!.map((topic, topicIndex) => (
