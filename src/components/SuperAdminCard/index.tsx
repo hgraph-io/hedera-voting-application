@@ -20,13 +20,13 @@ export default function SuperAdminCard(submission: Submission) {
   const { accountId, client, initData } = useHashConnect();
   const { openSnackbar } = useSnackbar();
 
-  // if (
-  //   !accountId ||
-  //   !client ||
-  //   !initData ||
-  //   !NEXT_PUBLIC_HEDERA_SUPER_ADMINS?.includes(accountId)
-  // )
-  //   return null;
+  if (
+    !accountId ||
+    !client ||
+    !initData ||
+    !NEXT_PUBLIC_HEDERA_SUPER_ADMINS?.includes(accountId)
+  )
+    return null;
 
   async function updateStatus(status: string) {
     // avoid JSON.stringify by hashpack
@@ -38,16 +38,6 @@ export default function SuperAdminCard(submission: Submission) {
       openSnackbar('There’s been an error signing the request', SnackbarMessageSeverity.Error);
       return;
     }
-
-    //const verified = nacl.sign.detached.verify(
-    //  //https://github.com/Hashpack/hashconnect/issues/140
-    //  Buffer.from(`"${signedMessageResponse.signedPayload}"`),
-    //  signedMessageResponse.userSignature as Uint8Array,
-    //  Buffer.from('9d9d8bc9cb905eb7d9fe3414da8bb789802bf30f9d1d989505e1c66e353e10af', 'hex')
-    //);
-
-    //console.log(signedMessageResponse);
-    //console.log(verified);
 
     const { success, error } = await setSubmissionStatus({
       signature: Buffer.from(signedMessageResponse.userSignature as Uint8Array).toString(

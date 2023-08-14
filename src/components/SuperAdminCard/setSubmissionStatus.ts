@@ -17,7 +17,6 @@ export default async function setSubmissionStatus({
   message: string;
 }) {
   try {
-    // console.log(atob(message));
     const { id, status, accountId } = JSON.parse(atob(message));
     if (!NEXT_PUBLIC_HEDERA_SUPER_ADMINS!.includes(accountId))
       throw new Error('Not authorized to set submission status');
