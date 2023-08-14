@@ -12,7 +12,10 @@ if (!NEXT_PUBLIC_SUPABASE_URL || !SUPABASE_SERVICE_KEY)
 export default async function AdminDashboardPage() {
   const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!)
 
-  const { data: submissions } = await supabase.from('submission').select('*')
+  const { data: submissions } = await supabase
+    .from('submission')
+    .select('*')
+    .order('created_at')
 
   return (
     <Container maxWidth="md" className={styles.adminDashboardContainer}>
@@ -21,13 +24,17 @@ export default async function AdminDashboardPage() {
           Admin Dashboard
         </Typography>
         <Typography component="p" gutterBottom>
-          Welcome to the Admin Panel of the Hedera conference Call for Panelists application!
+          Welcome to the Hedera conference{' '}
+          <b>
+            <em>Call for Panelists</em>
+          </b>{' '}
+          admin dashboard!
         </Typography>
         <Typography component="p" gutterBottom>
-          From here, you can view all submissions and rate them on a scale of 1-5 stars based on
-          how well they fit the theme of the conference. All ratings will be stored on the
-          Hedera Consensus Service to be tallied and displayed on the website. A selection
-          committee will consider all ratings and information to select the final panelists and
+          Here you can view all submissions and rate them on a scale of 1-5 stars based on how
+          well they fit the theme of the conference. All ratings will be stored on the Hedera
+          Consensus Service to be tallied and displayed on the website. A selection committee
+          will consider all ratings and information to select the final panelists and
           moderators.
         </Typography>
         <Button component="a" variant="contained" href="/admin/results">
@@ -38,9 +45,9 @@ export default async function AdminDashboardPage() {
       <Typography variant="h4" component="h2" gutterBottom>
         Submissions
       </Typography>
-      <Typography className={styles.descriptionParagraph} component="p" gutterBottom>
+      <Typography component="p" gutterBottom>
         Below you can review, manage and select applications from individuals eager to share
-        their insights at our upcoming conference.
+        their insights at our upcoming conference. Results are ordered by submission date.
       </Typography>
 
       <div>

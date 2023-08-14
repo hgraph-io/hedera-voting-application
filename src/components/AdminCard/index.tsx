@@ -7,7 +7,7 @@ import styles from './styles.module.scss'
 
 type Submission = Database['public']['Tables']['submission']['Row']
 
-export default function AdminCard({ id, name, moderator }: Submission) {
+export default function AdminCard({ id, name, moderator, status }: Submission) {
   const { accountId } = useHashConnect()
   const { ratingState } = useRating()
   const submissionRatings = ratingState?.[id]
@@ -17,7 +17,9 @@ export default function AdminCard({ id, name, moderator }: Submission) {
     <Grid
       container
       spacing={3}
-      className={`${styles.cardContainer} ${currentAdminRating ? styles.view : styles.vote}`}
+      className={`${styles.cardContainer} ${currentAdminRating ? styles.view : styles.vote} ${
+        styles[status.toLowerCase()]
+      }`}
     >
       <Grid item xs={9}>
         <Link href={`/admin/submission/${id}`}>
@@ -45,6 +47,7 @@ export default function AdminCard({ id, name, moderator }: Submission) {
                 />
               </div>
             </div>
+            <div className={styles.statusLabel}>{status}</div>
           </div>
         </Link>
       </Grid>
