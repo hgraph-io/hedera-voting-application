@@ -63,7 +63,6 @@ export default function RatingProvider({ children }: { children: React.ReactNode
     if (pathname === '/admin') setLoading(false);
     if (accountId && votingAdmins.includes(accountId)) {
       const hgraph = new HgraphClient();
-      console.log(hgraph);
       // TODO: this closes the subscription after 1 message is received
       const unsubscribe = hgraph.subscribe(
         {
