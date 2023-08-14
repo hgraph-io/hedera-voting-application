@@ -1,5 +1,5 @@
-import SubmissionForm from './SubmissionForm';
+import SubmissionForm from './SubmissionForm'
 
 export default function SubmissionPage() {
-  return <SubmissionForm />;
+  return <SubmissionForm />
 }

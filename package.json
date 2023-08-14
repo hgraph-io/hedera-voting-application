@@ -1,13 +1,13 @@
 {
   "name": "hedera-voting-application",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier -w src"
+    "format": "npx prettier -w src"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

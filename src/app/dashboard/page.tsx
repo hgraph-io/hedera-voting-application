@@ -1,19 +1,19 @@
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Card, Typography, Container, Button } from '@/components';
-import type { Database } from '@/types';
-import styles from './styles.module.scss';
+import { cookies } from 'next/headers'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Card, Typography, Container, Button } from '@/components'
+import type { Database } from '@/types'
+import styles from './styles.module.scss'
 
 export default async function DashboardPage() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerComponentClient<Database>({ cookies })
   const {
     data: { session },
-  } = await supabase.auth.getSession();
+  } = await supabase.auth.getSession()
 
   const { data: submissions } = await supabase
     .from('submission')
     .select('*')
-    .eq('user_id', session!.user.id);
+    .eq('user_id', session!.user.id)
 
   return (
     <Container maxWidth="lg" className={styles.dashboardContainer}>
@@ -39,10 +39,10 @@ export default async function DashboardPage() {
           {/*// @ts-ignore */}
           {submissions?.map((submission, index) => {
             /*// @ts-ignore */
-            return <Card key={index} {...submission} />;
+            return <Card key={index} {...submission} />
           })}
         </div>
       </div>
     </Container>
-  );
+  )
 }

@@ -54,15 +54,11 @@ const Input: React.FC<InputProps> = ({ children, appearance, ...props }) => {
     inputDefaultStyles({
       type: props.type === 'password' ? 'password' : 'default',
     }),
-    appearance
+    appearance,
   )
 
   return (
-    <input
-      {...props}
-      style={appearance?.style?.input}
-      className={classNames.join(' ')}
-    >
+    <input {...props} style={appearance?.style?.input} className={classNames.join(' ')}>
       {children}
     </input>
   )

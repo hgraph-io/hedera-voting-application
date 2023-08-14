@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import { Container, Typography, Button } from '@/components';
-import styles from './styles.module.scss';
+import Link from 'next/link'
+import { Container, Typography, Button } from '@/components'
+import styles from './styles.module.scss'
 
 export default function HomePage() {
   return (
@@ -26,5 +26,5 @@ export default function HomePage() {
         </div>
       </Container>
     </div>
-  );
+  )
 }

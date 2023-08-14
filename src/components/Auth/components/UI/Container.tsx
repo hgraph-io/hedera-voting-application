@@ -30,34 +30,25 @@ const containerDefaultStyles = css({
   },
 })
 
-export interface ContainerProps
-  extends React.HtmlHTMLAttributes<HTMLDivElement> {
+export interface ContainerProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   direction?: 'horizontal' | 'vertical'
   gap?: 'small' | 'medium' | 'large'
   appearance?: Appearance
 }
 
-const Container: React.FC<ContainerProps> = ({
-  children,
-  appearance,
-  ...props
-}) => {
+const Container: React.FC<ContainerProps> = ({ children, appearance, ...props }) => {
   const classNames = generateClassNames(
     'container',
     containerDefaultStyles({
       direction: props.direction,
       gap: props.gap,
     }),
-    appearance
+    appearance,
   )
 
   return (
-    <div
-      {...props}
-      style={appearance?.style?.container}
-      className={classNames.join(' ')}
-    >
+    <div {...props} style={appearance?.style?.container} className={classNames.join(' ')}>
       {children}
     </div>
   )

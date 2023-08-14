@@ -14,23 +14,11 @@ interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
   appearance?: Appearance
 }
 
-const Divider: React.FC<DividerProps> = ({
-  children,
-  appearance,
-  ...props
-}) => {
-  const classNames = generateClassNames(
-    'divider',
-    dividerDefaultStyles(),
-    appearance
-  )
+const Divider: React.FC<DividerProps> = ({ children, appearance, ...props }) => {
+  const classNames = generateClassNames('divider', dividerDefaultStyles(), appearance)
 
   return (
-    <div
-      {...props}
-      style={appearance?.style?.divider}
-      className={classNames.join(' ')}
-    ></div>
+    <div {...props} style={appearance?.style?.divider} className={classNames.join(' ')}></div>
   )
 }
 

@@ -64,7 +64,7 @@ const Button: React.FC<ButtonProps> = ({
   const classNames = generateClassNames(
     'button',
     buttonDefaultStyles({ color: color }),
-    appearance
+    appearance,
   )
 
   return (

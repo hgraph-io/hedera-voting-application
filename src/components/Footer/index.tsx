@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import Image from 'next/image';
-import { Container, Grid, Typography, Link } from '@mui/material';
-import styles from './styles.module.scss';
+import Image from 'next/image'
+import { Container, Grid, Typography, Link } from '@mui/material'
+import styles from './styles.module.scss'
 
 export default function Footer() {
-  const isMobile = false;
+  const isMobile = false
 
   return (
     <footer style={{ flexShrink: 0 }}>
@@ -41,5 +41,5 @@ export default function Footer() {
         </Container>
       </div>
     </footer>
-  );
+  )
 }

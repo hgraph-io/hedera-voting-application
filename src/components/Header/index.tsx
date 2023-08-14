@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import { AppBar, Toolbar, Hidden } from '@mui/material';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Session } from '@supabase/auth-helpers-nextjs';
-import MobileMenu from './MobileMenu';
-import DesktopMenu from './DesktopMenu';
-import styles from './styles.module.scss';
+import { AppBar, Toolbar, Hidden } from '@mui/material'
+import Link from 'next/link'
+import Image from 'next/image'
+import { Session } from '@supabase/auth-helpers-nextjs'
+import MobileMenu from './MobileMenu'
+import DesktopMenu from './DesktopMenu'
+import styles from './styles.module.scss'
 
 export default function Header({ session }: { session: Session | null }) {
   return (
@@ -41,5 +41,5 @@ export default function Header({ session }: { session: Session | null }) {
         </Toolbar>
       </AppBar>
     </div>
-  );
+  )
 }

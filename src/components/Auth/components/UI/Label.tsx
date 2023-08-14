@@ -16,18 +16,10 @@ interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
 }
 
 const Label: React.FC<LabelProps> = ({ children, appearance, ...props }) => {
-  const classNames = generateClassNames(
-    'label',
-    labelDefaultStyles(),
-    appearance
-  )
+  const classNames = generateClassNames('label', labelDefaultStyles(), appearance)
 
   return (
-    <label
-      {...props}
-      style={appearance?.style?.label}
-      className={classNames.join(' ')}
-    >
+    <label {...props} style={appearance?.style?.label} className={classNames.join(' ')}>
       {children}
     </label>
   )

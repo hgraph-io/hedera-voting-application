@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { useParams } from 'next/navigation';
-import { useRating } from '@/context';
+import { useParams } from 'next/navigation'
+import { useRating } from '@/context'
 
 import {
   Typography,
@@ -11,15 +11,15 @@ import {
   TableContainer,
   TableRow,
   Paper,
-} from '@/components';
+} from '@/components'
 
-import styles from './styles.module.scss';
+import styles from './styles.module.scss'
 
 export default function CurrentVotes() {
-  const { id } = useParams();
-  const { ratingState } = useRating();
+  const { id } = useParams()
+  const { ratingState } = useRating()
   const allRatings =
-    ratingState[id as string]?.ratings && Object.entries(ratingState[id as string].ratings);
+    ratingState[id as string]?.ratings && Object.entries(ratingState[id as string].ratings)
 
   return (
     <>
@@ -40,5 +40,5 @@ export default function CurrentVotes() {
         </Table>
       </TableContainer>
     </>
-  );
+  )
 }

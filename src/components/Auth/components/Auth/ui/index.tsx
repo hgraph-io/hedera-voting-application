@@ -31,41 +31,21 @@ export const AuthCard = ({
   return <div className={classNames.join(' ')}>{children}</div>
 }
 
-export const SignUp = (
-  props: Omit<AuthProps, 'view' | 'onlyThirdPartyProviders'>
-) => {
-  return (
-    <Auth
-      showLinks={false}
-      {...props}
-      onlyThirdPartyProviders={false}
-      view="sign_up"
-    />
-  )
+export const SignUp = (props: Omit<AuthProps, 'view' | 'onlyThirdPartyProviders'>) => {
+  return <Auth showLinks={false} {...props} onlyThirdPartyProviders={false} view="sign_up" />
 }
 
 export const SignIn = (
-  props: Omit<AuthProps, 'view' | 'onlyThirdPartyProviders' | 'additionalData'>
+  props: Omit<AuthProps, 'view' | 'onlyThirdPartyProviders' | 'additionalData'>,
 ) => {
-  return (
-    <Auth
-      showLinks={false}
-      {...props}
-      onlyThirdPartyProviders={false}
-      view="sign_in"
-    />
-  )
+  return <Auth showLinks={false} {...props} onlyThirdPartyProviders={false} view="sign_in" />
 }
 
 export const MagicLink = (
   props: Omit<
     AuthProps,
-    | 'view'
-    | 'onlyThirdPartyProviders'
-    | 'magicLink'
-    | 'showLinks'
-    | 'additionalData'
-  >
+    'view' | 'onlyThirdPartyProviders' | 'magicLink' | 'showLinks' | 'additionalData'
+  >,
 ) => {
   return <Auth {...props} view="magic_link" showLinks={false} />
 }
@@ -73,42 +53,23 @@ export const MagicLink = (
 export const SocialAuth = (
   props: Omit<
     AuthProps,
-    | 'view'
-    | 'onlyThirdPartyProviders'
-    | 'magicLink'
-    | 'showLinks'
-    | 'additionalData'
-  >
+    'view' | 'onlyThirdPartyProviders' | 'magicLink' | 'showLinks' | 'additionalData'
+  >,
 ) => {
-  return (
-    <Auth
-      {...props}
-      view="sign_in"
-      showLinks={false}
-      onlyThirdPartyProviders={true}
-    />
-  )
+  return <Auth {...props} view="sign_in" showLinks={false} onlyThirdPartyProviders={true} />
 }
 
 export const ForgottenPassword = (
   props: Pick<
     AuthProps,
-    | 'supabaseClient'
-    | 'appearance'
-    | 'localization'
-    | 'theme'
-    | 'showLinks'
-    | 'redirectTo'
-  >
+    'supabaseClient' | 'appearance' | 'localization' | 'theme' | 'showLinks' | 'redirectTo'
+  >,
 ) => {
   return <Auth showLinks={false} {...props} view="forgotten_password" />
 }
 
 export const UpdatePassword = (
-  props: Pick<
-    AuthProps,
-    'supabaseClient' | 'appearance' | 'localization' | 'theme'
-  >
+  props: Pick<AuthProps, 'supabaseClient' | 'appearance' | 'localization' | 'theme'>,
 ) => {
   return <Auth {...props} view="update_password" />
 }
@@ -117,7 +78,7 @@ export const VerifyOtp = (
   props: Pick<
     AuthProps,
     'supabaseClient' | 'appearance' | 'localization' | 'theme' | 'otpType'
-  >
+  >,
 ) => {
   return <Auth {...props} view="verify_otp" />
 }

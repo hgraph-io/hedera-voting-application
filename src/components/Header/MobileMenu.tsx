@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Session } from '@supabase/auth-helpers-nextjs';
-import { VIEWS } from '@supabase/auth-ui-shared';
-import { Hidden, IconButton, Button, Drawer, MenuIcon, CloseIcon } from '@/components';
-import styles from './styles.module.scss';
+import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import Image from 'next/image'
+import { Session } from '@supabase/auth-helpers-nextjs'
+import { VIEWS } from '@supabase/auth-ui-shared'
+import { Hidden, IconButton, Button, Drawer, MenuIcon, CloseIcon } from '@/components'
+import styles from './styles.module.scss'
 
 export default function MobileMenu({ session }: { session: Session | null }) {
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  const [open, setOpen] = useState(false)
+  const pathname = usePathname()
 
   return (
     <Hidden lgUp implementation="css">
@@ -103,5 +103,5 @@ export default function MobileMenu({ session }: { session: Session | null }) {
         </div>
       </Drawer>
     </Hidden>
-  );
+  )
 }

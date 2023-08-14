@@ -1,26 +1,26 @@
-'use client';
+'use client'
 
-import { useRating, useHashConnect } from '@/context';
-import { Rating, Button, Link, Grid } from '@/components';
-import type { Database } from '@/types';
-import styles from './styles.module.scss';
+import { useRating, useHashConnect } from '@/context'
+import { Rating, Button, Link, Grid } from '@/components'
+import type { Database } from '@/types'
+import styles from './styles.module.scss'
 
-type Submission = Database['public']['Tables']['submission']['Row'];
+type Submission = Database['public']['Tables']['submission']['Row']
 
 export default function AdminCard({ id, name, moderator }: Submission) {
-  const { accountId } = useHashConnect();
-  const { ratingState } = useRating();
-  const submissionRatings = ratingState?.[id];
-  const currentAdminRating = accountId && submissionRatings?.ratings?.[accountId];
+  const { accountId } = useHashConnect()
+  const { ratingState } = useRating()
+  const submissionRatings = ratingState?.[id]
+  const currentAdminRating = accountId && submissionRatings?.ratings?.[accountId]
 
   return (
-    <Grid container spacing={3} className={`${styles.cardContainer} ${
-      currentAdminRating ? styles.view : styles.vote
-    }`}>
+    <Grid
+      container
+      spacing={3}
+      className={`${styles.cardContainer} ${currentAdminRating ? styles.view : styles.vote}`}
+    >
       <Grid item xs={9}>
-        <Link
-          href={`/admin/submission/${id}`}
-        >
+        <Link href={`/admin/submission/${id}`}>
           <div className={`${styles.card}`}>
             <div className={styles.left}>
               <div className={styles.bar}></div>
@@ -66,5 +66,5 @@ export default function AdminCard({ id, name, moderator }: Submission) {
         </Link>
       </Grid>
     </Grid>
-  );
+  )
 }

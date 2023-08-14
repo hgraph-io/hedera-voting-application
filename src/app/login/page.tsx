@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import { useSearchParams } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { ThemeSupa, VIEWS } from '@supabase/auth-ui-shared';
-import { Container, Auth } from '@/components';
-import styles from './styles.module.scss';
+import { useSearchParams } from 'next/navigation'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { ThemeSupa, VIEWS } from '@supabase/auth-ui-shared'
+import { Container, Auth } from '@/components'
+import styles from './styles.module.scss'
 
 export default function SupabaseAuthUI() {
-  const supabase = createClientComponentClient();
-  const searchParams = useSearchParams();
-  const view = VIEWS[searchParams.get('v')?.toUpperCase() || VIEWS.SIGN_IN] || VIEWS.SIGN_IN;
-  console.log(view);
-  console.log(VIEWS);
+  const supabase = createClientComponentClient()
+  const searchParams = useSearchParams()
+  const view = VIEWS[searchParams.get('v')?.toUpperCase() || VIEWS.SIGN_IN] || VIEWS.SIGN_IN
+  console.log(view)
+  console.log(VIEWS)
 
   return (
     <Container className={styles.loginPageContainer}>
@@ -55,5 +55,5 @@ export default function SupabaseAuthUI() {
         view={view}
       />
     </Container>
-  );
+  )
 }

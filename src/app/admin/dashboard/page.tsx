@@ -1,18 +1,18 @@
-import { createClient } from '@supabase/supabase-js';
-import type { Database } from '@/types';
-import { Typography, Container, Button, AdminCard } from '@/components';
-import styles from './styles.module.scss';
+import { createClient } from '@supabase/supabase-js'
+import type { Database } from '@/types'
+import { Typography, Container, Button, AdminCard } from '@/components'
+import styles from './styles.module.scss'
 
-const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY
 
 if (!NEXT_PUBLIC_SUPABASE_URL || !SUPABASE_SERVICE_KEY)
-  throw new Error('Missing Supabase URL or Service Key');
+  throw new Error('Missing Supabase URL or Service Key')
 
 export default async function AdminDashboardPage() {
-  const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
+  const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!)
 
-  const { data: submissions } = await supabase.from('submission').select('*');
+  const { data: submissions } = await supabase.from('submission').select('*')
 
   return (
     <Container maxWidth="md" className={styles.adminDashboardContainer}>
@@ -43,12 +43,10 @@ export default async function AdminDashboardPage() {
       <div>
         {submissions?.map(
           (
-            submission: any // TODO:
-          ) => (
-            <AdminCard key={submission.id} {...submission} />
-          )
+            submission: any, // TODO:
+          ) => <AdminCard key={submission.id} {...submission} />,
         )}
       </div>
     </Container>
-  );
+  )
 }

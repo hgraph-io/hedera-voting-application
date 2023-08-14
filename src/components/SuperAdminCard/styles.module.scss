@@ -6,7 +6,7 @@
   align-items: center;
 
   @media (max-width: 900px) {
-    flex-direction: column!important;
+    flex-direction: column !important;
     padding: 10px;
     margin: 15px 0px;
   }
@@ -39,7 +39,9 @@
   }
 }
 
-.left, .middle, .right {
+.left,
+.middle,
+.right {
   margin: 10px 0px;
 }
 

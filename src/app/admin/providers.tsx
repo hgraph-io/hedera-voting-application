@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { RatingProvider } from '@/context';
+import { RatingProvider } from '@/context'
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  return <RatingProvider>{children}</RatingProvider>;
+  return <RatingProvider>{children}</RatingProvider>
 }

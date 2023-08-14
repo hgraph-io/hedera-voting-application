@@ -1,15 +1,15 @@
-import { Rating as MuiRating } from '@mui/material';
-import { Typography, StarBorderRoundedIcon } from '@/components';
-import styles from './styles.module.scss';
+import { Rating as MuiRating } from '@mui/material'
+import { Typography, StarBorderRoundedIcon } from '@/components'
+import styles from './styles.module.scss'
 
 export default function StarRating(props: {
-  className: string;
-  onChange?: (event: React.ChangeEvent<{}>, value: number | null) => void;
-  readOnly?: boolean;
-  average?: number;
-  value?: number;
+  className: string
+  onChange?: (event: React.ChangeEvent<{}>, value: number | null) => void
+  readOnly?: boolean
+  average?: number
+  value?: number
 }) {
-  const { average, ...rest } = props;
+  const { average, ...rest } = props
 
   return (
     <div className={styles.root}>
@@ -25,5 +25,5 @@ export default function StarRating(props: {
         </Typography>
       )}
     </div>
-  );
+  )
 }

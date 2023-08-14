@@ -1,24 +1,22 @@
-'use client';
+'use client'
 
-import { useHashConnect } from '@/context';
-import { Typography, Button, Grid } from '@/components';
-import { SnackbarMessageSeverity } from '@/types';
-import type { Database } from '@/types';
-import { useSnackbar } from '@/context';
-import setSubmissionStatus from './setSubmissionStatus';
-import styles from './styles.module.scss';
+import { useHashConnect } from '@/context'
+import { Typography, Button, Grid } from '@/components'
+import { SnackbarMessageSeverity } from '@/types'
+import type { Database } from '@/types'
+import { useSnackbar } from '@/context'
+import setSubmissionStatus from './setSubmissionStatus'
+import styles from './styles.module.scss'
 
-import nacl from 'tweetnacl';
+import nacl from 'tweetnacl'
 
-type Submission = Database['public']['Tables']['submission']['Row'];
+type Submission = Database['public']['Tables']['submission']['Row']
 
-const NEXT_PUBLIC_HEDERA_SUPER_ADMINS = JSON.parse(
-  process.env.NEXT_PUBLIC_HEDERA_SUPER_ADMINS!
-);
+const NEXT_PUBLIC_HEDERA_SUPER_ADMINS = JSON.parse(process.env.NEXT_PUBLIC_HEDERA_SUPER_ADMINS!)
 
 export default function SuperAdminCard(submission: Submission) {
-  const { accountId, client, initData } = useHashConnect();
-  const { openSnackbar } = useSnackbar();
+  const { accountId, client, initData } = useHashConnect()
+  const { openSnackbar } = useSnackbar()
 
   if (
     !accountId ||
@@ -26,30 +24,30 @@ export default function SuperAdminCard(submission: Submission) {
     !initData ||
     !NEXT_PUBLIC_HEDERA_SUPER_ADMINS?.includes(accountId)
   )
-    return null;
+    return null
 
   async function updateStatus(status: string) {
     // avoid JSON.stringify by hashpack
-    const message = btoa(JSON.stringify({ id: submission.id, accountId, status }));
+    const message = btoa(JSON.stringify({ id: submission.id, accountId, status }))
 
     // sign message
-    const signedMessageResponse = await client!.sign(initData!.topic, accountId!, message);
+    const signedMessageResponse = await client!.sign(initData!.topic, accountId!, message)
     if (!signedMessageResponse.success) {
-      openSnackbar('There’s been an error signing the request', SnackbarMessageSeverity.Error);
-      return;
+      openSnackbar('There’s been an error signing the request', SnackbarMessageSeverity.Error)
+      return
     }
 
     const { success, error } = await setSubmissionStatus({
       signature: Buffer.from(signedMessageResponse.userSignature as Uint8Array).toString(
-        'base64'
+        'base64',
       ),
       message: signedMessageResponse.signedPayload as string,
-    });
+    })
 
     openSnackbar(
       success ? 'Success!' : error,
-      SnackbarMessageSeverity[success ? 'Success' : 'Error']
-    );
+      SnackbarMessageSeverity[success ? 'Success' : 'Error'],
+    )
   }
 
   return (
@@ -97,5 +95,5 @@ export default function SuperAdminCard(submission: Submission) {
         </Grid>
       </Grid>
     </>
-  );
+  )
 }

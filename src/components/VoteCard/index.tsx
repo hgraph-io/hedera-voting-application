@@ -1,26 +1,26 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
-import { useHashConnect, useRating } from '@/context';
-import { Button, Rating, CircularProgress } from '@/components';
-import styles from './styles.module.scss';
+import { useState } from 'react'
+import { useParams } from 'next/navigation'
+import { useHashConnect, useRating } from '@/context'
+import { Button, Rating, CircularProgress } from '@/components'
+import styles from './styles.module.scss'
 
-const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK;
-const topicId = process.env.NEXT_PUBLIC_HEDERA_TOPIC_ID;
+const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK
+const topicId = process.env.NEXT_PUBLIC_HEDERA_TOPIC_ID
 
-if (!network || !topicId) throw new Error('Missing network or topic id env vars');
+if (!network || !topicId) throw new Error('Missing network or topic id env vars')
 
 export default function VoteCard() {
-  const { id } = useParams();
-  const { ratingState, submit } = useRating();
-  const { accountId } = useHashConnect();
-  const [rating, setRating] = useState(0);
+  const { id } = useParams()
+  const { ratingState, submit } = useRating()
+  const { accountId } = useHashConnect()
+  const [rating, setRating] = useState(0)
 
   // Loading
-  if (!ratingState || !accountId) return <CircularProgress />;
+  if (!ratingState || !accountId) return <CircularProgress />
 
-  const recordedRating = ratingState[id as string]?.ratings?.[accountId];
+  const recordedRating = ratingState[id as string]?.ratings?.[accountId]
 
   return (
     <div className={styles.cardContainer}>
@@ -65,5 +65,5 @@ export default function VoteCard() {
         </div>
       </div>
     </div>
-  );
+  )
 }

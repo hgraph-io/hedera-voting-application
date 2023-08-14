@@ -55,18 +55,10 @@ export interface LoaderProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
 }
 
 function Loader({ appearance, ...props }: LoaderProps) {
-  const classNames = generateClassNames(
-    'loader',
-    loaderDefaultStyles(),
-    appearance
-  )
+  const classNames = generateClassNames('loader', loaderDefaultStyles(), appearance)
 
   return (
-    <div
-      {...props}
-      style={appearance?.style?.loader}
-      className={classNames.join(' ')}
-    ></div>
+    <div {...props} style={appearance?.style?.loader} className={classNames.join(' ')}></div>
   )
 }
 

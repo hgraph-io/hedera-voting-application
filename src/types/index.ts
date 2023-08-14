@@ -1,4 +1,4 @@
-export * from './supabase';
+export * from './supabase'
 
 export enum SnackbarMessageSeverity {
   Success = 'success',
@@ -8,20 +8,20 @@ export enum SnackbarMessageSeverity {
 }
 
 export type SnackbarContextProps = {
-  openSnackbar: (message: string, severity: SnackbarMessageSeverity) => void;
-};
+  openSnackbar: (message: string, severity: SnackbarMessageSeverity) => void
+}
 
 export type Vote = {
-  id: string; // submission id
-  rating: number;
-};
+  id: string // submission id
+  rating: number
+}
 
 // call for paper application
 export type CFPSubmission = {
-  id: number;
-  name: string;
-  organization: string;
-  topics: string[];
-  links: string[];
-  moderator: boolean;
-};
+  id: number
+  name: string
+  organization: string
+  topics: string[]
+  links: string[]
+  moderator: boolean
+}

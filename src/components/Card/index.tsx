@@ -1,8 +1,8 @@
-import { Checkbox, Link, FormGroup, FormControlLabel } from '@/components';
-import type { Database } from '@/types';
-import styles from './styles.module.scss';
+import { Checkbox, Link, FormGroup, FormControlLabel } from '@/components'
+import type { Database } from '@/types'
+import styles from './styles.module.scss'
 
-type Submission = Database['public']['Tables']['submission']['Row'];
+type Submission = Database['public']['Tables']['submission']['Row']
 
 export default function Card({ id, name, moderator, status }: Submission) {
   return (
@@ -30,5 +30,5 @@ export default function Card({ id, name, moderator, status }: Submission) {
         </div>
       </div>
     </Link>
-  );
+  )
 }

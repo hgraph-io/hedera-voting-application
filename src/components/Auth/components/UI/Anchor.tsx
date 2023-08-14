@@ -21,18 +21,10 @@ interface LabelProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 const Anchor: React.FC<LabelProps> = ({ children, appearance, ...props }) => {
-  const classNames = generateClassNames(
-    'anchor',
-    anchorHTMLAttributes(),
-    appearance
-  )
+  const classNames = generateClassNames('anchor', anchorHTMLAttributes(), appearance)
 
   return (
-    <a
-      {...props}
-      style={appearance?.style?.anchor}
-      className={classNames.join(' ')}
-    >
+    <a {...props} style={appearance?.style?.anchor} className={classNames.join(' ')}>
       {children}
     </a>
   )

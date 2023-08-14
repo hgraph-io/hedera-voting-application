@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { createTheme } from '@mui/material';
+import { createTheme } from '@mui/material'
 
 // Define your colors
 const colors = {
@@ -17,7 +17,7 @@ const colors = {
   grey1: '#dde2e5',
   grey2: '#acb5bd',
   grey3: '#495057',
-};
+}
 
 // Use these colors in your theme
 export default createTheme({
@@ -136,4 +136,4 @@ export default createTheme({
       },
     },
   },
-});
+})

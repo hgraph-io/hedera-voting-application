@@ -1,30 +1,30 @@
-import { useState } from 'react';
-import { SupabaseClient } from '@supabase/supabase-js';
-import { Appearance } from '../../../types';
-import { Button, Container, Input, Label } from './../../UI';
+import { useState } from 'react'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { Appearance } from '../../../types'
+import { Button, Container, Input, Label } from './../../UI'
 
-import { useSnackbar } from '@/context';
-import { SnackbarMessageSeverity } from '@/types';
+import { useSnackbar } from '@/context'
+import { SnackbarMessageSeverity } from '@/types'
 
 function UpdatePassword({
   supabaseClient,
   appearance,
 }: {
-  supabaseClient: SupabaseClient;
-  appearance?: Appearance;
+  supabaseClient: SupabaseClient
+  appearance?: Appearance
 }) {
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const { openSnackbar } = useSnackbar();
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { openSnackbar } = useSnackbar()
 
   const handlePasswordReset = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    const { error } = await supabaseClient.auth.updateUser({ password });
-    if (error) openSnackbar(error.message, SnackbarMessageSeverity.Error);
-    else openSnackbar('Password updated successfully', SnackbarMessageSeverity.Success);
-    setLoading(false);
-  };
+    e.preventDefault()
+    setLoading(true)
+    const { error } = await supabaseClient.auth.updateUser({ password })
+    if (error) openSnackbar(error.message, SnackbarMessageSeverity.Error)
+    else openSnackbar('Password updated successfully', SnackbarMessageSeverity.Success)
+    setLoading(false)
+  }
 
   return (
     <form id="auth-update-password" onSubmit={handlePasswordReset}>
@@ -48,7 +48,7 @@ function UpdatePassword({
         </Button>
       </Container>
     </form>
-  );
+  )
 }
 
-export { UpdatePassword };
+export { UpdatePassword }

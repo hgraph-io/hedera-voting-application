@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { SupabaseClient } from '@supabase/supabase-js';
-import { ViewSignUp, ViewSignIn, VIEWS } from '@supabase/auth-ui-shared';
-import { Appearance } from './../../../types';
-import { Anchor, Button, Container, Input, Label } from './../../UI';
+import { useState } from 'react'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { ViewSignUp, ViewSignIn, VIEWS } from '@supabase/auth-ui-shared'
+import { Appearance } from './../../../types'
+import { Anchor, Button, Container, Input, Label } from './../../UI'
 
-import { useSnackbar } from '@/context';
-import { SnackbarMessageSeverity } from '@/types';
+import { useSnackbar } from '@/context'
+import { SnackbarMessageSeverity } from '@/types'
 
 export interface EmailAuthProps {
-  authView?: ViewSignIn | ViewSignUp;
-  setAuthView?: any;
-  supabaseClient: SupabaseClient;
-  appearance?: Appearance;
-  children?: React.ReactNode;
+  authView?: ViewSignIn | ViewSignUp
+  setAuthView?: any
+  supabaseClient: SupabaseClient
+  appearance?: Appearance
+  children?: React.ReactNode
 }
 
 export function EmailAuth({
@@ -22,42 +22,42 @@ export function EmailAuth({
   appearance,
   children,
 }: EmailAuthProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const { openSnackbar } = useSnackbar();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { openSnackbar } = useSnackbar()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault()
+    setLoading(true)
 
     switch (authView) {
       case 'sign_in':
         const { error: signInError } = await supabaseClient.auth.signInWithPassword({
           email,
           password,
-        });
-        if (signInError) openSnackbar(signInError.message, SnackbarMessageSeverity.Error);
-        else openSnackbar('You are now signed in!', SnackbarMessageSeverity.Success);
-        break;
+        })
+        if (signInError) openSnackbar(signInError.message, SnackbarMessageSeverity.Error)
+        else openSnackbar('You are now signed in!', SnackbarMessageSeverity.Success)
+        break
       case 'sign_up':
         const {
           data: { user, session },
           error,
-        } = await supabaseClient.auth.signUp({ email, password });
-        if (error) openSnackbar(error.message, SnackbarMessageSeverity.Error);
+        } = await supabaseClient.auth.signUp({ email, password })
+        if (error) openSnackbar(error.message, SnackbarMessageSeverity.Error)
         // Check if session is null -> email confirmation setting is turned on
         else if (user && !session)
           openSnackbar(
             'Please check your email for a confirmation link.',
-            SnackbarMessageSeverity.Info
-          );
-        break;
+            SnackbarMessageSeverity.Info,
+          )
+        break
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
-  const inOrUp = authView === 'sign_in' ? 'in' : 'up';
+  const inOrUp = authView === 'sign_in' ? 'in' : 'up'
 
   return (
     <form
@@ -110,8 +110,8 @@ export function EmailAuth({
             <Anchor
               href="#auth-forgot-password"
               onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
-                setAuthView(VIEWS.FORGOTTEN_PASSWORD);
+                e.preventDefault()
+                setAuthView(VIEWS.FORGOTTEN_PASSWORD)
               }}
               appearance={appearance}
             >
@@ -122,8 +122,8 @@ export function EmailAuth({
             <Anchor
               href="#auth-sign-up"
               onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
-                setAuthView(VIEWS.SIGN_UP);
+                e.preventDefault()
+                setAuthView(VIEWS.SIGN_UP)
               }}
               appearance={appearance}
             >
@@ -133,8 +133,8 @@ export function EmailAuth({
             <Anchor
               href="#auth-sign-in"
               onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
-                setAuthView(VIEWS.SIGN_IN);
+                e.preventDefault()
+                setAuthView(VIEWS.SIGN_IN)
               }}
               appearance={appearance}
             >
@@ -144,5 +144,5 @@ export function EmailAuth({
         </Container>
       </Container>
     </form>
-  );
+  )
 }

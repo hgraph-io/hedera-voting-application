@@ -7,14 +7,14 @@ import {
   FormLabel,
   Typography,
   Grid,
-} from '@/components';
-import type { Database } from '@/types';
+} from '@/components'
+import type { Database } from '@/types'
 
-import topics from './topics.json';
-import submit from './submit';
-import styles from './styles.module.scss';
+import topics from './topics.json'
+import submit from './submit'
+import styles from './styles.module.scss'
 
-type Submission = Database['public']['Tables']['submission']['Row'];
+type Submission = Database['public']['Tables']['submission']['Row']
 
 export default function SubmissionForm({ submission }: { submission?: Submission }) {
   const {
@@ -25,7 +25,7 @@ export default function SubmissionForm({ submission }: { submission?: Submission
     topics: selectedTopics,
     moderator,
     panelist,
-  } = submission || {};
+  } = submission || {}
 
   return (
     <div className={styles.submitApplication}>
@@ -106,5 +106,5 @@ export default function SubmissionForm({ submission }: { submission?: Submission
         </Grid>
       </form>
     </div>
-  );
+  )
 }

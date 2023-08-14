@@ -1,30 +1,30 @@
-import { createContext, useContext, useState } from 'react';
-import { Snackbar, Alert } from '@mui/material';
-import type { SnackbarContextProps } from '@/types';
-import { SnackbarMessageSeverity } from '@/types';
+import { createContext, useContext, useState } from 'react'
+import { Snackbar, Alert } from '@mui/material'
+import type { SnackbarContextProps } from '@/types'
+import { SnackbarMessageSeverity } from '@/types'
 
 const SnackbarContext = createContext<SnackbarContextProps>({
   openSnackbar: () => {},
-});
+})
 
-export const useSnackbar = () => useContext(SnackbarContext);
+export const useSnackbar = () => useContext(SnackbarContext)
 
 export default function SnackbarProvider({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState('');
+  const [open, setOpen] = useState(false)
+  const [message, setMessage] = useState('')
   const [severity, setSeverity] = useState<SnackbarMessageSeverity>(
-    SnackbarMessageSeverity.Info
-  );
+    SnackbarMessageSeverity.Info,
+  )
 
   const openSnackbar = (message: string, severity?: SnackbarMessageSeverity) => {
-    setMessage(message);
-    setSeverity(severity ?? SnackbarMessageSeverity.Info);
-    setOpen(true);
-  };
+    setMessage(message)
+    setSeverity(severity ?? SnackbarMessageSeverity.Info)
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <SnackbarContext.Provider value={{ openSnackbar }}>
@@ -40,5 +40,5 @@ export default function SnackbarProvider({ children }: { children: React.ReactNo
       </Snackbar>
       {children}
     </SnackbarContext.Provider>
-  );
+  )
 }

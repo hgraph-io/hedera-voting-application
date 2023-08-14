@@ -1,18 +1,18 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import type { Database } from '@/types';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
+import type { Database } from '@/types'
 
-import './global.css';
-import { Header, Footer } from '@/components';
-import { Providers } from './providers';
+import './global.css'
+import { Header, Footer } from '@/components'
+import { Providers } from './providers'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerComponentClient<Database>({ cookies })
   const {
     data: { session },
-  } = await supabase.auth.getSession();
+  } = await supabase.auth.getSession()
 
-  console.log(session);
+  console.log(session)
 
   return (
     <html lang="en">
@@ -26,5 +26,5 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </Providers>
       </body>
     </html>
-  );
+  )
 }

@@ -1,20 +1,20 @@
 //@ts-nocheck
-'use client';
+'use client'
 
-import { useReducer, useEffect, createContext, useContext } from 'react';
-import { usePathname, redirect } from 'next/navigation';
-import { HashConnect, HashConnectTypes } from 'hashconnect';
-import { useSnackbar } from '@/context';
-import { SnackbarMessageSeverity } from '@/types';
+import { useReducer, useEffect, createContext, useContext } from 'react'
+import { usePathname, redirect } from 'next/navigation'
+import { HashConnect, HashConnectTypes } from 'hashconnect'
+import { useSnackbar } from '@/context'
+import { SnackbarMessageSeverity } from '@/types'
 
-const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK!;
-const votingAdmins = JSON.parse(process.env.NEXT_PUBLIC_HEDERA_VOTING_ADMINS!);
+const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK!
+const votingAdmins = JSON.parse(process.env.NEXT_PUBLIC_HEDERA_VOTING_ADMINS!)
 
 const appMetadata: HashConnectTypes.AppMetadata = {
   name: 'Hedera Voting Application',
   description: 'Voting Application Created By Hedera',
   icon: 'https://uploads-ssl.webflow.com/634077443e3c357eec6a40fe/64444f46f7fdec1bfe8a1511_logo-twitter4-p-500.png',
-};
+}
 
 enum HashConnectEvents {
   FoundExtensionEvent = 'foundExtensionEvent',
@@ -29,31 +29,31 @@ enum HashConnectEvents {
 }
 
 type HashConnectContext = {
-  [key in HashConnectEvents]?: unknown;
+  [key in HashConnectEvents]?: unknown
 } & {
-  client?: HashConnect;
-  initData?: HashConnectTypes.InitilizationData;
+  client?: HashConnect
+  initData?: HashConnectTypes.InitilizationData
   // todo:
-  provider?: any;
-  signer?: any;
-  accountId?: string;
-};
+  provider?: any
+  signer?: any
+  accountId?: string
+}
 
-const HashpackContext = createContext<HashConnectContext>({});
+const HashpackContext = createContext<HashConnectContext>({})
 
 export function useHashConnect() {
-  return useContext(HashpackContext);
+  return useContext(HashpackContext)
 }
 
 function reducer(state: HashConnectContext | {}, action: { type: string; payload: unknown }) {
   switch (action.type) {
     case HashConnectEvents.PairingEvent: {
       //@ts-ignore
-      const accountId = action?.payload?.accountIds[0];
+      const accountId = action?.payload?.accountIds[0]
       //@ts-ignore
-      const provider = state?.client?.getProvider(network, action.payload.topic, accountId);
+      const provider = state?.client?.getProvider(network, action.payload.topic, accountId)
       //@ts-ignore
-      const signer = provider ? state?.client?.getSigner(provider) : undefined;
+      const signer = provider ? state?.client?.getSigner(provider) : undefined
 
       return {
         ...state,
@@ -61,15 +61,15 @@ function reducer(state: HashConnectContext | {}, action: { type: string; payload
         accountId,
         provider,
         signer,
-      };
+      }
     }
     case 'initData': {
       //@ts-ignore
-      const accountId = action?.payload?.savedPairings[0]?.accountIds[0];
+      const accountId = action?.payload?.savedPairings[0]?.accountIds[0]
       //@ts-ignore
-      const provider = state.client.getProvider(network, action.payload.topic, accountId);
+      const provider = state.client.getProvider(network, action.payload.topic, accountId)
       //@ts-ignore
-      const signer = state.client.getSigner(provider);
+      const signer = state.client.getSigner(provider)
 
       return {
         ...state,
@@ -77,7 +77,7 @@ function reducer(state: HashConnectContext | {}, action: { type: string; payload
         accountId,
         provider,
         signer,
-      };
+      }
     }
     case HashConnectEvents.ConnectionStatusChangeEvent: {
       // happens when a user connects to hashconnect but is not paired
@@ -88,27 +88,27 @@ function reducer(state: HashConnectContext | {}, action: { type: string; payload
           accountId: undefined,
           provider: undefined,
           signer: undefined,
-        };
+        }
     }
     default:
       // store last action
-      return { ...state, [action.type]: action.payload };
+      return { ...state, [action.type]: action.payload }
   }
 }
 
 export default function HashConnectProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, {});
-  const pathname = usePathname();
-  const { openSnackbar } = useSnackbar();
+  const [state, dispatch] = useReducer(reducer, {})
+  const pathname = usePathname()
+  const { openSnackbar } = useSnackbar()
   /*
    * Initialize HashConnect client
    */
   useEffect(() => {
-    if (!pathname.startsWith('/admin') || state.client) return;
+    if (!pathname.startsWith('/admin') || state.client) return
 
-    const client = new HashConnect();
+    const client = new HashConnect()
     // need initial client in some events before dispatching client after client.init()
-    dispatch({ type: 'client', payload: client });
+    dispatch({ type: 'client', payload: client })
 
     /*
      * Register event listeners
@@ -116,8 +116,8 @@ export default function HashConnectProvider({ children }: { children: React.Reac
     for (const event of Object.values(HashConnectEvents)) {
       //@ts-ignore
       client[event].on((data) => {
-        dispatch({ type: event, payload: data });
-      });
+        dispatch({ type: event, payload: data })
+      })
     }
 
     /*
@@ -126,24 +126,24 @@ export default function HashConnectProvider({ children }: { children: React.Reac
     client
       .init(appMetadata, process.env.NEXT_PUBLIC_HEDERA_NETWORK as 'testnet' | 'mainnet', true)
       .then((initData) => {
-        dispatch({ type: 'initData', payload: initData });
-      });
-  }, [pathname, state.client]);
+        dispatch({ type: 'initData', payload: initData })
+      })
+  }, [pathname, state.client])
 
   /*
    * If an account is paired but it is not in the voting admin, show error message, disconnect, and redirect to admin login
    */
   if (state.accountId && !votingAdmins.includes(state.accountId)) {
-    state.client?.disconnect();
+    state.client?.disconnect()
     if (pathname === '/admin')
       // @ts-ignore
       openSnackbar(
         'Sorry, this Hedera account is not an admin. Please contact the project coordinator to vote on panelists.',
-        SnackbarMessageSeverity.Error
-      );
+        SnackbarMessageSeverity.Error,
+      )
     // success: redirect to dashboard if on login page with valid voting id
   } else if (state.accountId && votingAdmins.includes(state.accountId) && pathname === '/admin')
-    redirect('/admin/dashboard');
+    redirect('/admin/dashboard')
   // redirect to admin login if an account is not paired
   else if (
     pathname.startsWith('/admin') &&
@@ -151,7 +151,7 @@ export default function HashConnectProvider({ children }: { children: React.Reac
     state?.connectionStatusChangeEvent &&
     state.connectionStatusChangeEvent !== 'Paired'
   )
-    redirect('/admin');
+    redirect('/admin')
 
-  return <HashpackContext.Provider value={state}>{children}</HashpackContext.Provider>;
+  return <HashpackContext.Provider value={state}>{children}</HashpackContext.Provider>
 }
