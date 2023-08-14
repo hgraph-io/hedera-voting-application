@@ -26,9 +26,9 @@ export default function SuperAdminCard(submission: Submission) {
   async function updateStatus(status: string) {
     const message = btoa(JSON.stringify({ id: submission.id, accountId, status }));
     // sign message
+    // TODO: handle signature
     //const signedMessageResponse = await client!.sign(initData!.topic, accountId!, message);
 
-    console.log(message);
     const response = await setSubmissionStatus({
       // signature: null,
       message,

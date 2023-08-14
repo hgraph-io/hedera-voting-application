@@ -17,11 +17,8 @@ export default async function setSubmissionStatus({
   signature?: string;
   message: string;
 }) {
-  console.log('xxxxxxxxxx');
-  console.log({ message });
   try {
     const { id, status, accountId } = JSON.parse(atob(message));
-    console.log(id, status, accountId);
     if (!NEXT_PUBLIC_HEDERA_SUPER_ADMINS!.includes(accountId))
       throw new Error('not authorized');
     // if signature doesn't match public key of account id
@@ -41,15 +38,12 @@ export default async function setSubmissionStatus({
     //     );
 
     const supabase = createClient<Database>(NEXT_PUBLIC_SUPABASE_URL!, SUPABASE_SERVICE_KEY!);
-    const { data, error } = await supabase.from('submission').update({ status }).eq('id', id);
-    console.log({ data, error });
+    const { data, error } = await supabase.from('submission').update({ status }).eq('ids', id);
 
-    if (error) {
-      console.error(error);
-      throw new Error(error.message);
-    } else return data;
+    if (error) throw error;
+    else return data;
   } catch (error) {
-    console.error(error);
-    return { error };
+    //@ts-ignore
+    return { error: error?.message || 'Unknown error' };
   }
 }
