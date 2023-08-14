@@ -24,9 +24,9 @@ export default async function AdminDashboardPage() {
           Admin Dashboard
         </Typography>
         <Typography component="p" gutterBottom>
-          Welcome to the Hedera conference{' '}
+          Welcome to the Hedera COP 28{' '}
           <b>
-            <em>Call for Panelists</em>
+            <em>Call for Speakers</em>
           </b>{' '}
           admin dashboard!
         </Typography>
@@ -53,8 +53,10 @@ export default async function AdminDashboardPage() {
       <div>
         {submissions?.map(
           (
-            submission: any, // TODO:
-          ) => <AdminCard key={submission.id} {...submission} />,
+            submission: any // TODO:
+          ) => (
+            <AdminCard key={submission.id} {...submission} />
+          )
         )}
       </div>
     </Container>
