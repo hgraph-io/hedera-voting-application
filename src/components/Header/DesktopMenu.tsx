@@ -4,32 +4,45 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Session } from '@supabase/auth-helpers-nextjs'
 import { VIEWS } from '@supabase/auth-ui-shared'
-import { Button } from '@/components'
+import { Button, Box, Grid } from '@/components'
 import { useHashConnect } from '@/context'
-
 import styles from './styles.module.scss'
 
-//https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs
-export default function DesktopMenu({ session }: { session: Session | null }) {
+function MenuLink({ href, children }: { href: string; children: string }) {
   const pathname = usePathname()
+  return (
+    <Box
+      position="relative"
+      top="-2px"
+      pb="8px"
+      borderBottom={pathname === href ? 4 : undefined}
+      borderColor={pathname === href ? 'secondary.main' : undefined}
+      color={pathname === href ? 'text.primary' : 'grey.600'}
+    >
+      <Link href={href}>{children}</Link>
+    </Box>
+  )
+}
+export default function DesktopMenu({ session }: { session: Session | null }) {
   const { accountId, client } = useHashConnect()
+  const pathname = usePathname()
 
   return (
-    <div className={styles.links}>
-      <Link href="/">
-        <div className={pathname === '/' ? styles.activeLink : styles.link}>Home</div>
-      </Link>
-      <Link href="/dashboard">
-        <div className={pathname.startsWith('/dashboard') ? styles.activeLink : styles.link}>
-          Dashboard
-        </div>
-      </Link>
-      <Link href="/admin">
-        <div className={pathname.startsWith('/admin') ? styles.activeLink : styles.link}>
-          Admin
-        </div>
-      </Link>
-      <div className={styles.desktopButtonContainer}>
+    <Grid container>
+      <Grid
+        item
+        xs={6}
+        display="flex"
+        justifyContent="space-evenly"
+        position="relative"
+        top="18px"
+      >
+        <MenuLink href="/">Home</MenuLink>
+        <MenuLink href="/dashboard">Dashboard</MenuLink>
+        <MenuLink href="/admin">Admin</MenuLink>
+      </Grid>
+      <Grid item xs={2} />
+      <Grid item xs={4} display="flex" justifyContent="space-evenly" alignItems="flex-end">
         {pathname.startsWith('/admin') && accountId && (
           <Button
             variant="contained"
@@ -43,27 +56,17 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
         )}
         {pathname.startsWith('/admin') && !accountId && !session?.user && (
           <>
-            <Button
-              component="a"
-              href={`/login?v=${VIEWS.SIGN_IN}`}
-              variant="outlined"
-              className={styles.signupButton}
-            >
+            <Button component="a" href={`/login?v=${VIEWS.SIGN_IN}`} variant="outlined">
               Login
             </Button>
-            <Button
-              component="a"
-              href={`/login?v=${VIEWS.SIGN_UP}`}
-              variant="contained"
-              className={styles.signupButton}
-            >
+            <Button component="a" href={`/login?v=${VIEWS.SIGN_UP}`} variant="contained">
               Sign Up
             </Button>
           </>
         )}
         {pathname.startsWith('/admin') && !accountId && session?.user && (
           <form action="/auth/signout" method="post">
-            <Button variant="contained" type="submit" className={styles.signoutButton}>
+            <Button variant="contained" type="submit">
               Sign Out
             </Button>
           </form>
@@ -96,7 +99,7 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
             </Button>
           </>
         )}
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   )
 }
