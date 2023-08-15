@@ -1,45 +1,41 @@
 'use client'
 
-import { AppBar, Toolbar, Hidden } from '@mui/material'
+import { AppBar, Toolbar, Grid, Hidden, Box } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Session } from '@supabase/auth-helpers-nextjs'
+import type { Session } from '@supabase/auth-helpers-nextjs'
 import MobileMenu from './MobileMenu'
 import DesktopMenu from './DesktopMenu'
-import styles from './styles.module.scss'
 
 export default function Header({ session }: { session: Session | null }) {
   return (
-    <div className={styles.root}>
-      <AppBar className={styles.menuBar} position="static">
-        <Toolbar
-          style={{
-            position: 'relative',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Link href="/">
-            <Image
-              className={styles.logo}
-              src="/assets/logo.png"
-              width={100}
-              height={30}
-              alt="Logo"
-            />
-          </Link>
-          <div>
+    <AppBar position="static" elevation={0}>
+      <Toolbar>
+        <Grid container>
+          <Grid item xs={3}>
+            <Link href="/" style={{ display: 'inline-block' }}>
+              <Image
+                src="/assets/logo.png"
+                width={110}
+                height={34}
+                style={{ width: 'auto' }}
+                alt="Logo"
+              />
+            </Link>
+          </Grid>
+          <Grid item xs={9}>
             <Hidden mdDown implementation="css">
               <DesktopMenu session={session} />
             </Hidden>
 
             <Hidden mdUp implementation="css">
-              <MobileMenu session={session} />
+              <Box display="flex" alignItems="center" justifyContent="flex-end">
+                <MobileMenu session={session} />
+              </Box>
             </Hidden>
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   )
 }

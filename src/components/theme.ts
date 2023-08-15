@@ -68,6 +68,7 @@ export default createTheme({
         root: {
           backgroundColor: colors.white, // Set AppBar background to white
           color: colors.black, // Set text color to black
+          borderBottom: `1px solid ${colors.black}`, // Add a border bottom
         },
       },
     },
