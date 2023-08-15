@@ -13,7 +13,7 @@ export default function Header({ session }: { session: Session | null }) {
       <Toolbar>
         <Grid container>
           <Grid item xs={5}>
-            <Link href="/">
+            <Link href="/" style={{ display: 'inline-block' }}>
               <Image
                 src="/assets/logo.png"
                 width={110}
