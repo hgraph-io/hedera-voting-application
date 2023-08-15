@@ -8,9 +8,11 @@ import LoginButtons from './LoginButtons'
 export default function DesktopMenu({ session }: { session: Session | null }) {
   return (
     <Grid container>
+      <Grid item xs={0} lg={3} />
       <Grid
         item
-        xs={6}
+        md={7}
+        lg={5}
         display="flex"
         justifyContent="space-evenly"
         position="relative"
@@ -20,10 +22,10 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
         <NavLink href="/dashboard">Dashboard</NavLink>
         <NavLink href="/admin">Admin</NavLink>
       </Grid>
-      <Grid item xs={2} />
       <Grid
         item
-        xs={4}
+        md={5}
+        lg={4}
         display="flex"
         justifyContent="space-evenly"
         position="relative"

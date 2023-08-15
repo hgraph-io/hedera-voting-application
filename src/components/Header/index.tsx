@@ -12,7 +12,7 @@ export default function Header({ session }: { session: Session | null }) {
     <AppBar position="static" elevation={0}>
       <Toolbar>
         <Grid container>
-          <Grid item xs={5}>
+          <Grid item xs={3}>
             <Link href="/" style={{ display: 'inline-block' }}>
               <Image
                 src="/assets/logo.png"
@@ -23,7 +23,7 @@ export default function Header({ session }: { session: Session | null }) {
               />
             </Link>
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={9}>
             <Hidden mdDown implementation="css">
               <DesktopMenu session={session} />
             </Hidden>
