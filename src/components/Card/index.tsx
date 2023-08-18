@@ -7,7 +7,7 @@ type Submission = Database['public']['Tables']['submission']['Row']
 export default function Card({ id, name, moderator, status }: Submission) {
   return (
     <Link href={`/submission/${id}`} className={`${styles.cardContainer} {$styles.vote}`}>
-      <div className={`${styles.card} ${styles.vote}`}>
+      <div className={`${styles.card} ${styles[status.toLowerCase()]}`}>
         <div className={styles.left}>
           <div className={styles.bar}></div>
           <div className={styles.speakerLabel}>Name</div>
