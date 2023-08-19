@@ -22,7 +22,7 @@ export default function AdminLoginPage() {
         </Typography>
         <form className={styles.formContent} noValidate autoComplete="off">
           <Button
-            variant="outlined"
+            variant="contained"
             color="primary"
             fullWidth
             onClick={() => {
@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
             Connect to Hashpack
           </Button>
           <Button
-            variant="text"
+            variant="outlined"
             color="primary"
             fullWidth
             onClick={() => {

@@ -6,10 +6,19 @@
   height: 100%;
   position: absolute;
   text-align: center;
+
+  @media (max-width: 1024px) {
+    background-size: 50%;
+  }
+
+  @media (min-width: 640px) {
+    background-size: 35%;
+  }
 }
 
 .adminLoginPageContainer {
-  margin: 50px auto;
+  margin:20vh auto;
+  text-align: center;
 
   button {
     margin-top: 30px;
@@ -17,5 +26,5 @@
 }
 
 .formContent {
-  margin-top: 30px;
+  margin-top: 10px;
 }
