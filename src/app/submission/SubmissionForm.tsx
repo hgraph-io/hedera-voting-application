@@ -76,6 +76,7 @@ export default function SubmissionForm({ submission }: { submission?: Submission
                 <FormControlLabel
                   key={topic}
                   label={topic}
+                  className={styles.selectionText}
                   control={
                     <Checkbox
                       name="topics"

@@ -4,6 +4,14 @@
   margin: 0 auto 40px;
   padding: 20px;
 
+  .selectionText {
+
+
+    @media (max-width: 900px) {
+      margin: 10px 0;
+    }
+  }
+
   h2 {
     text-align: center;
     color: #333;
