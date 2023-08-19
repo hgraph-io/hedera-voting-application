@@ -2,11 +2,18 @@ import { Checkbox, Link, FormGroup, FormControlLabel } from '@/components'
 import type { Database } from '@/types'
 import styles from './styles.module.scss'
 
-type Submission = Database['public']['Tables']['submission']['Row']
+// Define a type for the status keys
+type StatusKey = 'Approved' | 'Pending' | 'Not Selected';
+
+// Define a type for the color property
+type CheckboxColor = "success" | "warning" | "default" | "primary" | "secondary" | "error" | "info";
+
+// Modify the Submission type to specify the type for status
+type Submission = Omit<Database['public']['Tables']['submission']['Row'], 'status'> & { status: StatusKey };
 
 export default function Card({ id, name, moderator, status }: Submission) {
   // Define a mapping for checkbox properties based on status
-  const checkboxPropsMapping = {
+  const checkboxPropsMapping: Record<StatusKey, { color: CheckboxColor, checked?: boolean, readOnly: boolean }> = {
     'Approved': { color: "success", checked: true, readOnly: false },
     'Pending': { color: "success", readOnly: true },
     'Not Selected': { color: "warning", readOnly: true }
