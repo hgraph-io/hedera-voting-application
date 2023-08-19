@@ -11,7 +11,7 @@
   text-align: left;
 
   @media (min-width: 900px) {
-    background-image: url('/assets/homepage-bg-desktop.png');
+    background-image: url('/assets/homepage-bg-desktop.jpg');
   }
 }
 
@@ -19,6 +19,12 @@
   display: flex;
   justify-content: flex-start;
   margin-top: 2rem;
+}
+
+.homePageTitle{
+  @media (max-width: 900px) {
+    font-size: 60px!important;
+  }
 }
 
 .homePageHero {
