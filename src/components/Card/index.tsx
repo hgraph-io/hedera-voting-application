@@ -5,8 +5,18 @@ import styles from './styles.module.scss'
 type Submission = Database['public']['Tables']['submission']['Row']
 
 export default function Card({ id, name, moderator, status }: Submission) {
+  // Define a mapping for checkbox properties based on status
+  const checkboxPropsMapping = {
+    'Approved': { color: "success", checked: true, readOnly: false },
+    'Pending': { color: "success", readOnly: true },
+    'Not Selected': { color: "warning", readOnly: true }
+  };
+
+  // Fetch the appropriate checkbox properties using the status
+  const checkboxProps = checkboxPropsMapping[status] || {};
+
   return (
-    <Link href={`/submission/${id}`} className={`${styles.cardContainer} {$styles.vote}`}>
+    <Link href={`/submission/${id}`} className={`${styles.cardContainer} ${styles.vote}`}>
       <div className={`${styles.card} ${styles[status.toLowerCase()]}`}>
         <div className={styles.left}>
           <div className={styles.bar}></div>
@@ -22,7 +32,7 @@ export default function Card({ id, name, moderator, status }: Submission) {
         <div className={styles.right}>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox color="default" readOnly />}
+              control={<Checkbox className={styles.checkBox} {...checkboxProps} />}
               label={status}
               disabled
             />

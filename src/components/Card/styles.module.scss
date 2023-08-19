@@ -80,16 +80,25 @@
   }
 }
 
+
 .approved {
   .bar {
     background: $green;
   }
   .checkBox {
     color: $green;
+    svg {
+      color:$green;
+      border-radius: 5px;
+    }
+  }
+
+  .FormControlLabel-label {
+    color: inherit !important;
   }
 }
 
-.denied {
+.not-selected {
   .bar {
     background: $yellow;
   }
