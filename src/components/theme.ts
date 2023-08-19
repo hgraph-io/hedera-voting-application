@@ -73,17 +73,19 @@ export default createTheme({
       },
     },
     MuiButton: {
+      
       variants: [
         {
           props: { variant: 'gradient' },
           style: {
             color: colors.white,
-            background: colors.darkGreen,
+            background: ' linear-gradient(45deg, #3ec878, transparent) #21a056;',
             borderRadius: '50px',
             border: 'none',
             textTransform: 'capitalize',
+            transition: 'background 0.3s ease-out',  // Corrected this line
             '&:hover': {
-              background: colors.green,
+              background: 'linear-gradient(45deg, #3ec878, transparent) #3ec878',
             },
           },
         },
