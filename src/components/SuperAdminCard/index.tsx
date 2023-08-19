@@ -8,8 +8,6 @@ import { useSnackbar } from '@/context'
 import setSubmissionStatus from './setSubmissionStatus'
 import styles from './styles.module.scss'
 
-import nacl from 'tweetnacl'
-
 type Submission = Database['public']['Tables']['submission']['Row']
 
 const NEXT_PUBLIC_HEDERA_SUPER_ADMINS = JSON.parse(process.env.NEXT_PUBLIC_HEDERA_SUPER_ADMINS!)

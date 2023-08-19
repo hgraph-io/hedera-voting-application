@@ -77,17 +77,50 @@ export default createTheme({
         {
           props: { variant: 'gradient' },
           style: {
+            position: 'relative',
             color: colors.white,
-            background: colors.darkGreen,
+            background: 'linear-gradient(160deg, #3EC878, #21A056)',
             borderRadius: '50px',
             border: 'none',
             textTransform: 'capitalize',
-            '&:hover': {
-              background: colors.green,
+            overflow: 'hidden', // to contain the pseudo-element within the button
+            zIndex: 1,
+            
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: "-1px",
+              right: 0,
+              bottom: 0,
+              left: "-1px",
+              background: 'linear-gradient(160deg, #21A056, #3EC878);',
+              opacity: 0,
+              zIndex: -1,
+              transition: 'opacity 0.3s',
+            },
+            
+            '&:hover::before': {
+              opacity: 1,
             },
           },
         },
       ],
+      // variants: [
+      //   {
+      //     props: { variant: 'gradient' },
+      //     style: {
+      //       color: colors.white,
+      //       background: ' linear-gradient(45deg, #3ec878, transparent) #21a056;',
+      //       borderRadius: '50px',
+      //       border: 'none',
+      //       textTransform: 'capitalize',
+      //       transition: 'background 0.3s ease-out',  // Corrected this line
+      //       '&:hover': {
+      //         background: 'linear-gradient(45deg, #3ec878, transparent) #3ec878',
+      //       },
+      //     },
+      //   },
+      // ],
       styleOverrides: {
         text: {
           height: '32px',
@@ -121,10 +154,12 @@ export default createTheme({
           border: `1px solid ${colors.black}`,
           borderRadius: '50px',
           textTransform: 'capitalize',
+          backgroundColor: colors.white,
+          transition: 'all 0.2s ease-out', 
           '&:hover': {
             color: colors.whiteText,
             backgroundColor: colors.purple,
-            border: `none`,
+            border: `1px solid transparent`,
           },
         },
       },

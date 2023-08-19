@@ -1,11 +1,23 @@
 'use client'
-
+import { useEffect, useState } from 'react';
 import Image from 'next/image'
 import { Container, Grid, Typography, Link } from '@mui/material'
 import styles from './styles.module.scss'
 
 export default function Footer() {
-  const isMobile = false
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 900);
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   return (
     <footer style={{ flexShrink: 0 }}>

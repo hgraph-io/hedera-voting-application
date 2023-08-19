@@ -26,7 +26,7 @@ function AdminPageButtons({ session }: { session: Session | null }) {
         // not connected to hashpack but logged in to applicant flow
         (session?.user && (
           <form action="/auth/signout" method="post">
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" className={styles.signoutButton}>
               Sign Out
             </Button>
           </form>

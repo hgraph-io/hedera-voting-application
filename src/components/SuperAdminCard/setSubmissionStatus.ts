@@ -1,6 +1,7 @@
 'use server'
 import { createClient } from '@supabase/supabase-js'
 import nacl from 'tweetnacl'
+//@ts-ignore
 import HgraphClient, { stripShardRealm } from '@hgraph.io/sdk'
 import type { Database } from '@/types'
 import AccountPublicKey from './AccountPublicKey.gql'

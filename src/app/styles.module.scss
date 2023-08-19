@@ -3,7 +3,7 @@
   position: relative;
   background-image: url('/assets/homepage-bg-mobile.webp');
   background-size: cover;
-  height: 90vh;
+  height: calc(100vh - 184px);
   max-width: 100%;
   flex-direction: column;
   justify-content: center;
@@ -11,7 +11,7 @@
   text-align: left;
 
   @media (min-width: 900px) {
-    background-image: url('/assets/homepage-bg-desktop.png');
+    background-image: url('/assets/homepage-bg-desktop.jpg');
   }
 }
 
@@ -19,6 +19,12 @@
   display: flex;
   justify-content: flex-start;
   margin-top: 2rem;
+}
+
+.homePageTitle{
+  @media (max-width: 900px) {
+    font-size: 60px!important;
+  }
 }
 
 .homePageHero {
