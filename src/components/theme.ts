@@ -82,7 +82,7 @@ export default createTheme({
             background: 'linear-gradient(160deg, #3EC878, #21A056)',
             borderRadius: '50px',
             border: 'none',
-            textTransform: 'capitalize',
+            textTransform: 'uppercase',
             overflow: 'hidden', // to contain the pseudo-element within the button
             zIndex: 1,
             
@@ -105,22 +105,6 @@ export default createTheme({
           },
         },
       ],
-      // variants: [
-      //   {
-      //     props: { variant: 'gradient' },
-      //     style: {
-      //       color: colors.white,
-      //       background: ' linear-gradient(45deg, #3ec878, transparent) #21a056;',
-      //       borderRadius: '50px',
-      //       border: 'none',
-      //       textTransform: 'capitalize',
-      //       transition: 'background 0.3s ease-out',  // Corrected this line
-      //       '&:hover': {
-      //         background: 'linear-gradient(45deg, #3ec878, transparent) #3ec878',
-      //       },
-      //     },
-      //   },
-      // ],
       styleOverrides: {
         text: {
           height: '32px',
@@ -129,7 +113,7 @@ export default createTheme({
           border: 'none',
           color: colors.black,
           background: colors.white,
-          textTransform: 'capitalize',
+          textTransform: 'uppercase',
           '&:hover': {
             backgroundColor: colors.purple,
             color: colors.white,
@@ -142,7 +126,7 @@ export default createTheme({
           border: 'none',
           color: colors.white,
           background: colors.darkPurple,
-          textTransform: 'capitalize',
+          textTransform: 'uppercase',
           '&:hover': {
             backgroundColor: colors.purple,
           },
@@ -153,7 +137,7 @@ export default createTheme({
           minWidth: '100px',
           border: `1px solid ${colors.black}`,
           borderRadius: '50px',
-          textTransform: 'capitalize',
+          textTransform: 'uppercase',
           backgroundColor: colors.white,
           transition: 'all 0.2s ease-out', 
           '&:hover': {
