@@ -16,6 +16,9 @@ export default function SupabaseAuthUI() {
       <Auth
         supabaseClient={supabase}
         appearance={{
+          style: {
+            button: { textTransform:"uppercase", paddingTop:"15px"}
+          },
           theme: ThemeSupa,
           variables: {
             default: {
