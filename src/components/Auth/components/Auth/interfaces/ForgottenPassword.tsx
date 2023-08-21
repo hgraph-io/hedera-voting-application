@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SupabaseClient } from '@supabase/supabase-js'
-import { VIEWS, I18nVariables, RedirectTo } from '@supabase/auth-ui-shared'
+import { VIEWS } from '@supabase/auth-ui-shared'
 import { Appearance } from '../../../types'
 import { Anchor, Button, Container, Input, Label } from './../../UI'
 
@@ -23,12 +23,14 @@ export function ForgottenPassword({
   const handlePasswordReset = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
-    const { error } = await supabaseClient.auth.resetPasswordForEmail(email)
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/login?v=${VIEWS.ForgottenPassword}`,
+    })
     if (error) openSnackbar(error.message, SnackbarMessageSeverity.Error)
     else
       openSnackbar(
         'Please check your email for password reset instructions.',
-        SnackbarMessageSeverity.Warning,
+        SnackbarMessageSeverity.Warning
       )
     setLoading(false)
   }
