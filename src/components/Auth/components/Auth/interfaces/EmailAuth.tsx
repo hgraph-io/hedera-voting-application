@@ -44,13 +44,17 @@ export function EmailAuth({
         const {
           data: { user, session },
           error,
-        } = await supabaseClient.auth.signUp({ email, password })
+        } = await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+        })
         if (error) openSnackbar(error.message, SnackbarMessageSeverity.Error)
         // Check if session is null -> email confirmation setting is turned on
         else if (user && !session)
           openSnackbar(
             'Please check your email for a confirmation link.',
-            SnackbarMessageSeverity.Info,
+            SnackbarMessageSeverity.Info
           )
         break
     }
