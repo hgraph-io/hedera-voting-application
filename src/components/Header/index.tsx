@@ -15,10 +15,10 @@ export default function Header({ session }: { session: Session | null }) {
           <Grid item xs={3}>
             <Link href="/" style={{ display: 'inline-block'}}>
               <Image
-                src="/assets/logo.png"
+                src="/assets/logo_updated.png"
                 width={110}
                 height={34}
-                style={{ width: 'auto', top: '2px', position:'relative'}}
+                style={{width: 'auto', top: '2px', position:'relative'}}
                 alt="Logo"
               />
             </Link>

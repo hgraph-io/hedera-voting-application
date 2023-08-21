@@ -25,7 +25,7 @@ export default function Footer() {
         <Container maxWidth="lg">
           <Grid container spacing={2} justifyContent="space-between">
             <Grid item xs={12} sm={4} className={styles.logoContainer}>
-              <Image src="/logo.png" alt="Logo" width={100} height={30} />
+              <Image src="/logo_updated.png" alt="Logo" width={100} height={30} />
             </Grid>
             <Grid
               item
