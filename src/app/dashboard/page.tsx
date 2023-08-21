@@ -22,7 +22,7 @@ export default async function DashboardPage() {
           Dashboard
         </Typography>
         <Typography align="left" color="textSecondary" gutterBottom>
-          Welcome to the Hedera conference submission portal. Here, you can submit your
+          Welcome to the Hedera COP 28 speaking submission portal. Here, you can submit your
           application to speak on a panel and track your submission status.
         </Typography>
         <div className={styles.buttonContainer}>
