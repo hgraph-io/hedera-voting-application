@@ -7,23 +7,30 @@ export default function HomePage() {
     <div className={styles.homePageContainer}>
       <Container>
         <div className={styles.homePageHero}>
-          <Typography variant="h1" className={styles.homePageTitle} align="left" color="contrastText">
+          <Typography
+            variant="h1"
+            className={styles.homePageTitle}
+            align="left"
+            color="contrastText"
+          >
             Call For Speakers
           </Typography>
           <Typography
             variant="h5"
             align="left"
             color="contrastText"
-            sx={{"padding-top": "5px"}}
+            sx={{ 'padding-top': '5px' }}
             className={styles.homePageDescription}
           >
-            Apply to become a panelist or moderator
+            Apply to become a panelist or moderator at Hedera’s Regenerative Finance Forum
+            during COP 28
           </Typography>
           <Link href="/login">
             <Button
               variant="gradient"
-              sx={{"margin-top": "10px"}}
-              className={styles.heroButton}>
+              sx={{ 'margin-top': '10px' }}
+              className={styles.heroButton}
+            >
               Get started
             </Button>
           </Link>
