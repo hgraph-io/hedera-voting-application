@@ -27,7 +27,7 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
         md={6}
         lg={5}
         display="flex"
-        justifyContent="space-evenly"
+        justifyContent="flex-end"
         position="relative"
         top="6px"
       >

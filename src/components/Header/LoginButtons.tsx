@@ -46,6 +46,7 @@ function AdminPageButtons({ session }: { session: Session | null }) {
               href={`/login?v=${VIEWS.SIGN_UP}`}
               variant="contained"
               className={styles.signupButton}
+              sx={{ ml: 2 }}
             >
               Sign Up
             </Button>
@@ -81,6 +82,7 @@ function ApplicantPageButtons({ session }: { session: Session | null }) {
             href={`/login?v=${VIEWS.SIGN_UP}`}
             variant="contained"
             className={styles.signupButton}
+            sx={{ ml: 2 }}
           >
             Sign Up
           </Button>
