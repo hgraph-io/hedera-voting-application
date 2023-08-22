@@ -7,6 +7,7 @@ import {
   FormLabel,
   Typography,
   Grid,
+  Link,
 } from '@/components'
 import type { Database } from '@/types'
 
@@ -104,14 +105,21 @@ export default function SubmissionForm({ submission }: { submission?: Submission
               Please list links to previous presentations or articles you’ve done on these
               topic(s)
             </FormLabel>
-            <TextField
-              name="links"
-              label="Links"
-              fullWidth
-              required
-              // helperText="Please list links to previous presentations or articles you’ve done on these topic(s)"
-              defaultValue={links}
-            />
+            <TextField name="links" label="Links" fullWidth required defaultValue={links} />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body2" color="text.secondary">
+              By submitting your application you consent to the{' '}
+              <Link href="https://hedera.com/terms" target="_blank">
+                Terms of Use
+              </Link>
+              ,{' '}
+              <Link href="https://hedera.com/privacy" target="_blank">
+                Privacy Policy
+              </Link>
+              , and to Hedera sharing the information you submit with the individuals who will
+              review and vote on the applications to speak at the Regenerative Finance Forum.
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Button fullWidth variant="contained" color="primary" type="submit">
