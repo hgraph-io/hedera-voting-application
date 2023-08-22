@@ -8,10 +8,10 @@ import LoginButtons from './LoginButtons'
 export default function DesktopMenu({ session }: { session: Session | null }) {
   return (
     <Grid container>
-      <Grid item xs={0} lg={3} />
+      <Grid item xs={0} lg={2} />
       <Grid
         item
-        md={7}
+        md={6}
         lg={5}
         display="flex"
         justifyContent="space-evenly"
@@ -24,8 +24,8 @@ export default function DesktopMenu({ session }: { session: Session | null }) {
       </Grid>
       <Grid
         item
-        md={5}
-        lg={4}
+        md={6}
+        lg={5}
         display="flex"
         justifyContent="space-evenly"
         position="relative"
