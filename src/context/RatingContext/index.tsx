@@ -55,62 +55,50 @@ export default function RatingProvider({ children }: { children: React.ReactNode
       response?.transactionId
         ? `Success! Your vote has been submitted.`
         : 'There’s been an error submitting your vote. Please try again.',
-      response ? SnackbarMessageSeverity.Success : SnackbarMessageSeverity.Error,
+      response ? SnackbarMessageSeverity.Success : SnackbarMessageSeverity.Error
     )
   }
 
   useEffect(() => {
     if (pathname === '/admin') setLoading(false)
     if (accountId && votingAdmins.includes(accountId)) {
+      /* Get ledger data from Hgraph */
       const hgraph = new HgraphClient()
-      // TODO: this closes the subscription after 1 message is received
-      const unsubscribe = hgraph.subscribe(
-        {
+      hgraph
+        .query({
           query: TopicMessage,
           variables: {
             topic_id: topicId!.split('.')[2],
           },
-        },
-        {
-          //@ts-ignore
-          next: ({ data: { topic_message } }) => {
-            const newRatingState = {}
-            topic_message.forEach(({ message, payer_account_id }) => {
-              const { id, rating } = JSON.parse(
-                Buffer.from(message.substring(2), 'hex').toString(),
-              )
-              if (!newRatingState[id]) {
-                newRatingState[id] = {
-                  total: 1,
-                  average: rating,
-                  ratings: {
-                    ['0.0.' + payer_account_id]: rating,
-                  },
-                }
-              } else {
-                // overwrite rating if already exists to take into account most recent rating by admin
-                newRatingState[id].ratings['0.0.' + payer_account_id] = rating
-                // calculate total
-                newRatingState[id].total = Object.keys(newRatingState[id].ratings).length
-                // calculate average
-                newRatingState[id].average =
-                  Object.values(newRatingState[id].ratings).reduce((a, b) => a + b) /
-                  newRatingState[id].total
+        })
+        .then(({ data: { topic_message } }) => {
+          const newRatingState = {}
+          topic_message.forEach(({ message, payer_account_id }) => {
+            const { id, rating } = JSON.parse(
+              Buffer.from(message.substring(2), 'hex').toString()
+            )
+            if (!newRatingState[id]) {
+              newRatingState[id] = {
+                total: 1,
+                average: rating,
+                ratings: {
+                  ['0.0.' + payer_account_id]: rating,
+                },
               }
-            })
-
-            setRatingState(newRatingState)
-            setLoading(false)
-          },
-          error: (error) => {
-            console.log(error)
-          },
-          complete: () => {
-            console.log('complete')
-          },
-        },
-      )
-      return unsubscribe
+            } else {
+              // overwrite rating if already exists to take into account most recent rating by admin
+              newRatingState[id].ratings['0.0.' + payer_account_id] = rating
+              // calculate total
+              newRatingState[id].total = Object.keys(newRatingState[id].ratings).length
+              // calculate average
+              newRatingState[id].average =
+                Object.values(newRatingState[id].ratings).reduce((a, b) => a + b) /
+                newRatingState[id].total
+            }
+          })
+          setRatingState(newRatingState)
+          setLoading(false)
+        })
     }
   }, [accountId, pathname])
 
