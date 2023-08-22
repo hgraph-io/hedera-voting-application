@@ -33,7 +33,6 @@ type HashConnectContext = {
 } & {
   client?: HashConnect
   initData?: HashConnectTypes.InitilizationData
-  // todo:
   provider?: any
   signer?: any
   accountId?: string

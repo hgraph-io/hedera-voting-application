@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import type { Database } from '@/types'
+import type { Database, Submission } from '@/types'
 import { Typography, Container, Button, AdminCard } from '@/components'
 import styles from './styles.module.scss'
 
@@ -51,13 +51,9 @@ export default async function AdminDashboardPage() {
       </Typography>
 
       <div>
-        {submissions?.map(
-          (
-            submission: any // TODO:
-          ) => (
-            <AdminCard key={submission.id} {...submission} />
-          )
-        )}
+        {submissions?.map((submission: Submission) => (
+          <AdminCard key={submission.id} {...submission} />
+        ))}
       </div>
     </Container>
   )

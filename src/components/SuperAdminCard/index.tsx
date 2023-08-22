@@ -3,12 +3,10 @@
 import { useHashConnect } from '@/context'
 import { Typography, Button, Grid } from '@/components'
 import { SnackbarMessageSeverity } from '@/types'
-import type { Database } from '@/types'
+import type { Submission } from '@/types'
 import { useSnackbar } from '@/context'
 import setSubmissionStatus from './setSubmissionStatus'
 import styles from './styles.module.scss'
-
-type Submission = Database['public']['Tables']['submission']['Row']
 
 const NEXT_PUBLIC_HEDERA_SUPER_ADMINS = JSON.parse(process.env.NEXT_PUBLIC_HEDERA_SUPER_ADMINS!)
 
@@ -37,14 +35,14 @@ export default function SuperAdminCard(submission: Submission) {
 
     const { success, error } = await setSubmissionStatus({
       signature: Buffer.from(signedMessageResponse.userSignature as Uint8Array).toString(
-        'base64',
+        'base64'
       ),
       message: signedMessageResponse.signedPayload as string,
     })
 
     openSnackbar(
       success ? 'Success!' : error,
-      SnackbarMessageSeverity[success ? 'Success' : 'Error'],
+      SnackbarMessageSeverity[success ? 'Success' : 'Error']
     )
   }
 

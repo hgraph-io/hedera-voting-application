@@ -2,10 +2,8 @@
 
 import { useRating, useHashConnect } from '@/context'
 import { Rating, Button, Link, Grid } from '@/components'
-import type { Database } from '@/types'
+import type { Submission } from '@/types'
 import styles from './styles.module.scss'
-
-type Submission = Database['public']['Tables']['submission']['Row']
 
 export default function AdminCard({ id, name, moderator, status }: Submission) {
   const { accountId } = useHashConnect()

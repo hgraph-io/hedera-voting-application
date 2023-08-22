@@ -1,3 +1,4 @@
+import type { Database } from './supabase'
 export * from './supabase'
 
 export enum SnackbarMessageSeverity {
@@ -25,3 +26,5 @@ export type CFPSubmission = {
   links: string[]
   moderator: boolean
 }
+
+export type Submission = Database['public']['Tables']['submission']['Row']

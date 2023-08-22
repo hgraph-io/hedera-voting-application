@@ -9,13 +9,11 @@ import {
   Grid,
   Link,
 } from '@/components'
-import type { Database } from '@/types'
+import type { Submission } from '@/types'
 
 import topics from './topics.json'
 import submit from './submit'
 import styles from './styles.module.scss'
-
-type Submission = Database['public']['Tables']['submission']['Row']
 
 export default function SubmissionForm({ submission }: { submission?: Submission }) {
   const {
