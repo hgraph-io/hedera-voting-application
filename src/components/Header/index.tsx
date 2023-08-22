@@ -9,16 +9,16 @@ import DesktopMenu from './DesktopMenu'
 
 export default function Header({ session }: { session: Session | null }) {
   return (
-    <AppBar position="static" elevation={0} >
-      <Toolbar style={{ maxWidth: '1200px', width: "100%", margin: "0 auto"}}>
+    <AppBar position="static" elevation={0} sx={{ zIndex: 1100 }}>
+      <Toolbar style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
         <Grid container>
           <Grid item xs={3}>
-            <Link href="/" style={{ display: 'inline-block'}}>
+            <Link href="/" style={{ display: 'inline-block' }}>
               <Image
                 src="/assets/logo_updated.png"
                 width={110}
                 height={34}
-                style={{width: 'auto', top: '2px', position:'relative'}}
+                style={{ width: 'auto', top: '2px', position: 'relative' }}
                 alt="Logo"
               />
             </Link>
