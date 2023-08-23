@@ -5,7 +5,6 @@ import type { Database } from '@/types'
 import './global.css'
 import { Header, Footer } from '@/components'
 import { Providers } from './providers'
-import Analytics from './analytics'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const supabase = createServerComponentClient<Database>({ cookies })
@@ -15,7 +14,21 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en">
-      <Analytics />
+      <head>
+        <link rel="preconnect" href="xyz.com" />
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_TRACKING_ID}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GA_TRACKING_ID}');`,
+          }}
+        />
+      </head>
       <body>
         <Providers>
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
