@@ -18,19 +18,14 @@ export default function HomePage() {
           <Typography
             variant="h5"
             align="left"
-            color="contrastText"
-            sx={{ 'padding-top': '5px' }}
+            sx={{ paddingTop: '5px' }}
             className={styles.homePageDescription}
           >
             Apply to become a panelist or moderator at Hedera’s Regenerative Finance Forum
             during COP 28
           </Typography>
           <Link href="/login">
-            <Button
-              variant="gradient"
-              sx={{ 'margin-top': '10px' }}
-              className={styles.heroButton}
-            >
+            <Button variant="gradient" sx={{ marginTop: '10px' }} className={styles.heroButton}>
               Get started
             </Button>
           </Link>
