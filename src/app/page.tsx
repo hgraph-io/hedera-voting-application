@@ -7,12 +7,7 @@ export default function HomePage() {
     <div className={styles.homePageContainer}>
       <Container>
         <div className={styles.homePageHero}>
-          <Typography
-            variant="h1"
-            className={styles.homePageTitle}
-            align="left"
-            color="contrastText"
-          >
+          <Typography variant="h1" className={styles.homePageTitle} align="left">
             Call For Speakers
           </Typography>
           <Typography
