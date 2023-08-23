@@ -5,6 +5,7 @@ import type { Database } from '@/types'
 import './global.css'
 import { Header, Footer } from '@/components'
 import { Providers } from './providers'
+import Analytics from './analytics'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const supabase = createServerComponentClient<Database>({ cookies })
@@ -14,6 +15,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en">
+      <Analytics />
       <body>
         <Providers>
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
