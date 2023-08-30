@@ -16,7 +16,7 @@ export default function TotalVotes() {
           {ratings?.total ? '(' + ratings?.total + ' votes)' : ''}
         </Box>
       </Typography>{' '}
-      <Rating average={ratings?.average || ''} value={ratings?.average || ''} readOnly={true} />
+      <Rating average={ratings?.average || 0} value={ratings?.average || 0} readOnly={true} />
     </>
   )
 }
