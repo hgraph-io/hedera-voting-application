@@ -3,13 +3,14 @@
 
 import { useState, useEffect, useContext, createContext } from 'react'
 import { usePathname } from 'next/navigation'
-import { TopicMessageSubmitTransaction } from '@hashgraph/sdk'
+import { Client, TopicMessageSubmitTransaction } from '@hashgraph/sdk'
 import HgraphClient from '@hgraph.io/sdk'
 import { useHashConnect, useSnackbar } from '@/context'
 import { Container, CircularProgress } from '@/components'
 import TopicMessage from './TopicMessage.gql'
 import { SnackbarMessageSeverity } from '@/types'
 import type { Vote } from '@/types'
+import verifyAndSignMessage from './verifyAndSignTransaction'
 
 const topicId = process.env.NEXT_PUBLIC_HEDERA_TOPIC_ID
 const network = process.env.NEXT_PUBLIC_HEDERA_NETWORK
@@ -42,21 +43,36 @@ export default function RatingProvider({ children }: { children: React.ReactNode
    * Submit a vote to Hedera
    */
   async function submit(id: string, rating: number) {
-    const payload: Vote = { id, rating } // id is submissionId
+    try {
+      const payload: Vote = { id, rating } // id is submissionId
 
-    const topicMessageTransaction = await new TopicMessageSubmitTransaction()
-      .setTopicId(topicId!)
-      .setMessage(JSON.stringify(payload))
-      .freezeWithSigner(signer)
+      // create and freeze transaction
+      const _topicMessageTransaction = (
+        await new TopicMessageSubmitTransaction()
+          .setTopicId(topicId!)
+          .setMessage(JSON.stringify(payload))
+          .freezeWithSigner(signer)
+      ).toBytes()
 
-    const response = await topicMessageTransaction.executeWithSigner(signer)
+      // send to backend to sign
+      const signedTransaction = await verifyAndSignMessage(
+        Buffer.from(_topicMessageTransaction).toString('base64')
+      )
 
-    openSnackbar(
-      response?.transactionId
-        ? `Success! Your vote has been submitted.`
-        : 'There’s been an error submitting your vote. Please try again.',
-      response ? SnackbarMessageSeverity.Success : SnackbarMessageSeverity.Error
-    )
+      // get signed transaction from backend
+      const topicMessageTransaction = TopicMessageSubmitTransaction.fromBytes(
+        Buffer.from(signedTransaction, 'base64')
+      )
+
+      // submit signed transaction to Hedera
+      const response = await topicMessageTransaction.executeWithSigner(signer)
+      if (!response?.transactionId)
+        throw new Error('There’s been an error submitting your vote. Please try again.')
+      openSnackbar(`Success! Your vote has been submitted.`, SnackbarMessageSeverity.Success)
+    } catch (e) {
+      console.error(e)
+      openSnackbar(e.message, SnackbarMessageSeverity.Error)
+    }
   }
 
   useEffect(() => {

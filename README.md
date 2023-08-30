@@ -1,5 +1,12 @@
 # Developing
 
+## Set up
+
+### Create a new HCS topic id
+
+- `npx src/scripts/createTopic.ts'
+- copy generated topic id to `.env.local`
+
 ## Hedera
 
 - set environment variables in `.env.local`

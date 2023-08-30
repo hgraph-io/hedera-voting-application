@@ -17,13 +17,13 @@ const accountId = AccountId.fromString(process.env.HEDERA_ACCOUNT_ID)
 
 const client = Client[network === 'mainnet' ? 'forMainnet' : 'forTestnet']().setOperator(
   accountId,
-  accountPrivateKey,
+  accountPrivateKey
 )
 
 async function main() {
   const transactionId = await new TopicCreateTransaction()
     // make the topic private
-    //.setSubmitKey(accountPrivateKey)
+    .setSubmitKey(accountPrivateKey)
     .execute(client)
   const receipt = await transactionId.getReceipt(client)
   const topicId = receipt.topicId as TopicId
