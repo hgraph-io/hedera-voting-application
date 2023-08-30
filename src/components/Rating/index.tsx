@@ -19,7 +19,7 @@ export default function StarRating(props: {
         {...rest}
       />
 
-      {average && (
+      {!!average && (
         <Typography variant="body2" sx={{ marginLeft: '10px' }}>
           {average} out of 5
         </Typography>
